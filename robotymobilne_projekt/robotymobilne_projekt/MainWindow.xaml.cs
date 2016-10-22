@@ -1,4 +1,5 @@
-﻿using System;
+﻿using robotymobilne_projekt.Utils;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -21,12 +22,18 @@ namespace robotymobilne_projekt
     /// </summary>
     public partial class MainWindow : Window
     {
-        List<RobotModel> robots;
-
+        private List<RobotModel> robots;
+        private readonly Logger logger = Logger.getLogger();
 
         public MainWindow()
         {
             InitializeComponent();
+            populateListWithPredefinedRobots();
+            scrollViewerLogger.Content = logger;
+        }
+
+        private void populateListWithPredefinedRobots()
+        {
             robots = new List<RobotModel>()
             {
                 new RobotModel("30", "192.168.2.30", 8000),
@@ -35,18 +42,7 @@ namespace robotymobilne_projekt
                 new RobotModel("33", "192.168.2.33", 8000),
                 new RobotModel("34", "192.168.2.34", 8000),
             };
-
             list_availabledevices.ItemsSource = robots;
-        }
-
-        private void button_send_Click(object sender, RoutedEventArgs e)
-        {
-            robots[3].send(textBox_Data2send.Text);
-        }
-
-        private void button_stop_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void list_availabledevices_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -86,31 +82,8 @@ namespace robotymobilne_projekt
         {
             switch (e.Key)
             {
-                case Key.W:
-                    robots[3].send("032D2D");
-                    break;
-                case Key.S:
-                    robots[3].send("030000");
-                    robots[3].send("03E2E2");
-                    break;
-                case Key.A:
-                    robots[3].send("031E3C");
-                    break;
-                case Key.D:
-                    robots[3].send("033C1E");
-                    break;
-                case Key.Space:
-                    robots[3].send("030000");
-                    break;
-                case Key.LeftShift:
-                    robots[3].send("035A5A");
-                    break;
+    
             }
-        }
-
-        private void Window_KeyUp(object sender, KeyEventArgs e)
-        {
-            robots[3].send("032D2D");
         }
     }
 }

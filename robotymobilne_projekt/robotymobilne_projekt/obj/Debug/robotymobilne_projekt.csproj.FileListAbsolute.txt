@@ -15,3 +15,17 @@ c:\users\adam\documents\visual studio 2015\Projects\robotymobilne_projekt\roboty
 E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\robotymobilne_projekt.exe.config
 E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.exe
 E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.pdb
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\robotymobilne_projekt.exe.config
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.exe
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.pdb
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\robotymobilne_projekt.exe
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\robotymobilne_projekt.pdb
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.csprojResolveAssemblyReference.cache
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt_MarkupCompile.cache
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt_MarkupCompile.lref
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.g.resources
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.Properties.Resources.resources
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.csproj.GenerateResource.Cache
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\MainWindow.g.cs
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\App.g.cs
+E:\G\Repo\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\MainWindow.baml

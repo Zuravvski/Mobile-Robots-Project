@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Controrello robotello" Height="350" Width="525" KeyDown="Window_KeyDown" KeyUp="Window_KeyUp">
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="321" VerticalAlignment="Top" Width="518" Margin="0,0,0,-0.2">
+        <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="347" VerticalAlignment="Top" Width="540" Margin="0,0,-23,-28">
             <TabItem Header="Connection" Height="22" Margin="-2,-2,-2.2,0" VerticalAlignment="Bottom">
                 <Grid Background="#FFE5E5E5">
                     <ListBox x:Name="list_availabledevices" HorizontalAlignment="Left" Height="117" Margin="20,131,0,0" VerticalAlignment="Top" Width="472" SelectionChanged="list_availabledevices_SelectionChanged"/>
@@ -24,21 +24,29 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Debug">
-                <Grid Background="#FFE5E5E5">
+                <Grid Background="#FFE5E5E5" Margin="0,-6,0,6">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="249*"/>
+                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition Width="28*"/>
+                        <ColumnDefinition Width="85*"/>
+                        <ColumnDefinition Width="12*"/>
+                        <ColumnDefinition Width="23*"/>
+                        <ColumnDefinition Width="371*"/>
                     </Grid.ColumnDefinitions>
-                    <Label x:Name="labelData2send" Content="Data2send:" HorizontalAlignment="Left" Margin="28.6,10,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                    <Label x:Name="labelDataReceived" Content="Data Received:" Grid.Column="1" HorizontalAlignment="Left" Margin="9.6,41,0,0" VerticalAlignment="Top"/>
-                    <Button x:Name="button_send" Content="Send" Grid.Column="1" HorizontalAlignment="Left" Margin="235.6,10,0,0" VerticalAlignment="Top" Width="75" Click="button_send_Click"/>
-                    <TextBox x:Name="textBox_Data2send" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="99.6,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <TextBox x:Name="textBox_DataReceived" Grid.Column="1" HorizontalAlignment="Left" Height="23" Margin="99.6,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                    <Button x:Name="button_stop" Content="Stop" Grid.Column="1" HorizontalAlignment="Left" Margin="235.6,41,0,0" VerticalAlignment="Top" Width="75" Click="button_stop_Click"/>
+                    <Label x:Name="labelData2send" Content="Data2send:" HorizontalAlignment="Left" Margin="1,10,0,0" VerticalAlignment="Top" Grid.Column="3"/>
+                    <Label x:Name="labelDataReceived" Content="Data Received:" Grid.Column="2" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                    <Button x:Name="button_send" Content="Send" Grid.Column="6" HorizontalAlignment="Left" Margin="88,10,0,0" VerticalAlignment="Top" Width="75"/>
+                    <TextBox x:Name="textBox_Data2send" Grid.Column="3" HorizontalAlignment="Left" Height="23" Margin="72,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="4"/>
+                    <TextBox x:Name="textBox_DataReceived" Grid.Column="3" HorizontalAlignment="Left" Height="23" Margin="72,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="4"/>
+                    <Button x:Name="button_stop" Content="Stop" Grid.Column="6" HorizontalAlignment="Left" Margin="88,41,0,0" VerticalAlignment="Top" Width="75"/>
+                    <ScrollViewer x:Name="scrollViewerLogger" HorizontalAlignment="Left" Height="178" Margin="4,129,0,0" VerticalAlignment="Top" Width="514" Grid.ColumnSpan="6" BorderBrush="#FFABADB3" BorderThickness="1" Grid.Column="1" Background="White"/>
+                    <Label x:Name="label" Content="Logger" Grid.Column="2" HorizontalAlignment="Left" Margin="10,98,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+
                 </Grid>
             </TabItem>
             <TabItem Header="Control">
-                <Grid Background="#FFE5E5E5" Margin="0,-2,-0.2,2">
+                <Grid Background="#FFE5E5E5" Margin="0,-2,-1,-1">
                     <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="220" Margin="283,10,0,0" Stroke="Black" VerticalAlignment="Top" Width="220"/>
                     <Label x:Name="label_idconst" Content="ID:" HorizontalAlignment="Left" Margin="57,162,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="label_posXconst" Content="posX:" HorizontalAlignment="Left" Margin="43,193,0,0" VerticalAlignment="Top"/>
@@ -47,7 +55,7 @@
                     <ProgressBar x:Name="progressbar_acceleration" HorizontalAlignment="Left" Height="24" Margin="92,255,0,0" VerticalAlignment="Top" Width="175"/>
                     <Label x:Name="label_speedconst" Content="Speed:" HorizontalAlignment="Left" Margin="35,224,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.233,0.417"/>
                     <Label x:Name="label_accelerationconst" Content="Acceleration:" HorizontalAlignment="Left" Margin="9,255,0,0" VerticalAlignment="Top"/>
-                    <Label x:Name="label_id" Content="0x00" HorizontalAlignment="Left" Margin="92,162,0,0" VerticalAlignment="Top" Width="41"/>
+                    <Label x:Name="label_id" Content="0" HorizontalAlignment="Left" Margin="92,162,0,0" VerticalAlignment="Top" Width="41"/>
                     <Label x:Name="label_posx" Content="0.0" HorizontalAlignment="Left" Margin="92,193,0,0" VerticalAlignment="Top"/>
                     <Label x:Name="label_posy" Content="0.0" HorizontalAlignment="Left" Margin="199,193,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.194,0.562"/>
                 </Grid>

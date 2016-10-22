@@ -55,8 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="RemoteDevice.cs" />
-    <Compile Include="RobotModel.cs" />
+    <Compile Include="Devices\RemoteDevice.cs" />
+    <Compile Include="Devices\RobotModel.cs" />
+    <Compile Include="Utils\Logger.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -99,10 +100,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Automatic\" />
-    <Folder Include="GUI\" />
+    <Folder Include="GUI\ViewModels\" />
+    <Folder Include="GUI\Views\" />
     <Folder Include="Manual\" />
     <Folder Include="Settings\" />
-    <Folder Include="Utils\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
