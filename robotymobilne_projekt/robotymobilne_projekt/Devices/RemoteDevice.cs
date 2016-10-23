@@ -18,6 +18,8 @@ namespace robotymobilne_projekt
         protected Socket socket;
         protected Thread senderThread;
         protected Thread receiverThread;
+        protected ManualResetEvent conditionVariable;
+        protected object _lock;
 
         // setters and getters
         public string NAME
@@ -75,6 +77,8 @@ namespace robotymobilne_projekt
             receiveBuffer = new ConcurrentQueue<byte[]>();
             senderThread = new Thread(sender);
             receiverThread = new Thread(receiver);
+            _lock = new object();
+            conditionVariable = new ManualResetEvent(false);
         }
 
         // Abstract methods
@@ -90,7 +94,7 @@ namespace robotymobilne_projekt
             {
                 byte[] sendbyte = System.Text.Encoding.ASCII.GetBytes("[" + data + "]");
                 sendBuffer.Enqueue(sendbyte);
-                Monitor.Pulse(this);
+                conditionVariable.Set();
             }
             catch(Exception ex)
             {

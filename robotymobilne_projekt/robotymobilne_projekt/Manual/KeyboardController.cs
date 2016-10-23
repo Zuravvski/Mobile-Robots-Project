@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace robotymobilne_projekt.Manual
 {
@@ -11,9 +12,11 @@ namespace robotymobilne_projekt.Manual
     {
         private RobotModel robot;  // Robot assigned to controller
         private MainWindow window; // window that reacts to key press
+        private DispatcherTimer timer;
 
         private byte speed;
         private const double turningRatio = 0.8;
+        private const double nitroRatio = 1.2;
 
         // setters and getters
         public RobotModel ROBOT
@@ -32,13 +35,33 @@ namespace robotymobilne_projekt.Manual
         {
             this.window = window;
             window.KeyDown += Window_KeyDown;
+            window.KeyUp += Window_KeyUp;
+            timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(100) };
+            timer.Tick += Timer_Tick;
 
             // testing hardcoded values
             speed = 20;
         }
 
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            timer.Stop();
+            robot.DIRECTION = RobotModel.MOVE_DIRECTION.IDLE;
+            calculateFrame(0, 0);
+        }
+
+        private void Window_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            timer.Start();
+        }
+
         private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            // Resetting timer
+            timer.Stop();
+            timer.Interval = new TimeSpan(0, 0, 0, 0, 100);
+
+            // Determine the key and carry out the action
             switch (e.Key)
             {
                 case System.Windows.Input.Key.W:
@@ -61,7 +84,14 @@ namespace robotymobilne_projekt.Manual
 
                 case System.Windows.Input.Key.Space:
                     robot.DIRECTION = RobotModel.MOVE_DIRECTION.IDLE;
-                    calculateFrame(speed, speed);
+                    calculateFrame(0, 0);
+                    break;
+
+                case System.Windows.Input.Key.LeftShift:
+                    if(RobotModel.MOVE_DIRECTION.FORWARD == robot.DIRECTION)
+                    {
+                        calculateFrame((byte)(speed * nitroRatio), (byte)(speed * nitroRatio));
+                    }
                     break;
 
                 case System.Windows.Input.Key.Add:

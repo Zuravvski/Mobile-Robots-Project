@@ -1,12 +1,5 @@
-﻿using robotymobilne_projekt.Manual;
-using robotymobilne_projekt.Utils;
+﻿using robotymobilne_projekt.Utils;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace robotymobilne_projekt
@@ -88,7 +81,9 @@ namespace robotymobilne_projekt
 
         public override void receiver()
         {
-            // TODO: Implementation
+            byte[] receivedFrame = new byte[28];
+            socket.Receive(receivedFrame);
+            receiveBuffer.Enqueue(receivedFrame);
         }
 
         public override string ToString()
@@ -103,11 +98,14 @@ namespace robotymobilne_projekt
 
         public override void sender()
         {
-            // TODO: Implementation
-            lock (this)
+            while (true)
             {
-                Monitor.Wait(this);
-                while (!sendBuffer.IsEmpty)
+                if(sendBuffer.IsEmpty)
+                {
+                    conditionVariable.Reset();
+                }
+                conditionVariable.WaitOne();
+                lock (_lock)
                 {
                     try
                     {

@@ -1,26 +1,11 @@
 ﻿using robotymobilne_projekt.Manual;
 using robotymobilne_projekt.Utils;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace robotymobilne_projekt
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         private List<RobotModel> robots;
@@ -33,6 +18,7 @@ namespace robotymobilne_projekt
             populateListWithPredefinedRobots();
             scrollViewerLogger.Content = logger;
             currentController = new KeyboardController(this);
+            ((KeyboardController)currentController).ROBOT = robots[0];
         }
 
         private void populateListWithPredefinedRobots()
@@ -79,6 +65,11 @@ namespace robotymobilne_projekt
                 selectedRobot.disconnect();
                 button_connectdevices.IsEnabled = true;
             }
+        }
+
+        private void button_send_Click(object sender, RoutedEventArgs e)
+        {
+            robots[0].sendDataFrame("000000");
         }
     }
 }

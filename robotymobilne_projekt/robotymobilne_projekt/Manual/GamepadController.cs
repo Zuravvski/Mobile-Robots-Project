@@ -15,7 +15,7 @@ namespace robotymobilne_projekt.Manual
         double steerSensivity = 40; //sensivity of steering L-R
         double LRdeadbound = 0.05;  //deadbound on steering (dont set to more than 0.2)
         //
-        private DispatcherTimer _timer = new DispatcherTimer();
+        private DispatcherTimer _timer;
         private float X, LT, RT;
         private ButtonState LB, RB;
 
