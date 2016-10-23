@@ -1,4 +1,5 @@
-﻿using robotymobilne_projekt.Utils;
+﻿using robotymobilne_projekt.Manual;
+using robotymobilne_projekt.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace robotymobilne_projekt
     {
         private Point position;
         private int speed;
+        private MOVE_DIRECTION direction;
 
         // Setters and getters
         public Point POSITION
@@ -38,10 +40,21 @@ namespace robotymobilne_projekt
                 speed = value;
             }
         }
+        public MOVE_DIRECTION DIRECTION
+        {
+            get
+            {
+                return direction;
+            }
+            set
+            {
+                direction = value;
+            }
+        }
 
         public RobotModel(string name, string ip, int port) : base(name, ip, port)
         {
-
+            direction = MOVE_DIRECTION.IDLE;
         }
 
         public override bool connect()
@@ -109,5 +122,7 @@ namespace robotymobilne_projekt
                 }
             }
         }
+
+        public enum MOVE_DIRECTION { IDLE, FORWARD, BACKWARD };
     }
 }

@@ -61,7 +61,9 @@
     </ApplicationDefinition>
     <Compile Include="Devices\RemoteDevice.cs" />
     <Compile Include="Devices\RobotModel.cs" />
-    <Compile Include="Manual\GamepadHandling.cs" />
+    <Compile Include="Manual\GamepadController.cs" />
+    <Compile Include="Manual\IController.cs" />
+    <Compile Include="Manual\KeyboardController.cs" />
     <Compile Include="Utils\Logger.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

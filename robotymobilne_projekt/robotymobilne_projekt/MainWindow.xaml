@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:robotymobilne_projekt"
         mc:Ignorable="d"
-        Title="Controrello robotello" Height="380" Width="551" KeyDown="Window_KeyDown">
+        Title="Controrello robotello" Height="380" Width="551">
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="347" VerticalAlignment="Top" Width="540" Margin="0,0,-23,-28">
             <TabItem Header="Connection" Height="22" Margin="-2,-2,-2.2,0" VerticalAlignment="Bottom">

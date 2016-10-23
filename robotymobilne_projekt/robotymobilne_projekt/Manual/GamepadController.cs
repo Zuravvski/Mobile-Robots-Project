@@ -1,23 +1,27 @@
 ﻿using System;
 using System.Windows.Threading;
 using OpenTK.Input;
-
+using robotymobilne_projekt.Utils;
 
 namespace robotymobilne_projekt.Manual
 {
-    class GamepadHandling
+    class GamepadController : IController
     {
+        // Robot assigned to gamepad
+        RobotModel robot;
+
         //user input:
-        double nitrovalue = 1.2;    //if more than 1.27 will be not fully useable on max speed
-        double steersensivity = 40; //sensivity of steering L-R
+        double nitroValue = 1.2;    //if more than 1.27 will be not fully useable on max speed
+        double steerSensivity = 40; //sensivity of steering L-R
         double LRdeadbound = 0.05;  //deadbound on steering (dont set to more than 0.2)
         //
         private DispatcherTimer _timer = new DispatcherTimer();
         private float X, LT, RT;
         private ButtonState LB, RB;
 
-        public GamepadHandling()
+        public GamepadController(RobotModel robot)
         {
+            this.robot = robot;
             _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
             _timer.Tick += _timer_Tick;
             _timer.Start();
@@ -59,13 +63,13 @@ namespace robotymobilne_projekt.Manual
             {
                 if (speedR > 0 && speedL > 0)   //case: forward
                 {
-                    speedL = speedL * nitrovalue;
-                    speedR = speedR * nitrovalue;
+                    speedL = speedL * nitroValue;
+                    speedR = speedR * nitroValue;
                 }
                 else if (speedR < 0 && speedL < 0)  //case: backward
                 {
-                    speedL = speedL - (speedL * (nitrovalue - 1));
-                    speedR = speedR - (speedR * (nitrovalue - 1));
+                    speedL = speedL - (speedL * (nitroValue - 1));
+                    speedR = speedR - (speedR * (nitroValue - 1));
                 }
             }
             if (LB == ButtonState.Pressed)  //handbrake
@@ -77,22 +81,22 @@ namespace robotymobilne_projekt.Manual
             //left-right case: going forward
             if (X > 0 && X > LRdeadbound && speedL > 1 && speedR > 1)          //right
             {
-                speedL = speedL + (steersensivity * X);
+                speedL = speedL + (steerSensivity * X);
             }
             else if (X < 0 && X < -LRdeadbound && speedL > 1 && speedR > 1)    //left
             {
-                speedR = speedR - (steersensivity * X);
+                speedR = speedR - (steerSensivity * X);
             }
 
 
             //left-right case: going backward
             if (X > 0 && X > LRdeadbound && speedL < -1 && speedR < -1)          //left
             {
-                speedL = speedL - (steersensivity * X);
+                speedL = speedL - (steerSensivity * X);
             }
             else if (X < 0 && X < -LRdeadbound && speedL < -1 && speedR < -1)    //right
             {
-                speedR = speedR + (steersensivity * X);
+                speedR = speedR + (steerSensivity * X);
             }
 
             //to ensure that max speed isn't exceeded
@@ -126,6 +130,19 @@ namespace robotymobilne_projekt.Manual
         {
             getXinput(out X, out LT, out RT, out LB, out RB);       //take input from gamepad
             string finalFrame = calculateFrame(X, LT, RT, LB, RB);  //calculate final frame
+            execute(finalFrame);
+        }
+
+        public void execute(string action)
+        {
+            try
+            {
+                robot.sendDataFrame(action);
+            }
+            catch(Exception ex)
+            {
+                Logger.getLogger().log("The controller is not attached to any robot", ex);
+            }
         }
     }
 }

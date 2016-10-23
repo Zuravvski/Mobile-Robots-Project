@@ -1,4 +1,5 @@
-﻿using robotymobilne_projekt.Utils;
+﻿using robotymobilne_projekt.Manual;
+using robotymobilne_projekt.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,12 +25,14 @@ namespace robotymobilne_projekt
     {
         private List<RobotModel> robots;
         private readonly Logger logger = Logger.getLogger();
+        IController currentController;
 
         public MainWindow()
         {
             InitializeComponent();
             populateListWithPredefinedRobots();
             scrollViewerLogger.Content = logger;
+            currentController = new KeyboardController(this);
         }
 
         private void populateListWithPredefinedRobots()
@@ -75,14 +78,6 @@ namespace robotymobilne_projekt
             {
                 selectedRobot.disconnect();
                 button_connectdevices.IsEnabled = true;
-            }
-        }
-
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            switch (e.Key)
-            {
-    
             }
         }
     }
