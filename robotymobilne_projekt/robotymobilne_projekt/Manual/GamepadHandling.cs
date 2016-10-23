@@ -16,10 +16,8 @@ namespace robotymobilne_projekt.Manual
         private float X, LT, RT;
         private ButtonState LB, RB;
 
-        public MainWindow()
+        public GamepadHandling()
         {
-            InitializeComponent();
-
             _timer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(10) };
             _timer.Tick += _timer_Tick;
             _timer.Start();

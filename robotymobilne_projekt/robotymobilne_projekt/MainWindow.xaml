@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:robotymobilne_projekt"
         mc:Ignorable="d"
-        Title="Controrello robotello" Height="350" Width="525" KeyDown="Window_KeyDown">
+        Title="Controrello robotello" Height="380" Width="551" KeyDown="Window_KeyDown">
     <Grid>
         <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="347" VerticalAlignment="Top" Width="540" Margin="0,0,-23,-28">
             <TabItem Header="Connection" Height="22" Margin="-2,-2,-2.2,0" VerticalAlignment="Bottom">
@@ -14,7 +14,7 @@
                     <Button x:Name="button_connectdevices" Content="Connect" HorizontalAlignment="Left" Margin="337,253,0,0" VerticalAlignment="Top" Width="75" Click="button_connectdevices_Click"/>
                     <Button x:Name="button_disconnectdevices" Content="Disconnect" HorizontalAlignment="Left" Margin="417,253,0,0" VerticalAlignment="Top" Width="75" Click="button_disconnectdevices_Click"/>
                     <GroupBox x:Name="groupBox" Header="Connection settings:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="94" Width="493"/>
-                    <GroupBox x:Name="groupBox1" Header="Available devices:" HorizontalAlignment="Left" Margin="10,109,0,0" VerticalAlignment="Top" Height="173" Width="493"/>
+                    <GroupBox x:Name="groupBox1" Header="Available devices:" HorizontalAlignment="Left" Margin="10,109,-10,-11" VerticalAlignment="Top" Height="219" Width="534"/>
                     <Grid Margin="10,34,317.8,206">
                         <Label x:Name="label_ipadressconnectionconst" Content="IP adress:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="13,0,0,0"/>
                         <Label x:Name="label_portconnectionconst" Content="Port:" HorizontalAlignment="Left" Margin="38,26,0,0" VerticalAlignment="Top"/>
