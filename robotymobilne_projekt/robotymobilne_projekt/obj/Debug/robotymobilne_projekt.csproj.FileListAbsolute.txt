@@ -56,3 +56,6 @@ E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_pr
 E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.csproj.GenerateResource.Cache
 E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\OpenTK.dll
 E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\OpenTK.xml
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\robotymobilne_projekt.exe.config
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.exe
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.pdb

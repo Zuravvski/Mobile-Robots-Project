@@ -131,6 +131,7 @@ namespace robotymobilne_projekt.Manual
             getXinput(out X, out LT, out RT, out LB, out RB);       //take input from gamepad
             string finalFrame = calculateFrame(X, LT, RT, LB, RB);  //calculate final frame
             execute(finalFrame);
+
         }
 
         public void execute(string action)
