@@ -9,6 +9,38 @@ namespace robotymobilne_projekt
         private Point position;
         private int speed;
         private MOVE_DIRECTION direction;
+        private Manual.IController currentController;
+        private OpenTK.Input.Joystick currentJoystick;
+
+
+
+        public Manual.IController CONTROLLER
+        {
+            get
+            {
+                return currentController;
+            }
+            set
+            {
+                CONTROLLER = value;
+            }
+        }
+
+
+        public OpenTK.Input.Joystick JOYSTICK
+        {
+            get
+            {
+                return currentJoystick;
+            }
+            set
+            {
+                JOYSTICK = value;
+            }
+        }
+
+
+
 
         // Setters and getters
         public Point POSITION

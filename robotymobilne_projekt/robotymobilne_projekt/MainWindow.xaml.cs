@@ -19,6 +19,7 @@ namespace robotymobilne_projekt
             scrollViewerLogger.Content = logger;
             currentController = new KeyboardController(this);
             ((KeyboardController)currentController).ROBOT = robots[0];
+            new AddGamepad();
         }
 
         private void populateListWithPredefinedRobots()

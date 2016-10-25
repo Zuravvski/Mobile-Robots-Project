@@ -59,3 +59,16 @@ E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\OpenTK.xml
 C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\robotymobilne_projekt.exe.config
 C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.exe
 C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.pdb
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\robotymobilne_projekt.exe
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\robotymobilne_projekt.pdb
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\OpenTK.dll
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\bin\Debug\OpenTK.xml
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.csprojResolveAssemblyReference.cache
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\MainWindow.g.cs
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\App.g.cs
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt_MarkupCompile.cache
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt_MarkupCompile.lref
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\MainWindow.baml
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.g.resources
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.Properties.Resources.resources
+C:\Users\Adam\Documents\Roboty-Mobilne\robotymobilne_projekt\robotymobilne_projekt\obj\Debug\robotymobilne_projekt.csproj.GenerateResource.Cache
