@@ -1,36 +1,30 @@
-﻿using robotymobilne_projekt.Utils;
+﻿using MobileRobots.Utils;
+using robotymobilne_projekt.Devices.Network;
 using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace robotymobilne_projekt
+namespace MobileRobots
 {
     abstract class RemoteDevice
     {
-        protected string name;
+        protected string deviceName;
         protected string ip;
         protected int port;
-        protected Socket socket;
-        protected Thread senderThread;
-        protected Thread receiverThread;
-        protected ManualResetEvent conditionVariable;
-        protected object _lock;
+        protected TcpClient tcpClient;
+        protected NetworkStream networkStream;
 
         // setters and getters
         public string NAME
         {
             get
             {
-                return name;
+                return deviceName;
             }
             set
             {
-                name = value;
+                deviceName = value;
             }
         }
         public string IP
@@ -55,50 +49,143 @@ namespace robotymobilne_projekt
                 port = value;
             }
         }
-        public Socket SOCKET
+        public TcpClient TCPCLIENT
         {
             get
             {
-                return socket;
+                return tcpClient;
             }
         }
-
-        // Managing data received from socket
-        protected ConcurrentQueue<byte[]> sendBuffer;
-        protected ConcurrentQueue<byte[]> receiveBuffer;
 
         public RemoteDevice(string deviceName, string ip, int port)
         {
-            this.name = deviceName;
+            this.deviceName = deviceName;
+
+            // Network settings
             this.ip = ip;
             this.port = port;
-            socket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-            sendBuffer = new ConcurrentQueue<byte[]>();
-            receiveBuffer = new ConcurrentQueue<byte[]>();
-            senderThread = new Thread(sender);
-            receiverThread = new Thread(receiver);
-            _lock = new object();
-            conditionVariable = new ManualResetEvent(false);
+            tcpClient = new TcpClient(AddressFamily.InterNetwork);
         }
 
-        // Abstract methods
-        public abstract bool connect();
-        public abstract void disconnect();
-        public abstract void receiver();
-        public abstract void sender();
+        public virtual bool connect()
+        {
+            Logger.getLogger().log(string.Format("Connecting with device: {0}...", this));
+            tcpClient.BeginConnect(ip, port, new AsyncCallback(connectCallback), tcpClient);
+            return tcpClient.Connected;
+        }
 
-        // Implemented methods
-        public void sendDataFrame(string data)
+        public virtual void connectCallback(IAsyncResult result)
         {
             try
             {
-                byte[] sendbyte = System.Text.Encoding.ASCII.GetBytes("[" + data + "]");
-                sendBuffer.Enqueue(sendbyte);
-                conditionVariable.Set();
+                TcpClient client = (TcpClient)result.AsyncState;
+                tcpClient.EndConnect(result);
+               
+                if(tcpClient.Connected)
+                {
+                    // run all 
+                    networkStream = tcpClient.GetStream();
+                    receiveData();
+                }
+
+                Logger.getLogger().log(string.Format("Connected to {0}.", this));
             }
             catch(Exception ex)
             {
-                Logger.getLogger().log("Couldn't send data to device: " + name, ex);
+                Logger.getLogger().log(string.Format("Could not connect to {0}.", this), ex);
+            }
+        }
+
+        public virtual void disconnect()
+        {
+            try
+            {
+                tcpClient.GetStream().Close();
+                tcpClient.Close();
+                tcpClient = new TcpClient(AddressFamily.InterNetwork);
+
+                Logger.getLogger().log(string.Format("{0} disconnected.", this));
+            }
+            catch (Exception ex)
+            {
+                Logger.getLogger().log(string.Format("An error occurred while disconnecting with device: {0}.", this), ex);
+            }
+        }
+
+        // Adapt to generic Data frame objects
+        public virtual void sendData(string data)
+        {
+            try
+            {
+                if (null != networkStream && tcpClient.Connected)
+                {
+                    RobotFrame oFrame = new RobotFrame(data);
+                    string stingFrame = oFrame.getString();
+                    byte[] frameToSend = oFrame.getFrame();
+                    networkStream.BeginWrite(frameToSend, 0, frameToSend.Length, new AsyncCallback(sendCallback), tcpClient);
+                }
+                else
+                {
+                    disconnect();
+                }
+            }
+            catch(Exception ex)
+            {
+                Logger.getLogger().log("Could not send data to device: " + deviceName, ex);
+            }
+        }
+
+        protected virtual void sendCallback(IAsyncResult result)
+        {
+            try
+            {
+                TcpClient socket = (TcpClient)result.AsyncState;
+                networkStream.EndWrite(result);
+            }
+            catch(Exception ex)
+            {
+                Logger.getLogger().log("Could not send data to device: " + deviceName, ex);
+            }
+        }
+
+        protected virtual void receiveData()
+        {
+            try
+            {
+                byte[] receiveBuffer = new byte[28];
+                networkStream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, new AsyncCallback(receiveCallback), tcpClient);
+            }
+            catch(Exception)
+            {
+                Logger.getLogger().log("Lost connection with remote device.");
+            }
+        }
+
+        protected virtual void receiveCallback(IAsyncResult result)
+        {
+            try
+            {
+                int bytesRead = networkStream.EndRead(result);
+                Thread.Sleep(5000);
+
+                // Start another loop
+                if (bytesRead != 0)
+                {
+                    // TODO: Update model (most probably wrap it in data frame to receive fields)
+                    receiveData();
+                }
+                else
+                {
+                    // Handle disconnection
+                    disconnect();
+                    return;
+                }
+            }
+            catch (Exception)
+            {
+                // Implement countdown signal event to handle 3 reconnections then close
+                Logger.getLogger().log("Lost connection with remote device.");
+                disconnect(); // current solution
             }
         }
     }

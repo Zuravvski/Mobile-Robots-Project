@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
-namespace robotymobilne_projekt.Utils
+namespace MobileRobots.Utils
 {
     class Logger : TextBlock
     {
@@ -38,15 +33,18 @@ namespace robotymobilne_projekt.Utils
         {
             try
             {
-                // Writing log in log console
-                Text += '[' + generateTimeStamp() + "] " + message + '\n';
-                ((ScrollViewer)Parent).ScrollToBottom();
+                Dispatcher.BeginInvoke(new Action<string>((logToAdd) =>
+                {
+                    // Writing log in log console
+                    Text += '[' + generateTimeStamp() + "] " + message + '\n';
+                    ((ScrollViewer)Parent).ScrollToBottom();
+                }), new Object[] { message });
 
                 // Writing log to file
                 fileWriter.WriteLine('[' + generateTimeStamp() + "] " + message);
                 fileWriter.Flush();
             }
-            catch(Exception)
+            catch (Exception)
             {
                 fileWriter.Close();
             }
@@ -66,10 +64,13 @@ namespace robotymobilne_projekt.Utils
         {
             try
             {
-                // Writing log in log console
-                Text += '[' + generateTimeStamp() + "] " + message + '\n' + ex.Message + '\n';
-                ((ScrollViewer)Parent).ScrollToBottom();
-
+                Dispatcher.BeginInvoke(new Action<string, Exception>((logToAdd, exceptionToNote) =>
+                {
+                    // Writing log in log console
+                    Text += '[' + generateTimeStamp() + "] " + message + '\n' + ex.Message + '\n';
+                    ((ScrollViewer)Parent).ScrollToBottom();
+                }), new Object[] { message, ex });
+                
                 // Writing log to file
                 fileWriter.WriteLine('[' + generateTimeStamp() + "]");
                 fileWriter.WriteLine(ex + " " + ex.StackTrace);
@@ -78,6 +79,7 @@ namespace robotymobilne_projekt.Utils
             }
             catch(Exception)
             {
+                MessageBox.Show("An error has occured during writing log to file. Closing file.", "IO Exception");
                 fileWriter.Close();
             }
         }

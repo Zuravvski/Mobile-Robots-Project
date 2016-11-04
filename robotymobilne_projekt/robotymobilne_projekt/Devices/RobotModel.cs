@@ -1,46 +1,24 @@
-﻿using robotymobilne_projekt.Utils;
+﻿using MobileRobots.Manual;
+using MobileRobots.Utils;
+using robotymobilne_projekt.Devices.Network;
 using System;
+using System.Threading;
 using System.Windows;
 
-namespace robotymobilne_projekt
+namespace MobileRobots
 {
     class RobotModel : RemoteDevice
     {
+        // Robot data
         private Point position;
         private int speed;
+        private int battery;
+        private int status;
         private MOVE_DIRECTION direction;
-        private Manual.IController currentController;
-        private OpenTK.Input.Joystick currentJoystick;
 
-
-
-        public Manual.IController CONTROLLER
-        {
-            get
-            {
-                return currentController;
-            }
-            set
-            {
-                CONTROLLER = value;
-            }
-        }
-
-
-        public OpenTK.Input.Joystick JOYSTICK
-        {
-            get
-            {
-                return currentJoystick;
-            }
-            set
-            {
-                JOYSTICK = value;
-            }
-        }
-
-
-
+        // Utilities
+        private AbstractController controller;
+        private Thread controllerThread;
 
         // Setters and getters
         public Point POSITION
@@ -65,6 +43,17 @@ namespace robotymobilne_projekt
                 speed = value;
             }
         }
+        public int BATTERY
+        {
+            get
+            {
+                return battery;
+            }
+            set
+            {
+                battery = value;
+            }
+        }
         public MOVE_DIRECTION DIRECTION
         {
             get
@@ -76,80 +65,73 @@ namespace robotymobilne_projekt
                 direction = value;
             }
         }
+        public AbstractController CONTROLLER
+        {
+            get
+            {
+                return controller;
+            }
+            set
+            {
+                controller = value;
+            }
+        }
+        public int STATUS
+        {
+            get
+            {
+                return status;
+            }
+            set
+            {
+                status = value;
+            }
+        }
 
         public RobotModel(string name, string ip, int port) : base(name, ip, port)
         {
             direction = MOVE_DIRECTION.IDLE;
-        }
-
-        public override bool connect()
-        {
-            try
-            {
-                Logger.getLogger().log(string.Format("Connecting with robot with {0}...", this));
-                socket.Connect(ip, port);
-                receiverThread.Start();
-                senderThread.Start();        
-            }
-            catch(Exception)
-            {
-                Logger.getLogger().log(string.Format("Cannot connect to robot with {0}.", this));
-            }
-            
-            return socket.Connected;
-        }
-
-        public override void disconnect()
-        {
-            try
-            {
-                socket.Disconnect(true);
-            }
-            catch(Exception)
-            {
-                Logger.getLogger().log(string.Format("An error occurred while disconnecting robot with {0}.", this));
-            }
-        }
-
-        public override void receiver()
-        {
-            byte[] receivedFrame = new byte[28];
-            socket.Receive(receivedFrame);
-            receiveBuffer.Enqueue(receivedFrame);
+            controllerThread = new Thread(handleController);
         }
 
         public override string ToString()
         {
-            return "ID: " + name;
+            return "ID: " + deviceName;
         }
 
-        public bool isConnected()
-        {
-            return socket.Connected;
-        }
-
-        public override void sender()
+        public void handleController()
         {
             while (true)
             {
-                if(sendBuffer.IsEmpty)
+                string dataFrame = controller.execute();
+                if (null != dataFrame && tcpClient.Connected)
                 {
-                    conditionVariable.Reset();
+                    sendData(dataFrame);
                 }
-                conditionVariable.WaitOne();
-                lock (_lock)
-                {
-                    try
-                    {
-                        byte[] frame;
-                        sendBuffer.TryDequeue(out frame);
-                        socket.Send(frame);
-                    }
-                    catch (Exception ex)
-                    {
-                        Logger.getLogger().log("Could not send data frame to robot with ID: " + this, ex);
-                    }
-                }
+                Thread.Sleep(controller.LATENCY);
+            }
+        }
+
+        public void run()
+        {
+            controllerThread.Start();
+        }
+
+        protected override void receiveData()
+        {
+            try
+            {
+                byte[] receiveBuffer = new byte[28];
+                networkStream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, new AsyncCallback(receiveCallback), tcpClient);
+                RobotFrame oFrame = new RobotFrame(receiveBuffer);
+                oFrame.parseFrame(this);
+
+                Logger.getLogger().log(string.Format("Battery state from {0}: {1}mV", this, battery.ToString()));
+                Logger.getLogger().log(string.Format("Robot {0} status is: {1}", this, status.ToString()));
+            }
+            catch (Exception)
+            {
+                Logger.getLogger().log(string.Format("Lost connection with {0}", this));
             }
         }
 

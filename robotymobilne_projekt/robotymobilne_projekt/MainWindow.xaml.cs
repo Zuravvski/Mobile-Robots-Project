@@ -1,38 +1,19 @@
-﻿using robotymobilne_projekt.Manual;
-using robotymobilne_projekt.Utils;
-using System.Collections.Generic;
+﻿using MobileRobots.Manual;
+using MobileRobots.Utils;
+using OpenTK.Input;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace robotymobilne_projekt
+namespace MobileRobots
 {
     public partial class MainWindow : Window
     {
-        private List<RobotModel> robots;
         private readonly Logger logger = Logger.getLogger();
-        IController currentController;
 
         public MainWindow()
         {
             InitializeComponent();
-            populateListWithPredefinedRobots();
             scrollViewerLogger.Content = logger;
-            currentController = new KeyboardController(this);
-            ((KeyboardController)currentController).ROBOT = robots[0];
-            new AddGamepad();
-        }
-
-        private void populateListWithPredefinedRobots()
-        {
-            robots = new List<RobotModel>()
-            {
-                new RobotModel("30", "192.168.2.30", 8000),
-                new RobotModel("31", "192.168.2.31", 8000),
-                new RobotModel("32", "192.168.2.32", 8000),
-                new RobotModel("33", "192.168.2.33", 8000),
-                new RobotModel("34", "192.168.2.34", 8000),
-            };
-            list_availabledevices.ItemsSource = robots;
         }
 
         private void list_availabledevices_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -47,30 +28,35 @@ namespace robotymobilne_projekt
 
         private void button_connectdevices_Click(object sender, RoutedEventArgs e)
         {
-            RobotModel selectedRobot = (RobotModel)list_availabledevices.SelectedItem;
-            if (null != selectedRobot)
-            {
-                bool result = selectedRobot.connect();
-                if (result)
-                {
-                    button_connectdevices.IsEnabled = false;
-                }
-            }
+            Logger.getLogger().log("Connecting to robotellas");
+
+            // Robot 1
+            RobotModel robot1 = new RobotModel("Adam", "192.168.2.30", 8000);
+            robot1.CONTROLLER = new GamepadController(0);
+            robot1.connect();
+            robot1.run();
+
+            // Robot 2
+            RobotModel robot2 = new RobotModel("Bartek", "192.168.2.31", 8000);
+            robot2.CONTROLLER = new GamepadController(1);
+            robot2.connect();
+            robot2.run();
+
+            // Robot 3
+            RobotModel robot3 = new RobotModel("Michal", "192.168.2.33", 8000);
+            KeyboardState key = Keyboard.GetState();
+            robot3.CONTROLLER = new KeyboardController(key);
+            robot3.connect();
+            robot3.run();
         }
 
         private void button_disconnectdevices_Click(object sender, RoutedEventArgs e)
         {
             RobotModel selectedRobot = (RobotModel)list_availabledevices.SelectedItem;
-            if (null != selectedRobot && selectedRobot.isConnected())
+            if (null != selectedRobot && selectedRobot.TCPCLIENT.Connected)
             {
                 selectedRobot.disconnect();
-                button_connectdevices.IsEnabled = true;
             }
-        }
-
-        private void button_send_Click(object sender, RoutedEventArgs e)
-        {
-            robots[0].sendDataFrame("000000");
         }
     }
 }

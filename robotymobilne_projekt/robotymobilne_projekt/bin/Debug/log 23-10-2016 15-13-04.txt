@@ -1,8 +1,0 @@
-[23-10-2016 15:13:24]
-System.Threading.SynchronizationLockException: Object synchronization method was called from an unsynchronized block of code.
-   at System.Threading.Monitor.ObjPulse(Object obj)
-   at System.Threading.Monitor.Pulse(Object obj)
-   at robotymobilne_projekt.RemoteDevice.sendDataFrame(String data) in E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\Devices\RemoteDevice.cs:line 93    at System.Threading.Monitor.ObjPulse(Object obj)
-   at System.Threading.Monitor.Pulse(Object obj)
-   at robotymobilne_projekt.RemoteDevice.sendDataFrame(String data) in E:\G\Repo\robotymobilne_projekt\robotymobilne_projekt\Devices\RemoteDevice.cs:line 93
-
