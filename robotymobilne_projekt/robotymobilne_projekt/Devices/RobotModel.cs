@@ -1,7 +1,10 @@
 ﻿using MobileRobots.Manual;
-using MobileRobots.Utils;
+using MobileRobots.Utils.AppLogger;
 using robotymobilne_projekt.Devices.Network;
+using robotymobilne_projekt.Settings;
+using robotymobilne_projekt.Utils.AppLogger;
 using System;
+using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 
@@ -11,10 +14,11 @@ namespace MobileRobots
     {
         // Robot data
         private Point position;
-        private int speed;
         private int battery;
         private int status;
-        private MOVE_DIRECTION direction;
+        private double speedL;
+        private double speedR;
+        private RobotSettings robotSettings;
 
         // Utilities
         private AbstractController controller;
@@ -32,17 +36,6 @@ namespace MobileRobots
                 position = value;
             }
         }
-        public int SPEED
-        {
-            get
-            {
-                return speed;
-            }
-            set
-            {
-                speed = value;
-            }
-        }
         public int BATTERY
         {
             get
@@ -52,17 +45,6 @@ namespace MobileRobots
             set
             {
                 battery = value;
-            }
-        }
-        public MOVE_DIRECTION DIRECTION
-        {
-            get
-            {
-                return direction;
-            }
-            set
-            {
-                direction = value;
             }
         }
         public AbstractController CONTROLLER
@@ -87,11 +69,47 @@ namespace MobileRobots
                 status = value;
             }
         }
+        public double SPEED_L
+        {
+            get
+            {
+                return speedL;
+            }
+            set
+            {
+                if (value > 127)
+                {
+                    speedL = 127;
+                }
+                else
+                {
+                    speedL = 127;
+                }
+            }
+        }
+        public double SPEED_R
+        {
+            get
+            {
+                return speedR;
+            }
+            set
+            {
+                if (value > 127)
+                {
+                    speedR = 127;
+                }
+                else
+                {
+                    speedL = value;
+                }
+            }
+        }
 
         public RobotModel(string name, string ip, int port) : base(name, ip, port)
         {
-            direction = MOVE_DIRECTION.IDLE;
             controllerThread = new Thread(handleController);
+            robotSettings = RobotSettings.INSTANCE;
         }
 
         public override string ToString()
@@ -108,7 +126,7 @@ namespace MobileRobots
                 {
                     sendData(dataFrame);
                 }
-                Thread.Sleep(controller.LATENCY);
+                Thread.Sleep(ControllerSettings.INSTANCE.LATENCY);
             }
         }
 
@@ -126,15 +144,13 @@ namespace MobileRobots
                 RobotFrame oFrame = new RobotFrame(receiveBuffer);
                 oFrame.parseFrame(this);
 
-                Logger.getLogger().log(string.Format("Battery state from {0}: {1}mV", this, battery.ToString()));
-                Logger.getLogger().log(string.Format("Robot {0} status is: {1}", this, status.ToString()));
+                Logger.getLogger().log(LogLevel.INFO, string.Format("Battery state from {0}: {1}mV", this, battery.ToString()));
+                Logger.getLogger().log(LogLevel.INFO, string.Format("Robot {0} status is: {1}", this, status.ToString()));
             }
             catch (Exception)
             {
-                Logger.getLogger().log(string.Format("Lost connection with {0}", this));
+                Logger.getLogger().log(LogLevel.WARNING, string.Format("Lost connection with {0}", this));
             }
         }
-
-        public enum MOVE_DIRECTION { IDLE, FORWARD, BACKWARD };
     }
 }

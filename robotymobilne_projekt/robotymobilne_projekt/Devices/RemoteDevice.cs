@@ -1,9 +1,9 @@
-﻿using MobileRobots.Utils;
+﻿using MobileRobots.Utils.AppLogger;
 using robotymobilne_projekt.Devices.Network;
+using robotymobilne_projekt.Utils.AppLogger;
 using System;
 using System.Net.Sockets;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace MobileRobots
 {
@@ -69,7 +69,7 @@ namespace MobileRobots
 
         public virtual bool connect()
         {
-            Logger.getLogger().log(string.Format("Connecting with device: {0}...", this));
+            Logger.getLogger().log(LogLevel.INFO, string.Format("Connecting with device: {0}...", this));
             tcpClient.BeginConnect(ip, port, new AsyncCallback(connectCallback), tcpClient);
             return tcpClient.Connected;
         }
@@ -88,11 +88,11 @@ namespace MobileRobots
                     receiveData();
                 }
 
-                Logger.getLogger().log(string.Format("Connected to {0}.", this));
+                Logger.getLogger().log(LogLevel.INFO, string.Format("Connected to {0}.", this));
             }
             catch(Exception ex)
             {
-                Logger.getLogger().log(string.Format("Could not connect to {0}.", this), ex);
+                Logger.getLogger().log(LogLevel.WARNING, string.Format("Could not connect to {0}.", this), ex);
             }
         }
 
@@ -104,11 +104,11 @@ namespace MobileRobots
                 tcpClient.Close();
                 tcpClient = new TcpClient(AddressFamily.InterNetwork);
 
-                Logger.getLogger().log(string.Format("{0} disconnected.", this));
+                Logger.getLogger().log(LogLevel.INFO, string.Format("{0} disconnected.", this));
             }
             catch (Exception ex)
             {
-                Logger.getLogger().log(string.Format("An error occurred while disconnecting with device: {0}.", this), ex);
+                Logger.getLogger().log(LogLevel.WARNING, string.Format("An error occurred while disconnecting with device: {0}.", this), ex);
             }
         }
 
@@ -131,7 +131,7 @@ namespace MobileRobots
             }
             catch(Exception ex)
             {
-                Logger.getLogger().log("Could not send data to device: " + deviceName, ex);
+                Logger.getLogger().log(LogLevel.WARNING, "Could not send data to device: " + deviceName, ex);
             }
         }
 
@@ -144,7 +144,7 @@ namespace MobileRobots
             }
             catch(Exception ex)
             {
-                Logger.getLogger().log("Could not send data to device: " + deviceName, ex);
+                Logger.getLogger().log(LogLevel.WARNING, "Could not send data to device: " + deviceName, ex);
             }
         }
 
@@ -157,7 +157,7 @@ namespace MobileRobots
             }
             catch(Exception)
             {
-                Logger.getLogger().log("Lost connection with remote device.");
+                Logger.getLogger().log(LogLevel.WARNING, "Lost connection with remote device.");
             }
         }
 
@@ -184,7 +184,7 @@ namespace MobileRobots
             catch (Exception)
             {
                 // Implement countdown signal event to handle 3 reconnections then close
-                Logger.getLogger().log("Lost connection with remote device.");
+                Logger.getLogger().log(LogLevel.WARNING, "Lost connection with remote device.");
                 disconnect(); // current solution
             }
         }

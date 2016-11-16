@@ -1,73 +1,68 @@
-﻿namespace MobileRobots.Manual
+﻿using robotymobilne_projekt.Settings;
+
+namespace MobileRobots.Manual
 {
-    public abstract class AbstractController
+    abstract class AbstractController
     {
-        protected int latency;
-        protected double speedL, speedR;
-        protected bool nitro;
-        protected bool handbrake;
+        protected ControllerSettings controllerSettings;
+        protected RobotSettings robotSettings;
+        protected RobotModel robot;
+        protected bool nitroPressed;
+        protected bool handbrakePressed;
+
+        public RobotModel ROBOT
+        {
+            get
+            {
+                return robot;
+            }
+            set
+            {
+                robot = value;
+            }
+        }
 
         /// <summary>
         /// Specifies the time controller is being polled for data.
         /// </summary>
-        public int LATENCY
-        {
-            get
-            {
-                return latency;
-            }
-            set
-            {
-                latency = value;
-            }
-        }
-
         public AbstractController()
         {
-            latency = 100; // default value of 20 ms
+            controllerSettings = ControllerSettings.INSTANCE;
+            robotSettings = RobotSettings.INSTANCE;
         }
 
-        protected void CalculateFinalSpeed(double speedL, double speedR, double steerL, double steerR, bool nitro, bool handbrake,
-            double maxSpeed, double steeringSensivity, double nitroValue)
+        protected void CalculateFinalSpeed(double motorL, double motorR, double steerL, double steerR, bool nitro, bool handbrake)
         {
-            speedL *= maxSpeed;
-            speedR *= maxSpeed;
+            motorL *= robotSettings.MAX_SPEED;
+            motorR *= robotSettings.MAX_SPEED;
 
-            steerL *= steeringSensivity;
-            steerR *= steeringSensivity;
-
-            if (nitro)
-            {
-                speedL *= nitroValue;
-                speedR *= nitroValue;
-            }
+            steerL *= robotSettings.STEERING_SENSIVITY;
+            steerR *= robotSettings.STEERING_SENSIVITY;
 
             if (handbrake)
             {
-                speedL = 0;
-                speedR = 0;
+                motorL = 0;
+                motorR = 0;
             }
-
-            this.speedL = speedL + steerR;
-            this.speedR = speedR + steerL;
-
-            if (this.speedR > 127)
+            else
             {
-                this.speedR = 127;
-            }
+                if (nitro)
+                {
+                    motorL *= robotSettings.NITRO_VALUE;
+                    motorR *= robotSettings.NITRO_VALUE;
+                }
 
-            if (this.speedL > 127)
-            {
-                this.speedL = 127;
+                robot.SPEED_L = motorL + steerR;
+                robot.SPEED_R = motorR + steerL;
             }
         }
 
-        public string CalculateFrame(bool useLights, double speedL, double speedR)
+        public string CalculateFrame(double speedL, double speedR)
         {
             //set get robot
             string frameLights = "00", frameL = "", frameR = "";
 
-            if (useLights)
+            if (robotSettings.USE_LIGHTS)
             {
                 if (speedL == speedR)
                 {

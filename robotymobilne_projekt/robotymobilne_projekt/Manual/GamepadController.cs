@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OpenTK.Input;
 
 namespace MobileRobots.Manual
@@ -12,6 +8,14 @@ namespace MobileRobots.Manual
         private int index;
         private double RT, LT, RX, LX;
         private ButtonState A, B;
+
+        public int GAMEPAD_INDEX
+        {
+            get
+            {
+                return index;
+            }
+        }
 
         public GamepadController(int index) : base()
         {
@@ -55,18 +59,18 @@ namespace MobileRobots.Manual
 
             if (A == ButtonState.Pressed)   //nitro
             {
-                nitro = true;
+                nitroPressed = true;
             }
 
             if (B == ButtonState.Pressed)   //brake
             {
-                handbrake = true;
+                handbrakePressed = true;
             }
 
-            CalculateFinalSpeed(speedL, speedR, steerL, steerR, nitro, handbrake, 100, 35, 1.2);
+            CalculateFinalSpeed(speedL, speedR, steerL, steerR, nitroPressed, handbrakePressed);
 
-            nitro = false;
-            handbrake = false;
+            nitroPressed = false;
+            handbrakePressed = false;
         }
 
         // XBox Input = Xinput
@@ -89,7 +93,23 @@ namespace MobileRobots.Manual
         {
             getXinput();
             calculateSpeed();
-            return CalculateFrame(false, speedL, speedR);
+            return CalculateFrame(robot.SPEED_L, robot.SPEED_R);
+        }
+
+        public override bool Equals(object obj)
+        {
+            // TODO: consider using typeof in case it doesn't work
+            return index == ((GamepadController)obj).GAMEPAD_INDEX;
+        }
+
+        public override int GetHashCode()
+        {
+            return GAMEPAD_INDEX.GetHashCode();
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Gamepad {0}", index+1);
         }
     }
 }

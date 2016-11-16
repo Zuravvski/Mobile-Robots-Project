@@ -35,6 +35,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="FirstFloor.ModernUI">
+      <HintPath>C:\Users\Welcome to hell\Documents\Visual Studio 2015\Projects\ModernUINavigationApp1\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
       <Private>True</Private>
@@ -63,13 +66,81 @@
     <Compile Include="Devices\Network utils\RobotFrame.cs" />
     <Compile Include="Devices\RemoteDevice.cs" />
     <Compile Include="Devices\RobotModel.cs" />
+    <Compile Include="GUI\CoverPanel.xaml.cs">
+      <DependentUpon>CoverPanel.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Pages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Pages\Manual\ManualView.xaml.cs">
+      <DependentUpon>ManualView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Pages\SettingsPage.xaml.cs">
+      <DependentUpon>SettingsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Pages\About.xaml.cs">
+      <DependentUpon>About.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Pages\Settings\Appearance.xaml.cs">
+      <DependentUpon>Appearance.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Pages\Settings\AppearanceViewModel.cs" />
+    <Compile Include="GUI\ViewModels\ManualViewModel.cs" />
+    <Compile Include="GUI\ViewModels\RobotViewModel.cs" />
+    <Compile Include="GUI\Views\ControllerSettings.xaml.cs">
+      <DependentUpon>ControllerSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Views\TargetDeviceSettings.xaml.cs">
+      <DependentUpon>TargetDeviceSettings.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Views\UserInterface.xaml.cs">
+      <DependentUpon>UserInterface.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Manual\GamepadController.cs" />
     <Compile Include="Manual\AbstractController.cs" />
-    <Compile Include="Manual\Hub.cs" />
     <Compile Include="Manual\KeyboardController.cs" />
     <Compile Include="Manual\User.cs" />
-    <Compile Include="Utils\Logger.cs" />
-    <Page Include="MainWindow.xaml">
+    <Compile Include="Settings\ControllerSettings.cs" />
+    <Compile Include="Settings\RobotSettings.cs" />
+    <Compile Include="Utils\AppLogger\ErrorLevel.cs" />
+    <Compile Include="Utils\AppLogger\InfoLevel.cs" />
+    <Compile Include="Utils\AppLogger\LogLevel.cs" />
+    <Compile Include="Utils\AppLogger\Logger.cs" />
+    <Compile Include="Utils\Timestamp.cs" />
+    <Compile Include="Utils\AppLogger\WarningLevel.cs" />
+    <Page Include="GUI\CoverPanel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Pages\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Pages\Manual\ManualView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Pages\SettingsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Pages\About.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Pages\Settings\Appearance.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Views\ControllerSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Views\TargetDeviceSettings.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -77,10 +148,14 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="GUI\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="GUI\Views\UserInterface.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -112,9 +187,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Automatic\" />
-    <Folder Include="GUI\ViewModels\" />
-    <Folder Include="GUI\Views\" />
-    <Folder Include="Settings\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
