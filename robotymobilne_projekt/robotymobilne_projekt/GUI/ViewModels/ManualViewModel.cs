@@ -32,7 +32,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
                         if (USERS.Count < 4)
                         {
                             UserInterface newUser = new UserInterface();
-                            newUser.DataContext = new RobotViewModel();
+                            newUser.DataContext = new RobotViewModel(this);
                             USERS.Add(newUser);
                             manageLayout();
                         }
@@ -47,9 +47,16 @@ namespace robotymobilne_projekt.GUI.ViewModels
             {
                 if(null == removeUser)
                 {
-                    removeUser = new DelegateCommand<UserInterface>(delegate (UserInterface user)
+                    removeUser = new DelegateCommand<RobotViewModel>(delegate (RobotViewModel userVM)
                     {
-                        USERS.Remove(user);
+                        for(int i = 0; i < USERS.Count; i++)
+                        {
+                            if(USERS[i].DataContext.Equals(userVM))
+                            {
+                                USERS.Remove(USERS[i]);
+                                manageLayout();
+                            }
+                        }
                     });
                 }
                 return removeUser;

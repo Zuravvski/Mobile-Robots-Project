@@ -11,6 +11,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
         private ICommand connect;
         private ICommand disconnect;
         private ICommand delete;
+        private ManualViewModel context;
 
         #region Setters & Getters
         public List<RobotModel> ROBOTS
@@ -87,19 +88,21 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 {
                     delete = new DelegateCommand(delegate ()
                     {
-                        if (null != ROBOT)
+                        if (null != ROBOT && ROBOT.CONNECTED)
                         {
                             ROBOT.disconnect();
                         }
+                        context.RemoveUser.Execute(this);
                     });
                 }
-                return connect;
+                return delete;
             }
         }
         #endregion
 
-        public RobotViewModel()
+        public RobotViewModel(ManualViewModel context)
         {
+            this.context = context;
             ROBOT = new RobotModel("Test", "127.0.0.1", 23);
         }
     }

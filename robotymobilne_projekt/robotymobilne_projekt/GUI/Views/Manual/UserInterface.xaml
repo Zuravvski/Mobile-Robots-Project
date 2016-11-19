@@ -30,7 +30,7 @@
         <Label x:Name="label1" Content="SpeedR" HorizontalAlignment="Left" Margin="254,20,0,0" VerticalAlignment="Top" FontSize="10" Height="24" Width="43"/>
         <Button x:Name="buttonConnect" Content="Connect" HorizontalAlignment="Left" Margin="96,245,0,0" VerticalAlignment="Top" Width="72" FontSize="8" Command="{Binding Connect}"/>
         <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Margin="173,245,0,0" VerticalAlignment="Top" Width="72" FontSize="8" Command="{Binding Disconnect}" IsEnabled="{Binding Path=CONNECTED}"/>
-        <Button x:Name="buttonRemove" Content="-" HorizontalAlignment="Left" Margin="250,245,0,0" VerticalAlignment="Top" Width="40" FontSize="8" Background="Red"/>
+        <Button x:Name="buttonRemove" Content="-" HorizontalAlignment="Left" Margin="250,245,0,0" VerticalAlignment="Top" Width="40" FontSize="8" Background="Red" Command="{Binding Delete}"/>
         <Label x:Name="labelStatus" Content="{Binding Path=STATUS, Converter={StaticResource statusConverter}}" HorizontalAlignment="Left" Margin="10,245,0,0" VerticalAlignment="Top" Height="21" Width="81" FontSize="10" DataContext="{Binding Path=ROBOT}" HorizontalContentAlignment="Center" Background="#FF09573B" ToolTip="Robot status" VerticalContentAlignment="Center" Foreground="White"/>
     </Grid>
 </UserControl>
