@@ -69,7 +69,7 @@ namespace robotymobilne_projekt.Settings
             useLights = false;
             maxSpeed = 80;
             nitroValue = 1.2;
-            steeringSensivity = 1.3;
+            steeringSensivity = 35;
         }
 
         public static RobotSettings INSTANCE

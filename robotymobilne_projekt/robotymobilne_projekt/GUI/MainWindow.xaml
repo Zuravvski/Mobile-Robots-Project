@@ -4,42 +4,42 @@
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         Title="Pololu 3π robot controller" IsTitleVisible="True"
         LogoData=""
-        ContentSource="/GUI/Pages/HomePage.xaml">
+        ContentSource="/GUI/Views/HomePage.xaml">
 
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="Home page">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="let's get started" Source="/GUI/Pages/HomePage.xaml" />
+                <mui:Link DisplayName="let's get started" Source="/GUI/Views/HomePage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="Manual">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName = "" Source = "/GUI/Pages/Manual/ManualView.xaml"/>
+                <mui:Link DisplayName = "" Source = "/GUI/Views/Manual/ManualView.xaml"/>
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
 
         <mui:LinkGroup DisplayName="Automatic">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="destination point" Source="/GUI/Pages/HomePage.xaml" />
-                <mui:Link DisplayName="Click &amp; go" Source="/GUI/Pages/HomePage.xaml" />
-                <mui:Link DisplayName="Mouse follow" Source="/GUI/Pages/HomePage.xaml" />
-                <mui:Link DisplayName="Line follow" Source="/GUI/Pages/HomePage.xaml" />
+                <mui:Link DisplayName="destination point" Source="/GUI/Views/HomePage.xaml" />
+                <mui:Link DisplayName="Click &amp; go" Source="/GUI/Views/HomePage.xaml" />
+                <mui:Link DisplayName="Mouse follow" Source="/GUI/Views/HomePage.xaml" />
+                <mui:Link DisplayName="Line follow" Source="/GUI/Views/HomePage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="Debugging">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="let's get started" Source="/GUI/Pages/HomePage.xaml" />
+                <mui:Link DisplayName="let's get started" Source="/GUI/Views/HomePage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="settings" GroupKey="settings">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="software" Source="/GUI/Pages/SettingsPage.xaml" />
+                <mui:Link DisplayName="software" Source="/GUI/Views/Settings/SettingsPage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>
     
     <mui:ModernWindow.TitleLinks>
-        <mui:Link DisplayName="settings" Source="/GUI/Pages/SettingsPage.xaml" />
+        <mui:Link DisplayName="settings" Source="/GUI/Views/Settings/SettingsPage.xaml" />
         <mui:Link DisplayName="help" Source="https://github.com/Zuravvski/Roboty-Mobilne" />
     </mui:ModernWindow.TitleLinks>
 </mui:ModernWindow>

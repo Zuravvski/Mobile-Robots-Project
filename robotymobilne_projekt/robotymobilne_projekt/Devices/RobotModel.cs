@@ -10,12 +10,12 @@ using System.Windows;
 
 namespace MobileRobots
 {
-    class RobotModel : RemoteDevice
+    class RobotModel : RemoteDevice, INotifyPropertyChanged
     {
         // Robot data
         private Point position;
         private int battery;
-        private int status;
+        private statusE status;
         private double speedL;
         private double speedR;
         private RobotSettings robotSettings;
@@ -24,7 +24,9 @@ namespace MobileRobots
         private AbstractController controller;
         private Thread controllerThread;
 
-        // Setters and getters
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        #region Setters & Getters
         public Point POSITION
         {
             get
@@ -45,6 +47,7 @@ namespace MobileRobots
             set
             {
                 battery = value;
+                OnPropertyChanged("BATTERY");
             }
         }
         public AbstractController CONTROLLER
@@ -58,7 +61,7 @@ namespace MobileRobots
                 controller = value;
             }
         }
-        public int STATUS
+        public statusE STATUS
         {
             get
             {
@@ -83,8 +86,9 @@ namespace MobileRobots
                 }
                 else
                 {
-                    speedL = 127;
+                    speedL = value;
                 }
+                OnPropertyChanged("SPEED_L");
             }
         }
         public double SPEED_R
@@ -101,15 +105,18 @@ namespace MobileRobots
                 }
                 else
                 {
-                    speedL = value;
+                    speedR = value;
                 }
+                OnPropertyChanged("SPEED_R");
             }
         }
+        #endregion
 
         public RobotModel(string name, string ip, int port) : base(name, ip, port)
         {
             controllerThread = new Thread(handleController);
             robotSettings = RobotSettings.INSTANCE;
+            status = statusE.DISCONNECTED;
         }
 
         public override string ToString()
@@ -135,6 +142,15 @@ namespace MobileRobots
             controllerThread.Start();
         }
 
+        private void OnPropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                var e = new PropertyChangedEventArgs(propertyName);
+                PropertyChanged(this, e);
+            }
+        }
+
         protected override void receiveData()
         {
             try
@@ -152,5 +168,7 @@ namespace MobileRobots
                 Logger.getLogger().log(LogLevel.WARNING, string.Format("Lost connection with {0}", this));
             }
         }
+
+        public enum statusE { CONNECTED, DISCONNECTED };
     }
 }

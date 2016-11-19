@@ -91,7 +91,10 @@ namespace MobileRobots.Utils.AppLogger
                     string levelName = infoLevel.calculate(level, message);
                     // Writing log in log console
                     Text += '[' + Timestamp.getDatestamp() + "] " + message + '\n' + ex.Message + '\n';
-                    ((ScrollViewer)Parent).ScrollToBottom();
+                    if (null != parentScrollPane)
+                    {
+                        parentScrollPane.ScrollToBottom();
+                    }
                 }), new Object[] { level, message, ex });
                 
                 // Writing log to file

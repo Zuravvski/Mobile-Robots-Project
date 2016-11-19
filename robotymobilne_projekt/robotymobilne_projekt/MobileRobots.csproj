@@ -43,6 +43,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -66,40 +67,44 @@
     <Compile Include="Devices\Network utils\RobotFrame.cs" />
     <Compile Include="Devices\RemoteDevice.cs" />
     <Compile Include="Devices\RobotModel.cs" />
-    <Compile Include="GUI\CoverPanel.xaml.cs">
+    <Compile Include="GUI\Converters\ReverseLogicConverter.cs" />
+    <Compile Include="GUI\Converters\RobotStatusConverter.cs" />
+    <Compile Include="GUI\Views\CoverPanel.xaml.cs">
       <DependentUpon>CoverPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Pages\HomePage.xaml.cs">
+    <Compile Include="GUI\Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Pages\Manual\ManualView.xaml.cs">
+    <Compile Include="GUI\Views\Manual\ManualView.xaml.cs">
       <DependentUpon>ManualView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Pages\SettingsPage.xaml.cs">
+    <Compile Include="GUI\Views\Settings\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Pages\About.xaml.cs">
+    <Compile Include="GUI\Views\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Pages\Settings\Appearance.xaml.cs">
+    <Compile Include="GUI\Views\Settings\Appearance.xaml.cs">
       <DependentUpon>Appearance.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Pages\Settings\AppearanceViewModel.cs" />
+    <Compile Include="GUI\ViewModels\AppearanceViewModel.cs" />
+    <Compile Include="GUI\ViewModels\DelegateCommand.cs" />
     <Compile Include="GUI\ViewModels\ManualViewModel.cs" />
+    <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="GUI\ViewModels\RobotViewModel.cs" />
-    <Compile Include="GUI\Views\ControllerSettings.xaml.cs">
+    <Compile Include="GUI\ViewModels\ViewModel.cs" />
+    <Compile Include="GUI\Views\Settings\ControllerSettings.xaml.cs">
       <DependentUpon>ControllerSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Views\TargetDeviceSettings.xaml.cs">
+    <Compile Include="GUI\Views\Settings\TargetDeviceSettings.xaml.cs">
       <DependentUpon>TargetDeviceSettings.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Views\UserInterface.xaml.cs">
+    <Compile Include="GUI\Views\Manual\UserInterface.xaml.cs">
       <DependentUpon>UserInterface.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manual\GamepadController.cs" />
     <Compile Include="Manual\AbstractController.cs" />
     <Compile Include="Manual\KeyboardController.cs" />
-    <Compile Include="Manual\User.cs" />
     <Compile Include="Settings\ControllerSettings.cs" />
     <Compile Include="Settings\RobotSettings.cs" />
     <Compile Include="Utils\AppLogger\ErrorLevel.cs" />
@@ -108,35 +113,35 @@
     <Compile Include="Utils\AppLogger\Logger.cs" />
     <Compile Include="Utils\Timestamp.cs" />
     <Compile Include="Utils\AppLogger\WarningLevel.cs" />
-    <Page Include="GUI\CoverPanel.xaml">
+    <Page Include="GUI\Views\CoverPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\Pages\HomePage.xaml">
+    <Page Include="GUI\Views\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\Pages\Manual\ManualView.xaml">
+    <Page Include="GUI\Views\Manual\ManualView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="GUI\Pages\SettingsPage.xaml">
+    <Page Include="GUI\Views\Settings\SettingsPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\Pages\About.xaml">
+    <Page Include="GUI\Views\About.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\Pages\Settings\Appearance.xaml">
+    <Page Include="GUI\Views\Settings\Appearance.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\Views\ControllerSettings.xaml">
+    <Page Include="GUI\Views\Settings\ControllerSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\Views\TargetDeviceSettings.xaml">
+    <Page Include="GUI\Views\Settings\TargetDeviceSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -152,7 +157,7 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="GUI\Views\UserInterface.xaml">
+    <Page Include="GUI\Views\Manual\UserInterface.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

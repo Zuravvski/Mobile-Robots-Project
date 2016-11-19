@@ -1,27 +1,63 @@
-﻿using robotymobilne_projekt.GUI.Views;
-using System.Collections.Generic;
+﻿using robotymobilne_projekt.GUI.Views.Manual;
+using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace robotymobilne_projekt.GUI.ViewModels
 {
-    class ManualViewModel
+    public class ManualViewModel : ViewModel
     {
+        private ICommand addUser;
+        private ICommand removeUser;
+
+        #region Setters & Getters
         public int ROWS { set; get; }
         public int COLS { set; get; }
-        public List<UserInterface> USERS { set; get; }
+        public ObservableCollection<UserInterface> USERS { get; }
+        #endregion
 
         public ManualViewModel()
         {
-            USERS = new List<UserInterface>(4); // max capacity is 4
-            addUser();
+            USERS = new ObservableCollection<UserInterface>();
         }
 
-        private void addUser()
+        #region Actions
+        public ICommand AddUser
         {
-            UserInterface firstUser = new UserInterface();
-            firstUser.DataContext = new RobotViewModel();
-            USERS.Add(firstUser);
+            get
+            {
+                if (null == addUser)
+                {
+                    addUser = new DelegateCommand(delegate ()
+                    {
+                        if (USERS.Count < 4)
+                        {
+                            UserInterface newUser = new UserInterface();
+                            newUser.DataContext = new RobotViewModel();
+                            USERS.Add(newUser);
+                            manageLayout();
+                        }
+                    });
+                }
+                return addUser;
+            }
         }
+        public ICommand RemoveUser
+        {
+            get
+            {
+                if(null == removeUser)
+                {
+                    removeUser = new DelegateCommand<UserInterface>(delegate (UserInterface user)
+                    {
+                        USERS.Remove(user);
+                    });
+                }
+                return removeUser;
+            }
+        }
+        #endregion
 
+        #region Helper Methods
         private void manageLayout()
         {
             switch (USERS.Count)
@@ -48,5 +84,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
                     break;
             }
         }
+        #endregion
     }
 }

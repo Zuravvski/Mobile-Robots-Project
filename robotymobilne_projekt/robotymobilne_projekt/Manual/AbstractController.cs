@@ -39,22 +39,21 @@ namespace MobileRobots.Manual
             steerL *= robotSettings.STEERING_SENSIVITY;
             steerR *= robotSettings.STEERING_SENSIVITY;
 
+            if (nitro)
+            {
+                motorL *= robotSettings.NITRO_VALUE;
+                motorR *= robotSettings.NITRO_VALUE;
+            }
+
+            robot.SPEED_L = motorL + steerR;
+            robot.SPEED_R = motorR + steerL;
+
             if (handbrake)
             {
-                motorL = 0;
-                motorR = 0;
+                robot.SPEED_L = 0;
+                robot.SPEED_R = 0;
             }
-            else
-            {
-                if (nitro)
-                {
-                    motorL *= robotSettings.NITRO_VALUE;
-                    motorR *= robotSettings.NITRO_VALUE;
-                }
 
-                robot.SPEED_L = motorL + steerR;
-                robot.SPEED_R = motorR + steerL;
-            }
         }
 
         public string CalculateFrame(double speedL, double speedR)

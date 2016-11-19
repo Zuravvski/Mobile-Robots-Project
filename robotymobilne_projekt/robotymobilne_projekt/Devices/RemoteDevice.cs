@@ -15,7 +15,7 @@ namespace MobileRobots
         protected TcpClient tcpClient;
         protected NetworkStream networkStream;
 
-        // setters and getters
+        #region Setters & Getters
         public string NAME
         {
             get
@@ -56,6 +56,18 @@ namespace MobileRobots
                 return tcpClient;
             }
         }
+        public bool CONNECTED
+        {
+            get
+            {
+                if(null != tcpClient)
+                {
+                    return tcpClient.Connected;
+                }
+                return false;
+            }
+        }
+        #endregion
 
         public RemoteDevice(string deviceName, string ip, int port)
         {

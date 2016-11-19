@@ -33,6 +33,7 @@ namespace MobileRobots.Manual
 
         public override string execute()
         {
+            key = Keyboard.GetState();
             getKinput();
             return CalculateFrame(robot.SPEED_L, robot.SPEED_R);
         }
