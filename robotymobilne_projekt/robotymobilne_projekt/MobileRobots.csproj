@@ -75,8 +75,11 @@
     <Compile Include="Devices\Network utils\RobotFrame.cs" />
     <Compile Include="Devices\RemoteDevice.cs" />
     <Compile Include="Devices\RobotModel.cs" />
+    <Compile Include="GUI\Converters\AbsoluteSpeedConverter.cs" />
+    <Compile Include="GUI\Converters\DirectionToColorConverter.cs" />
     <Compile Include="GUI\Converters\ReverseLogicConverter.cs" />
-    <Compile Include="GUI\Converters\RobotStatusConverter.cs" />
+    <Compile Include="GUI\Converters\RobotStatusToTextConverter.cs" />
+    <Compile Include="GUI\Converters\RobotStatusToBoolConverter.cs" />
     <Compile Include="GUI\Converters\TextToNumberConverter.cs" />
     <Compile Include="GUI\Views\CoverPanel.xaml.cs">
       <DependentUpon>CoverPanel.xaml</DependentUpon>

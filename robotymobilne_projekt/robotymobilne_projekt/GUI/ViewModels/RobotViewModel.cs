@@ -104,7 +104,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
         public RobotViewModel(ManualViewModel context)
         {
             this.context = context;
-            Robot = new RobotModel("Test", "127.0.0.1", 23);
+            Robot = new RobotModel("Test", "216.58.209.163", 23);
         }
     }
 }

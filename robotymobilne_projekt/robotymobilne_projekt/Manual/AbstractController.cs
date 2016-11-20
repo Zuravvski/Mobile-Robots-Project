@@ -10,6 +10,13 @@ namespace MobileRobots.Manual
         protected bool nitroPressed;
         protected bool handbrakePressed;
 
+        #region Constants
+        private const string noLights = "00";
+        private const string leftLight = "01";
+        private const string rightLight = "02";
+        private const string bothLights = "03";
+        #endregion
+
         public RobotModel Robot
         {
             get
@@ -59,21 +66,21 @@ namespace MobileRobots.Manual
         public string CalculateFrame(double speedL, double speedR)
         {
             //set get robot
-            string frameLights = "00", frameL = "", frameR = "";
+            string frameLights = noLights, frameL = string.Empty, frameR = string.Empty;
 
             if (robotSettings.UseLights)
             {
                 if (speedL == speedR)
                 {
-                    frameLights = "03";
+                    frameLights = bothLights;
                 }
                 if (speedR > speedL)
                 {
-                    frameLights = "02";
+                    frameLights = rightLight;
                 }
                 if (speedL > speedR)
                 {
-                    frameLights = "01";
+                    frameLights = leftLight;
                 }
             }
 

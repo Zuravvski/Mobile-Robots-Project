@@ -1,7 +1,5 @@
 ﻿using robotymobilne_projekt.GUI.ViewModels;
-using robotymobilne_projekt.GUI.Views;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace robotymobilne_projekt.GUI.Views.Manual
 {

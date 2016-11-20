@@ -1,6 +1,5 @@
 ﻿using robotymobilne_projekt.GUI.ViewModels;
 using robotymobilne_projekt.Settings;
-using System;
 using System.Windows.Input;
 
 namespace robotymobilne_projekt.GUI.Views.Settings

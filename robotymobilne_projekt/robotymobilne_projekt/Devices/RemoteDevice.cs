@@ -1,5 +1,6 @@
 ﻿using MobileRobots.Utils.AppLogger;
 using robotymobilne_projekt.Devices.Network;
+using robotymobilne_projekt.Utils;
 using robotymobilne_projekt.Utils.AppLogger;
 using System;
 using System.Net.Sockets;
@@ -7,13 +8,18 @@ using System.Threading;
 
 namespace MobileRobots
 {
-    public abstract class RemoteDevice
+    public abstract class RemoteDevice : ObservableObject
     {
+        #region Enums
+        public enum StatusE { CONNECTED, DISCONNECTED, CONNECTING };
+        #endregion
+
         protected string deviceName;
         protected string ip;
         protected int port;
         protected TcpClient tcpClient;
         protected NetworkStream networkStream;
+        protected StatusE status;
 
         #region Setters & Getters
         public string DeviceName
@@ -67,6 +73,18 @@ namespace MobileRobots
                 return false;
             }
         }
+        public StatusE Status
+        {
+            get
+            {
+                return status;
+            }
+            set
+            {
+                status = value;
+                NotifyPropertyChanged("Status");
+            }
+        }
         #endregion
 
         public RemoteDevice(string deviceName, string ip, int port)
@@ -77,12 +95,15 @@ namespace MobileRobots
             this.ip = ip;
             this.port = port;
             tcpClient = new TcpClient(AddressFamily.InterNetwork);
+            Status = StatusE.DISCONNECTED;
         }
 
+        #region Connection
         public virtual void connect()
         {
             if (!tcpClient.Connected)
             {
+                Status = StatusE.CONNECTING;
                 Logger.getLogger().log(LogLevel.INFO, string.Format("Connecting with device: {0}...", this));
                 tcpClient.BeginConnect(ip, port, new AsyncCallback(connectCallback), tcpClient);
             }
@@ -102,14 +123,18 @@ namespace MobileRobots
                     receiveData();
                 }
 
+                Status = StatusE.CONNECTED;
                 Logger.getLogger().log(LogLevel.INFO, string.Format("Connected to {0}.", this));
             }
             catch(Exception ex)
             {
+                Status = StatusE.DISCONNECTED;
                 Logger.getLogger().log(LogLevel.WARNING, string.Format("Could not connect to {0}.", this), ex);
             }
         }
+        #endregion
 
+        #region Disconnection
         public virtual void disconnect()
         {
             try
@@ -119,17 +144,21 @@ namespace MobileRobots
                     tcpClient.GetStream().Close();
                     tcpClient.Close();
                     tcpClient = new TcpClient(AddressFamily.InterNetwork);
-
+                    Status = StatusE.DISCONNECTED;
+                  
                     Logger.getLogger().log(LogLevel.INFO, string.Format("{0} disconnected.", this));
                 }
             }
             catch (Exception ex)
             {
+                Status = StatusE.DISCONNECTED;
                 Logger.getLogger().log(LogLevel.WARNING, string.Format("An error occurred while disconnecting with device: {0}.", this), ex);
             }
         }
+        #endregion
 
         // Adapt to generic Data frame objects
+        #region Sending Data
         public virtual void sendData(string data)
         {
             try
@@ -164,7 +193,10 @@ namespace MobileRobots
                 Logger.getLogger().log(LogLevel.WARNING, "Could not send data to device: " + deviceName, ex);
             }
         }
+        #endregion
 
+        // Includes TODO!
+        #region Receiving Data
         protected virtual void receiveData()
         {
             try
@@ -205,5 +237,6 @@ namespace MobileRobots
                 disconnect(); // current solution
             }
         }
+        #endregion
     }
 }

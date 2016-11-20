@@ -1,4 +1,5 @@
-﻿using System.Windows.Controls;
+﻿using MobileRobots;
+using System.Windows.Controls;
 
 namespace robotymobilne_projekt.GUI.Views.Manual
 {
@@ -10,10 +11,6 @@ namespace robotymobilne_projekt.GUI.Views.Manual
         public UserInterface()
         {
             InitializeComponent();
-        }
-
-        private void comboBoxControllers_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
         }
     }
 }

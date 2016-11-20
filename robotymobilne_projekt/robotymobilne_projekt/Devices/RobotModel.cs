@@ -4,27 +4,22 @@ using robotymobilne_projekt.Devices.Network;
 using robotymobilne_projekt.Settings;
 using robotymobilne_projekt.Utils.AppLogger;
 using System;
-using System.ComponentModel;
 using System.Threading;
 using System.Windows;
 
 namespace MobileRobots
 {
-    public class RobotModel : RemoteDevice, INotifyPropertyChanged
+    public class RobotModel : RemoteDevice
     {
         // Robot data
         private Point position;
         private int battery;
-        private statusE status;
         private double speedL;
         private double speedR;
-        private RobotSettings robotSettings;
 
         // Utilities
         private AbstractController controller;
         private Thread controllerThread;
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         #region Setters & Getters
         public Point Position
@@ -36,6 +31,7 @@ namespace MobileRobots
             set
             {
                 position = value;
+                NotifyPropertyChanged("Position");
             }
         }
         public int Battery
@@ -46,8 +42,11 @@ namespace MobileRobots
             }
             set
             {
-                battery = value;
-                OnPropertyChanged("Battery");
+                if (tcpClient.Connected)
+                {
+                    battery = value;
+                }
+                NotifyPropertyChanged("Battery");
             }
         }
         public AbstractController Controller
@@ -61,17 +60,6 @@ namespace MobileRobots
                 controller = value;
             }
         }
-        public statusE Status
-        {
-            get
-            {
-                return status;
-            }
-            set
-            {
-                status = value;
-            }
-        }
         public double SpeedL
         {
             get
@@ -80,15 +68,26 @@ namespace MobileRobots
             }
             set
             {
-                if (value > 127)
+                if (tcpClient.Connected)
                 {
-                    speedL = 127;
+                    if (value > 127)
+                    {
+                        speedL = 127;
+                    }
+                    else if(value < -127)
+                    {
+                        speedL = -127;
+                    }
+                    else
+                    {
+                        speedL = value;
+                    }
                 }
                 else
                 {
-                    speedL = value;
+                    speedL = 0;
                 }
-                OnPropertyChanged("SpeedL");
+                NotifyPropertyChanged("SpeedL");
             }
         }
         public double SpeedR
@@ -99,15 +98,26 @@ namespace MobileRobots
             }
             set
             {
-                if (value > 127)
+                if (tcpClient.Connected)
                 {
-                    speedR = 127;
+                    if (value > 127)
+                    {
+                        speedR = 127;
+                    }
+                    else if(value < -127)
+                    {
+                        speedR = -127;
+                    }
+                    else
+                    {
+                        speedR = value;
+                    }
                 }
                 else
                 {
-                    speedR = value;
+                    speedR = 0;
                 }
-                OnPropertyChanged("SpeedR");
+                NotifyPropertyChanged("SpeedR");
             }
         }
         #endregion
@@ -115,8 +125,6 @@ namespace MobileRobots
         public RobotModel(string name, string ip, int port) : base(name, ip, port)
         {
             controllerThread = new Thread(handleController);
-            robotSettings = RobotSettings.Instance;
-            status = statusE.DISCONNECTED;
         }
 
         public override string ToString()
@@ -142,15 +150,6 @@ namespace MobileRobots
             controllerThread.Start();
         }
 
-        private void OnPropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                var e = new PropertyChangedEventArgs(propertyName);
-                PropertyChanged(this, e);
-            }
-        }
-
         protected override void receiveData()
         {
             try
@@ -168,7 +167,5 @@ namespace MobileRobots
                 Logger.getLogger().log(LogLevel.WARNING, string.Format("Lost connection with {0}", this));
             }
         }
-
-        public enum statusE { CONNECTED, DISCONNECTED };
     }
 }
