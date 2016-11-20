@@ -20,7 +20,8 @@ namespace MobileRobots
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             MainWindow mainWindow = new MainWindow();
-            ControllerSettings.INSTANCE.initialize();
+            ControllerSettings.Instance.initialize();
+            RobotSettings.Instance.initialize();
             Logger.getLogger().log(LogLevel.INFO, "Starting application...");
             mainWindow.Show();
         }

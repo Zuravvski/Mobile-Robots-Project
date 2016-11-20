@@ -12,10 +12,10 @@
         <Button x:Name="button" Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Background="Green" Margin="0,-26,0,0" Command="{Binding AddUser}"/>
 
         <Viewbox Stretch="Uniform">
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding USERS}">
+        <ItemsControl Grid.Row="1" ItemsSource="{Binding Users}">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Rows="{Binding Path=ROWS}" Columns="{Binding Path=COLS}"/>
+                    <UniformGrid Rows="{Binding Rows}" Columns="{Binding Cols}"/>
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
         </ItemsControl>

@@ -14,25 +14,16 @@ namespace robotymobilne_projekt.GUI.ViewModels
     {
         #region Constructors
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public DelegateCommand(Action executeMethod)
             : this(executeMethod, null, false)
         {
         }
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public DelegateCommand(Action executeMethod, Func<bool> canExecuteMethod)
             : this(executeMethod, canExecuteMethod, false)
         {
         }
 
-        /// <summary>
-        ///     Constructor
-        /// </summary>
         public DelegateCommand(Action executeMethod, Func<bool> canExecuteMethod, bool isAutomaticRequeryDisabled)
         {
             if (executeMethod == null)
@@ -49,9 +40,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
 
         #region Public Methods
 
-        /// <summary>
-        ///     Method to determine if the command can be executed
-        /// </summary>
         public bool CanExecute()
         {
             if (_canExecuteMethod != null)
@@ -61,9 +49,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
             return true;
         }
 
-        /// <summary>
-        ///     Execution of the command
-        /// </summary>
         public void Execute()
         {
             if (_executeMethod != null)
@@ -72,9 +57,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
             }
         }
 
-        /// <summary>
-        ///     Property to enable or disable CommandManager's automatic requery on this command
-        /// </summary>
         public bool IsAutomaticRequeryDisabled
         {
             get
@@ -98,17 +80,11 @@ namespace robotymobilne_projekt.GUI.ViewModels
             }
         }
 
-        /// <summary>
-        ///     Raises the CanExecuteChaged event
-        /// </summary>
         public void RaiseCanExecuteChanged()
         {
             OnCanExecuteChanged();
         }
 
-        /// <summary>
-        ///     Protected virtual method to raise CanExecuteChanged event
-        /// </summary>
         protected virtual void OnCanExecuteChanged()
         {
             CommandManagerHelper.CallWeakReferenceHandlers(_canExecuteChangedHandlers);
@@ -118,9 +94,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
 
         #region ICommand Members
 
-        /// <summary>
-        ///     ICommand.CanExecuteChanged implementation
-        /// </summary>
         public event EventHandler CanExecuteChanged
         {
             add

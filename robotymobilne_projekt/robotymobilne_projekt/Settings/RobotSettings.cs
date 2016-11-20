@@ -1,24 +1,33 @@
 ﻿using MobileRobots;
+using MobileRobots.Utils.AppLogger;
+using robotymobilne_projekt.Utils;
+using robotymobilne_projekt.Utils.AppLogger;
 using System;
-using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace robotymobilne_projekt.Settings
 {
-    class RobotSettings
+    public class RobotSettings : ObservableObject
     {
-        // Singleton
         private static Lazy<RobotSettings> instance = new Lazy<RobotSettings>(() => new RobotSettings());
-
-        // setting fields
         private bool useLights;
         private double maxSpeed;
         private double steeringSensivity;
-        private double nitroValue;
+        private double nitroFactor;
+        private int reconnectAttempts;
 
-        private List<RobotModel> robots;
+        #region Default values
+        private const bool defaultUseLights = false;
+        private const double defaultMaxSpeed = 80;
+        private const double defaultSteeringSensibity = 35;
+        private const double defaultNitroFactor = 1.1;
+        private const int defaultReconnectAttempts = 3;
+        #endregion
+
+        private ObservableCollection<RobotModel> robots;
 
         // setters and getters
-        public double MAX_SPEED
+        public double MaxSpeed
         {
             get
             {
@@ -27,9 +36,10 @@ namespace robotymobilne_projekt.Settings
             set
             {
                 maxSpeed = value;
+                NotifyPropertyChanged("MaxSpeed");
             }
         }
-        public double STEERING_SENSIVITY
+        public double SteeringSensivity
         {
             get
             {
@@ -38,20 +48,22 @@ namespace robotymobilne_projekt.Settings
             set
             {
                 steeringSensivity = value;
+                NotifyPropertyChanged("SteeringSensivity");
             }
         }
-        public double NITRO_VALUE
+        public double NitroFactor
         {
             get
             {
-                return nitroValue;
+                return nitroFactor;
             }
             set
             {
-                nitroValue = value;
+                nitroFactor = value;
+                NotifyPropertyChanged("NitroFactor");
             }
         }
-        public bool USE_LIGHTS
+        public bool UseLights
         {
             get
             {
@@ -60,19 +72,59 @@ namespace robotymobilne_projekt.Settings
             set
             {
                 useLights = value;
+                NotifyPropertyChanged("UseLights");
+            }
+        }
+        public int ReconnectAttempts
+        {
+            get
+            {
+                return reconnectAttempts;
+            }
+            set
+            {
+                if (value > 0 && value < 10)
+                {
+                    reconnectAttempts = value;
+                }
+                NotifyPropertyChanged("ReconnectAttempts");
             }
         }
 
         private RobotSettings()
         {
-            // default values
-            useLights = false;
-            maxSpeed = 80;
-            nitroValue = 1.2;
-            steeringSensivity = 35;
+            robots = new ObservableCollection<RobotModel>();
+
+            // setting default values
+            reset();
         }
 
-        public static RobotSettings INSTANCE
+        public void reset()
+        {
+            UseLights = defaultUseLights;
+            MaxSpeed = defaultMaxSpeed;
+            NitroFactor = defaultNitroFactor;
+            SteeringSensivity = defaultSteeringSensibity;
+            ReconnectAttempts = defaultReconnectAttempts;
+        }
+
+        public void initialize()
+        {
+            if(0 == robots.Count)
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    RobotModel newRobot = new RobotModel("3" + i, "192.168.2.3" + i, 8000);
+                    robots.Add(newRobot);
+                }
+            }
+            else
+            {
+                Logger.INSTANCE.log(LogLevel.INFO, "Initialization can be called only once");
+            }
+        }
+
+        public static RobotSettings Instance
         {
             get
             {
@@ -81,7 +133,7 @@ namespace robotymobilne_projekt.Settings
         }
 
         // TODO: To be implemented
-        public List<RobotModel> AVAILABLE_ROBOTS
+        public ObservableCollection<RobotModel> AvailableRobots
         {
             get
             {

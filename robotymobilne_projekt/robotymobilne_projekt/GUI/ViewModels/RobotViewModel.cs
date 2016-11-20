@@ -2,6 +2,7 @@
 using MobileRobots.Manual;
 using robotymobilne_projekt.Settings;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace robotymobilne_projekt.GUI.ViewModels
@@ -14,28 +15,28 @@ namespace robotymobilne_projekt.GUI.ViewModels
         private ManualViewModel context;
 
         #region Setters & Getters
-        public List<RobotModel> ROBOTS
+        public ObservableCollection<RobotModel> Robots
         {
             get
             {
-                return RobotSettings.INSTANCE.AVAILABLE_ROBOTS;
+                return RobotSettings.Instance.AvailableRobots;
             }
         }
-        public List<AbstractController> CONTROLLERS
+        public List<AbstractController> Controllers
         {
             get
             {
-                return ControllerSettings.INSTANCE.AVAILABLE_CONTROLLERS;
+                return ControllerSettings.Instance.AVAILABLE_CONTROLLERS;
             }
         }
-        public RobotModel ROBOT { set; get; }
-        public bool CONNECTED
+        public RobotModel Robot { set; get; }
+        public bool Connected
         {
             get
             {
-                if(null != ROBOT)
+                if(null != Robot)
                 {
-                    return ROBOT.CONNECTED;
+                    return Robot.Connected;
                 }
                 return false;
             }
@@ -51,9 +52,9 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 {
                     connect = new DelegateCommand(delegate ()
                     {
-                        if (null != ROBOT)
+                        if (null != Robot)
                         {
-                            ROBOT.connect();
+                            Robot.connect();
                         }
                     });
                 }
@@ -69,9 +70,9 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 {
                     disconnect = new DelegateCommand(delegate ()
                     {
-                        if (null != ROBOT)
+                        if (null != Robot)
                         {
-                            ROBOT.disconnect();
+                            Robot.disconnect();
                         }
                     });
                 }
@@ -88,9 +89,9 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 {
                     delete = new DelegateCommand(delegate ()
                     {
-                        if (null != ROBOT && ROBOT.CONNECTED)
+                        if (null != Robot && Robot.Connected)
                         {
-                            ROBOT.disconnect();
+                            Robot.disconnect();
                         }
                         context.RemoveUser.Execute(this);
                     });
@@ -103,7 +104,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
         public RobotViewModel(ManualViewModel context)
         {
             this.context = context;
-            ROBOT = new RobotModel("Test", "127.0.0.1", 23);
+            Robot = new RobotModel("Test", "127.0.0.1", 23);
         }
     }
 }

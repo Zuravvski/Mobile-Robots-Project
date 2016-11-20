@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace MobileRobots
 {
-    abstract class RemoteDevice
+    public abstract class RemoteDevice
     {
         protected string deviceName;
         protected string ip;
@@ -16,7 +16,7 @@ namespace MobileRobots
         protected NetworkStream networkStream;
 
         #region Setters & Getters
-        public string NAME
+        public string DeviceName
         {
             get
             {
@@ -38,7 +38,7 @@ namespace MobileRobots
                 ip = value;
             }
         }
-        public int PORT
+        public int Port
         {
             get
             {
@@ -49,14 +49,14 @@ namespace MobileRobots
                 port = value;
             }
         }
-        public TcpClient TCPCLIENT
+        public TcpClient TcpClient
         {
             get
             {
                 return tcpClient;
             }
         }
-        public bool CONNECTED
+        public bool Connected
         {
             get
             {
@@ -79,11 +79,13 @@ namespace MobileRobots
             tcpClient = new TcpClient(AddressFamily.InterNetwork);
         }
 
-        public virtual bool connect()
+        public virtual void connect()
         {
-            Logger.getLogger().log(LogLevel.INFO, string.Format("Connecting with device: {0}...", this));
-            tcpClient.BeginConnect(ip, port, new AsyncCallback(connectCallback), tcpClient);
-            return tcpClient.Connected;
+            if (!tcpClient.Connected)
+            {
+                Logger.getLogger().log(LogLevel.INFO, string.Format("Connecting with device: {0}...", this));
+                tcpClient.BeginConnect(ip, port, new AsyncCallback(connectCallback), tcpClient);
+            }
         }
 
         public virtual void connectCallback(IAsyncResult result)
@@ -112,11 +114,14 @@ namespace MobileRobots
         {
             try
             {
-                tcpClient.GetStream().Close();
-                tcpClient.Close();
-                tcpClient = new TcpClient(AddressFamily.InterNetwork);
+                if (tcpClient.Connected)
+                {
+                    tcpClient.GetStream().Close();
+                    tcpClient.Close();
+                    tcpClient = new TcpClient(AddressFamily.InterNetwork);
 
-                Logger.getLogger().log(LogLevel.INFO, string.Format("{0} disconnected.", this));
+                    Logger.getLogger().log(LogLevel.INFO, string.Format("{0} disconnected.", this));
+                }
             }
             catch (Exception ex)
             {

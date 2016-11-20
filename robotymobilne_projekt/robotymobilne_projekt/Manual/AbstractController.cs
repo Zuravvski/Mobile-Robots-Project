@@ -2,7 +2,7 @@
 
 namespace MobileRobots.Manual
 {
-    abstract class AbstractController
+    public abstract class AbstractController
     {
         protected ControllerSettings controllerSettings;
         protected RobotSettings robotSettings;
@@ -10,7 +10,7 @@ namespace MobileRobots.Manual
         protected bool nitroPressed;
         protected bool handbrakePressed;
 
-        public RobotModel ROBOT
+        public RobotModel Robot
         {
             get
             {
@@ -27,31 +27,31 @@ namespace MobileRobots.Manual
         /// </summary>
         public AbstractController()
         {
-            controllerSettings = ControllerSettings.INSTANCE;
-            robotSettings = RobotSettings.INSTANCE;
+            controllerSettings = ControllerSettings.Instance;
+            robotSettings = RobotSettings.Instance;
         }
 
         protected void CalculateFinalSpeed(double motorL, double motorR, double steerL, double steerR, bool nitro, bool handbrake)
         {
-            motorL *= robotSettings.MAX_SPEED;
-            motorR *= robotSettings.MAX_SPEED;
+            motorL *= robotSettings.MaxSpeed;
+            motorR *= robotSettings.MaxSpeed;
 
-            steerL *= robotSettings.STEERING_SENSIVITY;
-            steerR *= robotSettings.STEERING_SENSIVITY;
+            steerL *= robotSettings.SteeringSensivity;
+            steerR *= robotSettings.SteeringSensivity;
 
             if (nitro)
             {
-                motorL *= robotSettings.NITRO_VALUE;
-                motorR *= robotSettings.NITRO_VALUE;
+                motorL *= robotSettings.NitroFactor;
+                motorR *= robotSettings.NitroFactor;
             }
 
-            robot.SPEED_L = motorL + steerR;
-            robot.SPEED_R = motorR + steerL;
+            robot.SpeedL = motorL + steerR;
+            robot.SpeedR = motorR + steerL;
 
             if (handbrake)
             {
-                robot.SPEED_L = 0;
-                robot.SPEED_R = 0;
+                robot.SpeedL = 0;
+                robot.SpeedR = 0;
             }
 
         }
@@ -61,7 +61,7 @@ namespace MobileRobots.Manual
             //set get robot
             string frameLights = "00", frameL = "", frameR = "";
 
-            if (robotSettings.USE_LIGHTS)
+            if (robotSettings.UseLights)
             {
                 if (speedL == speedR)
                 {

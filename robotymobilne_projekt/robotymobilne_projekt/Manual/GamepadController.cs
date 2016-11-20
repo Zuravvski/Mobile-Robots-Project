@@ -3,13 +3,13 @@ using OpenTK.Input;
 
 namespace MobileRobots.Manual
 {
-    class GamepadController : AbstractController
+    public class GamepadController : AbstractController
     {
         private int index;
         private double RT, LT, RX, LX;
         private ButtonState A, B;
 
-        public int GAMEPAD_INDEX
+        public int GamepadIndex
         {
             get
             {
@@ -93,18 +93,18 @@ namespace MobileRobots.Manual
         {
             getXinput();
             calculateSpeed();
-            return CalculateFrame(robot.SPEED_L, robot.SPEED_R);
+            return CalculateFrame(robot.SpeedL, robot.SpeedR);
         }
 
         public override bool Equals(object obj)
         {
             // TODO: consider using typeof in case it doesn't work
-            return index == ((GamepadController)obj).GAMEPAD_INDEX;
+            return index == ((GamepadController)obj).GamepadIndex;
         }
 
         public override int GetHashCode()
         {
-            return GAMEPAD_INDEX.GetHashCode();
+            return GamepadIndex.GetHashCode();
         }
 
         public override string ToString()

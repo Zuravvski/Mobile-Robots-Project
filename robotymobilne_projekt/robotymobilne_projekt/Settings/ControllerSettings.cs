@@ -1,12 +1,13 @@
 ﻿using MobileRobots.Manual;
 using OpenTK.Input;
+using robotymobilne_projekt.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace robotymobilne_projekt.Settings
 {
-    class ControllerSettings
+    public class ControllerSettings : ObservableObject
     {
         private static readonly Lazy<ControllerSettings> instance = new Lazy<ControllerSettings>(() => new ControllerSettings());
         private int latency;
@@ -14,7 +15,7 @@ namespace robotymobilne_projekt.Settings
         private static object syncRoot = new object();
 
         // setters and getters
-        public int LATENCY
+        public int Latency
         {
             get
             {
@@ -23,6 +24,7 @@ namespace robotymobilne_projekt.Settings
             set
             {
                 latency = value;
+                NotifyPropertyChanged("Latency");
             }
         }
 
@@ -33,7 +35,7 @@ namespace robotymobilne_projekt.Settings
             controllers = new Dictionary<AbstractController, bool>();
         }
 
-        public static ControllerSettings INSTANCE
+        public static ControllerSettings Instance
         {
             get
             {

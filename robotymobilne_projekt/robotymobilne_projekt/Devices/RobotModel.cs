@@ -10,7 +10,7 @@ using System.Windows;
 
 namespace MobileRobots
 {
-    class RobotModel : RemoteDevice, INotifyPropertyChanged
+    public class RobotModel : RemoteDevice, INotifyPropertyChanged
     {
         // Robot data
         private Point position;
@@ -27,7 +27,7 @@ namespace MobileRobots
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Setters & Getters
-        public Point POSITION
+        public Point Position
         {
             get
             {
@@ -38,7 +38,7 @@ namespace MobileRobots
                 position = value;
             }
         }
-        public int BATTERY
+        public int Battery
         {
             get
             {
@@ -47,10 +47,10 @@ namespace MobileRobots
             set
             {
                 battery = value;
-                OnPropertyChanged("BATTERY");
+                OnPropertyChanged("Battery");
             }
         }
-        public AbstractController CONTROLLER
+        public AbstractController Controller
         {
             get
             {
@@ -61,7 +61,7 @@ namespace MobileRobots
                 controller = value;
             }
         }
-        public statusE STATUS
+        public statusE Status
         {
             get
             {
@@ -72,7 +72,7 @@ namespace MobileRobots
                 status = value;
             }
         }
-        public double SPEED_L
+        public double SpeedL
         {
             get
             {
@@ -88,10 +88,10 @@ namespace MobileRobots
                 {
                     speedL = value;
                 }
-                OnPropertyChanged("SPEED_L");
+                OnPropertyChanged("SpeedL");
             }
         }
-        public double SPEED_R
+        public double SpeedR
         {
             get
             {
@@ -107,7 +107,7 @@ namespace MobileRobots
                 {
                     speedR = value;
                 }
-                OnPropertyChanged("SPEED_R");
+                OnPropertyChanged("SpeedR");
             }
         }
         #endregion
@@ -115,7 +115,7 @@ namespace MobileRobots
         public RobotModel(string name, string ip, int port) : base(name, ip, port)
         {
             controllerThread = new Thread(handleController);
-            robotSettings = RobotSettings.INSTANCE;
+            robotSettings = RobotSettings.Instance;
             status = statusE.DISCONNECTED;
         }
 
@@ -133,7 +133,7 @@ namespace MobileRobots
                 {
                     sendData(dataFrame);
                 }
-                Thread.Sleep(ControllerSettings.INSTANCE.LATENCY);
+                Thread.Sleep(ControllerSettings.Instance.Latency);
             }
         }
 

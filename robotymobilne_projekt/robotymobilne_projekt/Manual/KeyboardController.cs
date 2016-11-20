@@ -3,7 +3,7 @@ using OpenTK.Input;
 
 namespace MobileRobots.Manual
 {
-    class KeyboardController : AbstractController
+    public class KeyboardController : AbstractController
     {
         private int index;
         private KeyboardState key;
@@ -35,7 +35,7 @@ namespace MobileRobots.Manual
         {
             key = Keyboard.GetState();
             getKinput();
-            return CalculateFrame(robot.SPEED_L, robot.SPEED_R);
+            return CalculateFrame(robot.SpeedL, robot.SpeedR);
         }
 
         private void getKinput()

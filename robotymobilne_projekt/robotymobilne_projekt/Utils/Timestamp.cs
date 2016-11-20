@@ -2,21 +2,30 @@
 
 namespace robotymobilne_projekt.Utils
 {
-    class Timestamp
+    class TimestampUtilities
     {
-        public static string getDatestamp()
+        public static string Datestamp
         {
-            return string.Format("{0:dd-MM-yyyy HH:mm:ss}", DateTime.Now);
+            get
+            {
+                return string.Format("{0:dd-MM-yyyy HH:mm:ss}", DateTime.Now);
+            }
         }
 
-        public static string getTimestamp()
+        public static string Timestamp
         {
-            return string.Format("{0:HH:mm:ss}", DateTime.Now);
+            get
+            {
+                return string.Format("{0:HH:mm:ss}", DateTime.Now);
+            }
         }
 
-        public static string getFileDateStamp()
+        public static string FileDatestamp
         {
-            return string.Format("{0:dd-MM-yyyy HH-mm-ss}", DateTime.Now);
+            get
+            {
+                return string.Format("{0:dd-MM-yyyy HH-mm-ss}", DateTime.Now);
+            }
         }
     }
 }

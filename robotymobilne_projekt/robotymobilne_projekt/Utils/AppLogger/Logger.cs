@@ -35,7 +35,7 @@ namespace MobileRobots.Utils.AppLogger
             TextWrapping = TextWrapping.Wrap;
 
             // Creating file handler for logs
-            fileWriter = new StreamWriter("log " + Timestamp.getFileDateStamp() + ".txt");
+            fileWriter = new StreamWriter("log " + TimestampUtilities.FileDatestamp + ".txt");
 
             // Creating logger's chain of responsibility
             infoLevel = new InfoLevel(this);
@@ -64,7 +64,7 @@ namespace MobileRobots.Utils.AppLogger
                     // TODO: Add [LEVEL] tag in file to make everything more selective
                     string levelName = infoLevel.calculate(level, message);
                     // Writing log in log console
-                    Text += '[' + Timestamp.getDatestamp() + "] " + message + '\n';
+                    Text += '[' + TimestampUtilities.Datestamp + "] " + message + '\n';
 
                     if (null != parentScrollPane)
                     {
@@ -73,7 +73,7 @@ namespace MobileRobots.Utils.AppLogger
                 }), new Object[] { level, message });
 
                 // Writing log to file
-                fileWriter.WriteLine('[' + Timestamp.getDatestamp() + "] " + message);
+                fileWriter.WriteLine('[' + TimestampUtilities.Datestamp + "] " + message);
                 fileWriter.Flush();
             }
             catch (Exception)
@@ -90,7 +90,7 @@ namespace MobileRobots.Utils.AppLogger
                 {
                     string levelName = infoLevel.calculate(level, message);
                     // Writing log in log console
-                    Text += '[' + Timestamp.getDatestamp() + "] " + message + '\n' + ex.Message + '\n';
+                    Text += '[' + TimestampUtilities.Datestamp + "] " + message + '\n' + ex.Message + '\n';
                     if (null != parentScrollPane)
                     {
                         parentScrollPane.ScrollToBottom();
@@ -98,7 +98,7 @@ namespace MobileRobots.Utils.AppLogger
                 }), new Object[] { level, message, ex });
                 
                 // Writing log to file
-                fileWriter.WriteLine('[' + Timestamp.getDatestamp() + "]");
+                fileWriter.WriteLine('[' + TimestampUtilities.Datestamp + "]");
                 fileWriter.WriteLine(ex + " " + ex.StackTrace);
                 fileWriter.WriteLine();
                 fileWriter.Flush();

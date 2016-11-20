@@ -26,8 +26,8 @@ namespace robotymobilne_projekt.Devices.Network
             // Battery state is the only data that is actually used right now
             if(FRAME_SIZE == data.Length)
             {
-                obj.BATTERY = getBattery();
-                //obj.STATUS = getStatus();
+                obj.Battery = getBattery();
+                //obj.Status = getStatus();
             }
         }
 

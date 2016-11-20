@@ -10,14 +10,14 @@ namespace robotymobilne_projekt.GUI.ViewModels
         private ICommand removeUser;
 
         #region Setters & Getters
-        public int ROWS { set; get; }
-        public int COLS { set; get; }
-        public ObservableCollection<UserInterface> USERS { get; }
+        public int Rows { set; get; }
+        public int Cols { set; get; }
+        public ObservableCollection<UserInterface> Users { get; }
         #endregion
 
         public ManualViewModel()
         {
-            USERS = new ObservableCollection<UserInterface>();
+            Users = new ObservableCollection<UserInterface>();
         }
 
         #region Actions
@@ -29,11 +29,11 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 {
                     addUser = new DelegateCommand(delegate ()
                     {
-                        if (USERS.Count < 4)
+                        if (Users.Count < 4)
                         {
                             UserInterface newUser = new UserInterface();
                             newUser.DataContext = new RobotViewModel(this);
-                            USERS.Add(newUser);
+                            Users.Add(newUser);
                             manageLayout();
                         }
                     });
@@ -49,11 +49,11 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 {
                     removeUser = new DelegateCommand<RobotViewModel>(delegate (RobotViewModel userVM)
                     {
-                        for(int i = 0; i < USERS.Count; i++)
+                        for(int i = 0; i < Users.Count; i++)
                         {
-                            if(USERS[i].DataContext.Equals(userVM))
+                            if(Users[i].DataContext.Equals(userVM))
                             {
-                                USERS.Remove(USERS[i]);
+                                Users.Remove(Users[i]);
                                 manageLayout();
                             }
                         }
@@ -67,27 +67,27 @@ namespace robotymobilne_projekt.GUI.ViewModels
         #region Helper Methods
         private void manageLayout()
         {
-            switch (USERS.Count)
+            switch (Users.Count)
             {
                 case 1:
-                    ROWS = 1;
-                    COLS = 1;
+                    Rows = 1;
+                    Cols = 1;
                     break;
 
                 case 2:
-                    ROWS = 1;
-                    COLS = 2;
+                    Rows = 1;
+                    Cols = 2;
                     break;
 
                 case 3:
                 case 4:
-                    ROWS = 2;
-                    COLS = 2;
+                    Rows = 2;
+                    Cols = 2;
                     break;
 
                 default:
-                    ROWS = 0;
-                    COLS = 0;
+                    Rows = 0;
+                    Cols = 0;
                     break;
             }
         }
