@@ -52,8 +52,16 @@ namespace MobileRobots.Manual
                 motorR *= robotSettings.NitroFactor;
             }
 
-            robot.SpeedL = motorL + steerR;
-            robot.SpeedR = motorR + steerL;
+            if (motorL > 0)
+            {
+                robot.SpeedL = motorL + steerR;
+                robot.SpeedR = motorR + steerL;
+            }
+            else
+            {
+                robot.SpeedL = motorL - steerR;
+                robot.SpeedR = motorR - steerL;
+            }
 
             if (handbrake)
             {

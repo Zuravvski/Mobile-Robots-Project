@@ -59,12 +59,12 @@ namespace MobileRobots.Manual
 
             if (key.IsKeyDown(right) && Math.Abs(speed) > 0)   //right
             {
-                steerR = 1;
+                steerR = 0.6;
             }
 
             if (key.IsKeyDown(left) && Math.Abs(speed) > 0)    //left
             {
-                steerL = 1;
+                steerL = 0.6;
             }
 
             if (key.IsKeyDown(leftTurn) && Math.Abs(speed) < 1 && speed < 1)
