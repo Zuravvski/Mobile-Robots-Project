@@ -1,22 +1,19 @@
 ﻿using MobileRobots.Manual;
 using OpenTK.Input;
 using robotymobilne_projekt.Manual;
-using robotymobilne_projekt.Utils;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
 
 namespace robotymobilne_projekt.Settings
 {
-    public class ControllerSettings : ObservableObject
+    public class ControllerSettings : Observable
     {
         private static readonly Lazy<ControllerSettings> instance = new Lazy<ControllerSettings>(() => new ControllerSettings());
         private ObservableCollection<AbstractController> controllers;
         private Thread scanningThread;
         private int latency;
         private int scanTime;
-
-        private readonly object scanMutex = new object();
 
         #region Default values
         private const int defaultLatency = 100;
@@ -29,11 +26,6 @@ namespace robotymobilne_projekt.Settings
             get
             {
                 return latency;
-            }
-            set
-            {
-                latency = value;
-                NotifyPropertyChanged("Latency");
             }
         }
         public ObservableCollection<AbstractController> Controllers
@@ -69,18 +61,21 @@ namespace robotymobilne_projekt.Settings
             {
                 for (int i = 0; i < 4; i++)
                 {
+                    AbstractController newGamepad = new GamepadController(i);
                     if (Joystick.GetState(i).IsConnected)
                     {
-                        AbstractController newGamepad = new GamepadController(i);
                         if (!controllers.Contains(newGamepad))
                         {
-                            lock (scanMutex)
-                            {
-                                if (!controllers.Contains(newGamepad))
-                                {
-                                    Controllers.Add(newGamepad);
-                                }
-                            }
+                            Controllers.Add(newGamepad);
+                            notifyObservers();  
+                        }
+                    }
+                    else
+                    {
+                        if(controllers.Contains(newGamepad))
+                        {
+                            Controllers.Remove(newGamepad);
+                            notifyObservers();
                         }
                     }
                 }
@@ -111,5 +106,7 @@ namespace robotymobilne_projekt.Settings
         {
             addDefaultKeyboardControllers();
         }
+
+        
     }
 }

@@ -28,6 +28,7 @@ namespace robotymobilne_projekt.Devices.Network_utils
 
             ControllerSettings.Instance.reserveController(controller);
             RobotSettings.Instance.reserveRobot(robot);
+            ControllerSettings.Instance.notifyObservers();
 
             handlerThread = new Thread(run);
             handlerThread.Start();

@@ -78,6 +78,7 @@
     <Compile Include="Devices\RemoteDevice.cs" />
     <Compile Include="Devices\RobotModel.cs" />
     <Compile Include="GUI\Converters\AbsoluteSpeedConverter.cs" />
+    <Compile Include="GUI\Converters\BatteryStatusToColorConverter.cs" />
     <Compile Include="GUI\Converters\DirectionToColorConverter.cs" />
     <Compile Include="GUI\Converters\ReverseConnectionStatus.cs" />
     <Compile Include="GUI\Converters\ReverseLogicConverter.cs" />
@@ -108,6 +109,8 @@
     <Compile Include="GUI\ViewModels\DelegateCommand.cs" />
     <Compile Include="GUI\ViewModels\ManualViewModel.cs" />
     <Compile Include="Manual\NullObjectController.cs" />
+    <Compile Include="Settings\IObservable.cs" />
+    <Compile Include="Settings\IObserver.cs" />
     <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="GUI\ViewModels\RobotViewModel.cs" />
     <Compile Include="GUI\ViewModels\ViewModel.cs" />

@@ -7,15 +7,21 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
 using System.Windows.Data;
+using System;
 
 namespace robotymobilne_projekt.GUI.ViewModels
 {
-    class RobotViewModel : ViewModel
+    class RobotViewModel : ViewModel, IObserver
     {
         private ICommand connect;
         private ICommand disconnect;
         private ICommand delete;
         private ManualViewModel context;
+
+        // Collections
+        private ObservableCollection<AbstractController> controllers;
+
+        // Currently selected
         private RobotModel robot;
         private AbstractController controller;
 
@@ -36,16 +42,16 @@ namespace robotymobilne_projekt.GUI.ViewModels
         {
             get
             {
-                ObservableCollection<AbstractController> filteredControllers = 
-                        new ObservableCollection<AbstractController>(ControllerSettings.Instance.Controllers);
-                if (null != controller && !filteredControllers.Contains(controller))
-                {
-                    filteredControllers.Add(controller);
-                }
-                return filteredControllers;
+                return controllers;
+            }
+            set
+            {
+                controllers = value;
+                NotifyPropertyChanged("Controllers");
             }
         }
 
+        // Accessors
         public AbstractController Controller
         {
             get
@@ -54,7 +60,14 @@ namespace robotymobilne_projekt.GUI.ViewModels
             }
             set
             {
-                controller = value;
+                if (null != value)
+                {
+                    controller = value;
+                }
+                else
+                {
+                    controller = ControllerSettings.Instance.Controllers[0]; // Null object element (NONE)
+                }
                 NotifyPropertyChanged("Controller");
             }
         }
@@ -145,6 +158,19 @@ namespace robotymobilne_projekt.GUI.ViewModels
         public RobotViewModel(ManualViewModel context)
         {
             this.context = context;
+            Controllers = new ObservableCollection<AbstractController>(ControllerSettings.Instance.Controllers);
+            ControllerSettings.Instance.registerObserver(this);
+        }
+
+        public void notify()
+        {
+            ObservableCollection<AbstractController> refreshedControllers =
+                    new ObservableCollection<AbstractController>(ControllerSettings.Instance.Controllers);
+            if (null != controller && !controllers.Contains(controller))
+            {
+                refreshedControllers.Add(controller);
+            }
+            Controllers = refreshedControllers;
         }
     }
 }

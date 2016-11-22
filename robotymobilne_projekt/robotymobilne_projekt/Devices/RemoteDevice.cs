@@ -1,5 +1,6 @@
 ﻿using MobileRobots.Utils.AppLogger;
 using robotymobilne_projekt.Devices.Network;
+using robotymobilne_projekt.Settings;
 using robotymobilne_projekt.Utils;
 using robotymobilne_projekt.Utils.AppLogger;
 using System;
@@ -218,7 +219,7 @@ namespace MobileRobots
             try
             {
                 int bytesRead = networkStream.EndRead(result);
-                Thread.Sleep(5000);
+                Thread.Sleep(1000);
 
                 // Start another loop
                 if (bytesRead != 0)

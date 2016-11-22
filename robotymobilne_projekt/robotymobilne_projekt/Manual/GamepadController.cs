@@ -1,6 +1,5 @@
 ﻿using System;
 using OpenTK.Input;
-using System.Threading;
 
 namespace MobileRobots.Manual
 {
@@ -100,6 +99,20 @@ namespace MobileRobots.Manual
         public override string ToString()
         {
             return string.Format("Gamepad {0}", index+1);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if(null != obj && obj is GamepadController)
+            {
+                return ((GamepadController)obj).GamepadIndex == index;
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return GamepadIndex.GetHashCode();
         }
     }
 }

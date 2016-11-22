@@ -15,9 +15,6 @@ namespace MobileRobots
         private double speedL;
         private double speedR;
 
-        // Utilities
-        private AbstractController controller;
-
         #region Setters & Getters
         public Point Position
         {
@@ -44,17 +41,6 @@ namespace MobileRobots
                     battery = value;
                 }
                 NotifyPropertyChanged("Battery");
-            }
-        }
-        public AbstractController Controller
-        {
-            get
-            {
-                return controller;
-            }
-            set
-            {
-                controller = value;
             }
         }
         public double SpeedL
@@ -121,7 +107,7 @@ namespace MobileRobots
 
         public RobotModel(string name, string ip, int port) : base(name, ip, port)
         {
-
+            Battery = 4400;
         }
 
         public override string ToString()
@@ -138,7 +124,6 @@ namespace MobileRobots
                 RobotFrame oFrame = new RobotFrame(receiveBuffer);
                 oFrame.parseFrame(this);
 
-                Logger.getLogger().log(LogLevel.INFO, string.Format("Battery state from {0}: {1}mV", this, battery.ToString()));
                 Logger.getLogger().log(LogLevel.INFO, string.Format("Robot {0} status is: {1}", this, status.ToString()));
             }
             catch (Exception)
