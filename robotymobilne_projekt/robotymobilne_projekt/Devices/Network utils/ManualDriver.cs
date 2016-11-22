@@ -24,7 +24,6 @@ namespace robotymobilne_projekt.Devices.Network_utils
         {
             this.robot = robot;
             this.controller = controller;
-            controller.Robot = robot; // just for now!
 
             ControllerSettings.Instance.reserveController(controller);
             RobotSettings.Instance.reserveRobot(robot);
@@ -38,8 +37,11 @@ namespace robotymobilne_projekt.Devices.Network_utils
             while(Robot.Status == RemoteDevice.StatusE.CONNECTED || Robot.Status == RemoteDevice.StatusE.CONNECTING)
             {
                 string dataFrame = controller.execute();
-                if (null != dataFrame)
+
+                if (null != dataFrame && dataFrame.Length == 6)
                 {
+                    RobotTransmitFrame transmitFrame = new RobotTransmitFrame(dataFrame);
+                    transmitFrame.parseFrame(Robot);
                     Robot.sendData(dataFrame);
                 }
                 Thread.Sleep(ControllerSettings.Instance.Latency);

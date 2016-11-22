@@ -6,9 +6,11 @@ namespace MobileRobots.Manual
     {
         protected ControllerSettings controllerSettings;
         protected RobotSettings robotSettings;
-        protected RobotModel robot;
         protected bool nitroPressed;
         protected bool handbrakePressed;
+        protected double SpeedL;
+        protected double SpeedR;
+
 
         #region Constants
         private const string noLights = "00";
@@ -17,17 +19,6 @@ namespace MobileRobots.Manual
         private const string bothLights = "03";
         #endregion
 
-        public RobotModel Robot
-        {
-            get
-            {
-                return robot;
-            }
-            set
-            {
-                robot = value;
-            }
-        }
 
         /// <summary>
         /// Specifies the time controller is being polled for data.
@@ -46,29 +37,27 @@ namespace MobileRobots.Manual
             steerL *= robotSettings.SteeringSensivity;
             steerR *= robotSettings.SteeringSensivity;
 
-            if (nitro)
+            if (motorL > 0 && motorR > 0)
             {
-                motorL *= robotSettings.NitroFactor;
-                motorR *= robotSettings.NitroFactor;
-            }
-
-            if (motorL > 0)
-            {
-                robot.SpeedL = motorL + steerR;
-                robot.SpeedR = motorR + steerL;
+                if (nitro)
+                {
+                    motorL *= robotSettings.NitroFactor;
+                    motorR *= robotSettings.NitroFactor;
+                }
+                SpeedL = motorL + steerR;
+                SpeedR = motorR + steerL;
             }
             else
             {
-                robot.SpeedL = motorL - steerR;
-                robot.SpeedR = motorR - steerL;
+                SpeedL = motorL - steerR;
+                SpeedR = motorR - steerL;
             }
 
             if (handbrake)
             {
-                robot.SpeedL = 0;
-                robot.SpeedR = 0;
+                SpeedL = 0;
+                SpeedR = 0;
             }
-
         }
 
         protected virtual string CalculateFrame(double speedL, double speedR)

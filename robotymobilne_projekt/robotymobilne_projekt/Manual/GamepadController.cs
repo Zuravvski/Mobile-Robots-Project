@@ -94,7 +94,7 @@ namespace MobileRobots.Manual
         {
             getXinput();
             calculateSpeed();
-            return CalculateFrame(robot.SpeedL, robot.SpeedR);
+            return CalculateFrame(SpeedL, SpeedR);
         }
 
         public override string ToString()

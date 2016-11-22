@@ -35,7 +35,7 @@ namespace MobileRobots.Manual
         {
             key = Keyboard.GetState();
             getKinput();
-            return CalculateFrame(robot.SpeedL, robot.SpeedR);
+            return CalculateFrame(SpeedL, SpeedR);
         }
 
         private void getKinput()
@@ -92,6 +92,9 @@ namespace MobileRobots.Manual
             }
 
             CalculateFinalSpeed(speedL, speedR, steerL, steerR, nitroPressed, handbrakePressed);
+
+            nitroPressed = false;
+            handbrakePressed = false;
         }
 
         public override string ToString()

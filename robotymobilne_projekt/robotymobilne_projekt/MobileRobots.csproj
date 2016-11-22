@@ -74,6 +74,7 @@
     <Compile Include="Devices\Network utils\DataFrame.cs" />
     <Compile Include="Devices\Network utils\ManualDriver.cs" />
     <Compile Include="Devices\Network utils\RobotFrame.cs" />
+    <Compile Include="Devices\Network utils\RobotTransmitFrame.cs" />
     <Compile Include="Devices\NullObjectRobot.cs" />
     <Compile Include="Devices\RemoteDevice.cs" />
     <Compile Include="Devices\RobotModel.cs" />
