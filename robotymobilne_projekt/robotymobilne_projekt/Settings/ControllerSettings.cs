@@ -4,6 +4,7 @@ using robotymobilne_projekt.Manual;
 using robotymobilne_projekt.Utils;
 using System;
 using System.Collections.ObjectModel;
+using System.Threading;
 
 namespace robotymobilne_projekt.Settings
 {
@@ -11,10 +12,15 @@ namespace robotymobilne_projekt.Settings
     {
         private static readonly Lazy<ControllerSettings> instance = new Lazy<ControllerSettings>(() => new ControllerSettings());
         private ObservableCollection<AbstractController> controllers;
+        private Thread scanningThread;
         private int latency;
+        private int scanTime;
+
+        private readonly object scanMutex = new object();
 
         #region Default values
         private const int defaultLatency = 100;
+        private const int defaultScanTime = 3000; // 3s
         #endregion
 
         #region Getters & Setters
@@ -42,7 +48,10 @@ namespace robotymobilne_projekt.Settings
         private ControllerSettings()
         {
             latency = defaultLatency;
+            scanTime = defaultScanTime;
             controllers = new ObservableCollection<AbstractController>();
+            scanningThread = new Thread(scanPads);
+            scanningThread.Start();
         }
 
         public static ControllerSettings Instance
@@ -53,19 +62,25 @@ namespace robotymobilne_projekt.Settings
             }
         }
 
-        // TODO: Test this
-        public void scanPads()
+        private void scanPads()
         {
-            for (int i = 0; i < 4; i++)
+            while (true)
             {
-                if (Joystick.GetState(i).IsConnected)
+                for (int i = 0; i < 4; i++)
                 {
-                    AbstractController newGamepad = new GamepadController(i);
-                    if (controllers.Contains(newGamepad))
+                    if (Joystick.GetState(i).IsConnected)
                     {
-                        controllers.Add(newGamepad);
+                        AbstractController newGamepad = new GamepadController(i);
+                        if (!controllers.Contains(newGamepad))
+                        {
+                            lock (scanMutex)
+                            {
+                                Controllers.Add(newGamepad);
+                            }
+                        }
                     }
                 }
+                Thread.Sleep(scanTime);
             }
         }
 
@@ -91,7 +106,6 @@ namespace robotymobilne_projekt.Settings
         public void initialize()
         {
             addDefaultKeyboardControllers();
-            scanPads();
         }
     }
 }

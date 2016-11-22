@@ -1,5 +1,6 @@
 ﻿using System;
 using OpenTK.Input;
+using System.Threading;
 
 namespace MobileRobots.Manual
 {
@@ -94,17 +95,6 @@ namespace MobileRobots.Manual
             getXinput();
             calculateSpeed();
             return CalculateFrame(robot.SpeedL, robot.SpeedR);
-        }
-
-        public override bool Equals(object obj)
-        {
-            // TODO: consider using typeof in case it doesn't work
-            return index == ((GamepadController)obj).GamepadIndex;
-        }
-
-        public override int GetHashCode()
-        {
-            return GamepadIndex.GetHashCode();
         }
 
         public override string ToString()
