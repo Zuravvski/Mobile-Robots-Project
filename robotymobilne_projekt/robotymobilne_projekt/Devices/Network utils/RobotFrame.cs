@@ -1,13 +1,9 @@
 ﻿using MobileRobots;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace robotymobilne_projekt.Devices.Network
 {
-    class RobotFrame : DataFrame<RobotModel>
+    public class RobotFrame : DataFrame<RobotModel>
     {
         const int FRAME_SIZE = 28;
 

@@ -1,5 +1,6 @@
 ﻿using MobileRobots;
 using MobileRobots.Utils.AppLogger;
+using robotymobilne_projekt.Devices;
 using robotymobilne_projekt.Utils;
 using robotymobilne_projekt.Utils.AppLogger;
 using System;
@@ -26,7 +27,7 @@ namespace robotymobilne_projekt.Settings
 
         private ObservableCollection<RobotModel> robots;
 
-        // setters and getters
+        #region Setters & Getters
         public double MaxSpeed
         {
             get
@@ -83,13 +84,21 @@ namespace robotymobilne_projekt.Settings
             }
             set
             {
-                if (value > 0 && value < 10)
+                if (value >= 0 && value <= 10)
                 {
                     reconnectAttempts = value;
                 }
                 NotifyPropertyChanged("ReconnectAttempts");
             }
         }
+        public ObservableCollection<RobotModel> Robots
+        {
+            get
+            {
+                return robots;
+            }
+        }
+        #endregion
 
         private RobotSettings()
         {
@@ -112,9 +121,11 @@ namespace robotymobilne_projekt.Settings
         {
             if(0 == robots.Count)
             {
-                for (int i = 0; i < 6; i++)
+                robots.Add(new NullObjectRobot("NONE", "", 0));
+                robots.Add(new RobotModel("ID: 30", "127.0.0.1", 23));
+                for (int i = 1; i < 6; i++)
                 {
-                    RobotModel newRobot = new RobotModel("3" + i, "192.168.2.3" + i, 8000);
+                    RobotModel newRobot = new RobotModel("ID: 3" + i, "192.168.2.3" + i, 8000);
                     robots.Add(newRobot);
                 }
             }
@@ -132,13 +143,15 @@ namespace robotymobilne_projekt.Settings
             }
         }
 
-        // TODO: To be implemented
-        public ObservableCollection<RobotModel> AvailableRobots
+        public void reserveRobot(RobotModel robot)
         {
-            get
-            {
-                return robots;
-            }
+            Robots.Remove(robot);
+        }
+
+        // TODO: Fix need here
+        public void freeRobot(RobotModel robot)
+        {
+            Robots.Add(robot);
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using MobileRobots.Manual;
 using MobileRobots.Utils.AppLogger;
 using robotymobilne_projekt.Devices.Network;
-using robotymobilne_projekt.Settings;
 using robotymobilne_projekt.Utils.AppLogger;
 using System;
-using System.Threading;
 using System.Windows;
 
 namespace MobileRobots
@@ -19,7 +17,6 @@ namespace MobileRobots
 
         // Utilities
         private AbstractController controller;
-        private Thread controllerThread;
 
         #region Setters & Getters
         public Point Position
@@ -124,32 +121,14 @@ namespace MobileRobots
 
         public RobotModel(string name, string ip, int port) : base(name, ip, port)
         {
-            controllerThread = new Thread(handleController);
+
         }
 
         public override string ToString()
         {
-            return "ID: " + deviceName;
+            return deviceName;
         }
-
-        public void handleController()
-        {
-            while (true)
-            {
-                string dataFrame = controller.execute();
-                if (null != dataFrame && tcpClient.Connected)
-                {
-                    sendData(dataFrame);
-                }
-                Thread.Sleep(ControllerSettings.Instance.Latency);
-            }
-        }
-
-        public void run()
-        {
-            controllerThread.Start();
-        }
-
+    
         protected override void receiveData()
         {
             try

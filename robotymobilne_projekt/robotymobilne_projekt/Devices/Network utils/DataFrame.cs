@@ -3,7 +3,7 @@
 namespace robotymobilne_projekt.Devices.Network
 {
     // Simple wrapper for managing data frames
-    abstract class DataFrame<T>
+    public abstract class DataFrame<T>
     {
         protected string data;
 

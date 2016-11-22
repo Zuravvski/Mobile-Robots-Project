@@ -1,9 +1,12 @@
 ﻿using MobileRobots;
 using MobileRobots.Manual;
+using robotymobilne_projekt.Devices.Network_utils;
 using robotymobilne_projekt.Settings;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
+using System.Windows;
+using System.Windows.Data;
 
 namespace robotymobilne_projekt.GUI.ViewModels
 {
@@ -13,34 +16,61 @@ namespace robotymobilne_projekt.GUI.ViewModels
         private ICommand disconnect;
         private ICommand delete;
         private ManualViewModel context;
+        private RobotModel robot;
+        private AbstractController controller;
 
         #region Setters & Getters
         public ObservableCollection<RobotModel> Robots
         {
             get
             {
-                return RobotSettings.Instance.AvailableRobots;
-            }
-        }
-        public List<AbstractController> Controllers
-        {
-            get
-            {
-                return ControllerSettings.Instance.AVAILABLE_CONTROLLERS;
-            }
-        }
-        public RobotModel Robot { set; get; }
-        public bool Connected
-        {
-            get
-            {
-                if(null != Robot)
+                ObservableCollection<RobotModel> filteredRobots = new ObservableCollection<RobotModel>(RobotSettings.Instance.Robots);
+                if(null != robot && !filteredRobots.Contains(robot))
                 {
-                    return Robot.Connected;
+                    filteredRobots.Add(robot);
                 }
-                return false;
+                return filteredRobots;
             }
         }
+        public ObservableCollection<AbstractController> Controllers
+        {
+            get
+            {
+                ObservableCollection<AbstractController> filteredControllers = 
+                        new ObservableCollection<AbstractController>(ControllerSettings.Instance.Controllers);
+                if (null != controller && !filteredControllers.Contains(controller))
+                {
+                    filteredControllers.Add(controller);
+                }
+                return filteredControllers;
+            }
+        }
+
+        public AbstractController Controller
+        {
+            get
+            {
+                return controller;
+            }
+            set
+            {
+                controller = value;
+                NotifyPropertyChanged("Controller");
+            }
+        }
+        public RobotModel Robot
+        {
+            get
+            {
+                return robot;
+            }
+            set
+            {
+                robot = value;
+                NotifyPropertyChanged("Robot");
+            }
+        }
+        public ManualDriver Driver;
         #endregion
 
         #region Actions
@@ -52,9 +82,17 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 {
                     connect = new DelegateCommand(delegate ()
                     {
-                        if (null != Robot)
+                        if (null != Robot && !Robot.DeviceName.Equals("NONE") && 
+                            null != Controller && !Controller.ToString().Equals("NONE"))
                         {
+                            
                             Robot.connect();
+                            Driver = new ManualDriver(robot, controller);
+                            
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please choose valid robot and controller.", "Invalid settings");
                         }
                     });
                 }
@@ -92,6 +130,9 @@ namespace robotymobilne_projekt.GUI.ViewModels
                         if (null != Robot && Robot.Connected)
                         {
                             Robot.disconnect();
+                            Robot = null;
+                            Controller = null;
+                            Driver = null;
                         }
                         context.RemoveUser.Execute(this);
                     });
@@ -104,7 +145,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
         public RobotViewModel(ManualViewModel context)
         {
             this.context = context;
-            Robot = new RobotModel("Test", "216.58.209.163", 23);
         }
     }
 }

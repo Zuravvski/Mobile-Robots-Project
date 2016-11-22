@@ -38,7 +38,7 @@ namespace MobileRobots.Manual
             robotSettings = RobotSettings.Instance;
         }
 
-        protected void CalculateFinalSpeed(double motorL, double motorR, double steerL, double steerR, bool nitro, bool handbrake)
+        protected virtual void CalculateFinalSpeed(double motorL, double motorR, double steerL, double steerR, bool nitro, bool handbrake)
         {
             motorL *= robotSettings.MaxSpeed;
             motorR *= robotSettings.MaxSpeed;
@@ -63,7 +63,7 @@ namespace MobileRobots.Manual
 
         }
 
-        public string CalculateFrame(double speedL, double speedR)
+        protected virtual string CalculateFrame(double speedL, double speedR)
         {
             //set get robot
             string frameLights = noLights, frameL = string.Empty, frameR = string.Empty;
@@ -106,7 +106,7 @@ namespace MobileRobots.Manual
             return finalFrame;
         }
 
-        public double mapValues(double value, double fromSource, double toSource, double fromTarget, double toTarget)
+        protected double mapValues(double value, double fromSource, double toSource, double fromTarget, double toTarget)
         {
             return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
         }

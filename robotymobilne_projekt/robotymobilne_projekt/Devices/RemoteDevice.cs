@@ -158,6 +158,7 @@ namespace MobileRobots
         #endregion
 
         // Adapt to generic Data frame objects
+        // Add reconnection mechanism
         #region Sending Data
         public virtual void sendData(string data)
         {
@@ -178,6 +179,7 @@ namespace MobileRobots
             catch(Exception ex)
             {
                 Logger.getLogger().log(LogLevel.WARNING, "Could not send data to device: " + deviceName, ex);
+                disconnect();
             }
         }
 
@@ -191,6 +193,7 @@ namespace MobileRobots
             catch(Exception ex)
             {
                 Logger.getLogger().log(LogLevel.WARNING, "Could not send data to device: " + deviceName, ex);
+                disconnect();
             }
         }
         #endregion

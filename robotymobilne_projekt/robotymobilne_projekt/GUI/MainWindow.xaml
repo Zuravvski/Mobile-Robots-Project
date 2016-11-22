@@ -38,8 +38,8 @@
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>
 
-    <mui:ModernWindow.TitleLinks>
-        <mui:Link DisplayName="settings" Source="/GUI/Views/Settings/SettingsPage.xaml" />
-        <mui:Link DisplayName="help" Source="https://github.com/Zuravvski/Roboty-Mobilne" />
-    </mui:ModernWindow.TitleLinks>
+        <mui:ModernWindow.TitleLinks>
+            <mui:Link DisplayName="settings" Source="/GUI/Views/Settings/SettingsPage.xaml" />
+            <mui:Link DisplayName="help" Source="https://github.com/Zuravvski/Roboty-Mobilne" />
+        </mui:ModernWindow.TitleLinks>
 </mui:ModernWindow>

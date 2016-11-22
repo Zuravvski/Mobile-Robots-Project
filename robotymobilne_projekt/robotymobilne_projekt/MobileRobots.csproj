@@ -72,11 +72,14 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Devices\Network utils\DataFrame.cs" />
+    <Compile Include="Devices\Network utils\ManualDriver.cs" />
     <Compile Include="Devices\Network utils\RobotFrame.cs" />
+    <Compile Include="Devices\NullObjectRobot.cs" />
     <Compile Include="Devices\RemoteDevice.cs" />
     <Compile Include="Devices\RobotModel.cs" />
     <Compile Include="GUI\Converters\AbsoluteSpeedConverter.cs" />
     <Compile Include="GUI\Converters\DirectionToColorConverter.cs" />
+    <Compile Include="GUI\Converters\ReverseConnectionStatus.cs" />
     <Compile Include="GUI\Converters\ReverseLogicConverter.cs" />
     <Compile Include="GUI\Converters\RobotStatusToTextConverter.cs" />
     <Compile Include="GUI\Converters\RobotStatusToBoolConverter.cs" />
@@ -103,6 +106,7 @@
     <Compile Include="GUI\ViewModels\AppearanceViewModel.cs" />
     <Compile Include="GUI\ViewModels\DelegateCommand.cs" />
     <Compile Include="GUI\ViewModels\ManualViewModel.cs" />
+    <Compile Include="Manual\NullObjectController.cs" />
     <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="GUI\ViewModels\RobotViewModel.cs" />
     <Compile Include="GUI\ViewModels\ViewModel.cs" />
