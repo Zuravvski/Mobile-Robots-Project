@@ -51,6 +51,7 @@ namespace robotymobilne_projekt.Settings
             scanTime = defaultScanTime;
             controllers = new ObservableCollection<AbstractController>();
             scanningThread = new Thread(scanPads);
+            scanningThread.IsBackground = true;
             scanningThread.Start();
         }
 
@@ -75,7 +76,10 @@ namespace robotymobilne_projekt.Settings
                         {
                             lock (scanMutex)
                             {
-                                Controllers.Add(newGamepad);
+                                if (!controllers.Contains(newGamepad))
+                                {
+                                    Controllers.Add(newGamepad);
+                                }
                             }
                         }
                     }
