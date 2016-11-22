@@ -84,6 +84,7 @@
     <Compile Include="GUI\Converters\RobotStatusToTextConverter.cs" />
     <Compile Include="GUI\Converters\RobotStatusToBoolConverter.cs" />
     <Compile Include="GUI\Converters\TextToNumberConverter.cs" />
+    <Compile Include="GUI\Converters\ValToPercentConverter.cs" />
     <Compile Include="GUI\Views\CoverPanel.xaml.cs">
       <DependentUpon>CoverPanel.xaml</DependentUpon>
     </Compile>
