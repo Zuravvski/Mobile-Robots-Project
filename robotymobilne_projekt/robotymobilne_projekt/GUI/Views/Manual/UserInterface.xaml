@@ -24,18 +24,11 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="83*"/>
         </Grid.ColumnDefinitions>
-<<<<<<< HEAD
+
         <Canvas HorizontalAlignment="Left" Height="200" Margin="10,39,0,0" VerticalAlignment="Top" Width="200" Background="White"/>
-        <ProgressBar HorizontalAlignment="Left" Height="160" Margin="215,39,0,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Value="{Binding SpeedL, Mode=OneWay, Converter={StaticResource speedConverter}}" Background="{x:Null}" BorderThickness="2, 2, 2, 2" Grid.ColumnSpan="2" Foreground="{Binding SpeedL, Mode=OneWay, Converter={StaticResource directionConverter}}" DataContext="{Binding Robot}"/>
-        <ProgressBar HorizontalAlignment="Left" Height="160" Margin="256,39,0,0" VerticalAlignment="Top" Width="34" Background="{x:Null}" Orientation="Vertical" Value="{Binding SpeedR, Mode=OneWay, Converter={StaticResource speedConverter}, FallbackValue=0}" BorderThickness="2, 2, 2, 2" DataContext="{Binding Robot}" Foreground="{Binding SpeedR, Mode=OneWay, Converter={StaticResource directionConverter}}"/>
-        <ProgressBar HorizontalAlignment="Left" Height="35" Margin="215,204,0,0" VerticalAlignment="Top" Width="75" Background="{x:Null}" BorderThickness="2, 2, 2, 2" Grid.ColumnSpan="2" DataContext="{Binding Robot}" Maximum="5000" Minimum="4300" Value="{Binding Battery}"/>
-=======
-        <Canvas HorizontalAlignment="Left" Height="200" Margin="10,39,0,0" VerticalAlignment="Top" Width="200" Background="White">
-        </Canvas>
         <ProgressBar x:Name="speedl" HorizontalAlignment="Left" Height="160" Margin="215,39,0,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Value="{Binding SpeedL, Mode=OneWay, Converter={StaticResource speedConverter}}" Background="{x:Null}" BorderThickness="2, 2, 2, 2" Grid.ColumnSpan="2" Foreground="{Binding SpeedL, Mode=OneWay, Converter={StaticResource directionConverter}}" DataContext="{Binding Robot}"/>
         <ProgressBar x:Name="speedr" HorizontalAlignment="Left" Height="160" Margin="256,39,0,0" VerticalAlignment="Top" Width="34" Background="{x:Null}" Orientation="Vertical" Value="{Binding SpeedR, Mode=OneWay, Converter={StaticResource speedConverter}}" BorderThickness="2, 2, 2, 2" DataContext="{Binding Robot}" Foreground="{Binding SpeedR, Mode=OneWay, Converter={StaticResource directionConverter}}"/>
         <ProgressBar x:Name="batteryStat" HorizontalAlignment="Left" Height="35" Margin="215,204,0,0" VerticalAlignment="Top" Width="75" Value="{Binding Battery}" Background="{x:Null}" BorderThickness="2, 2, 2, 2" Grid.ColumnSpan="2" DataContext="{Binding Robot}" Maximum="5000" Minimum="4300" Foreground="#CC3AFF00"/>
->>>>>>> 57e9422d13e6aa6918ba77b3400398eac229a572
         <Rectangle HorizontalAlignment="Left" Height="17" Margin="290,213,0,0" VerticalAlignment="Top" Width="4" Fill="#FFBCBCBC" />
         <ComboBox x:Name="comboBoxRobots" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" Width="95" ItemsSource="{Binding Robots, Mode=OneWay}" Height="22" SelectedIndex="0" SelectedItem="{Binding Robot, Mode=OneWayToSource}" IsEnabled="{Binding ElementName=comboBoxRobots, Path=DataContext.Robot.Status, Converter={StaticResource statusToBoolConverter}, FallbackValue=true}"/>
         <ComboBox x:Name="comboBoxControllers" HorizontalAlignment="Left" Margin="115,12,0,0" VerticalAlignment="Top" Width="95" ItemsSource="{Binding Controllers}" Height="22" SelectedIndex="0" SelectedItem="{Binding Controller, Mode=OneWayToSource}" IsEnabled="{Binding ElementName=comboBoxControllers, Path=DataContext.Robot.Status, Converter={StaticResource statusToBoolConverter}, FallbackValue=true}"/>
