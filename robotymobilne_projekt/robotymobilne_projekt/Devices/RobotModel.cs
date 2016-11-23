@@ -121,8 +121,9 @@ namespace MobileRobots
             {
                 byte[] receiveBuffer = new byte[28];
                 networkStream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, new AsyncCallback(receiveCallback), tcpClient);
-                RobotFrame oFrame = new RobotFrame(receiveBuffer);
-                oFrame.parseFrame(this);
+                //RobotFrame oFrame = new RobotFrame(receiveBuffer);
+                //oFrame.parseFrame(this);
+                Battery = new Random().Next(4300, 5000);
 
                 Logger.getLogger().log(LogLevel.INFO, string.Format("Robot {0} status is: {1}", this, status.ToString()));
             }
