@@ -10,6 +10,7 @@ namespace MobileRobots.Manual
         protected bool handbrakePressed;
         protected double SpeedL;
         protected double SpeedR;
+        protected bool nitro;
 
 
         #region Constants
@@ -31,6 +32,8 @@ namespace MobileRobots.Manual
 
         protected virtual void CalculateFinalSpeed(double motorL, double motorR, double steerL, double steerR, bool nitro, bool handbrake)
         {
+            this.nitro = nitro;
+
             motorL *= robotSettings.MaxSpeed;
             motorR *= robotSettings.MaxSpeed;
 
@@ -69,7 +72,7 @@ namespace MobileRobots.Manual
             {
                 if (speedL == speedR)
                 {
-                    frameLights = bothLights;
+                    frameLights = noLights;
                 }
                 if (speedR > speedL)
                 {
@@ -78,6 +81,10 @@ namespace MobileRobots.Manual
                 if (speedL > speedR)
                 {
                     frameLights = leftLight;
+                }
+                if (nitro)
+                {
+                    frameLights = bothLights;
                 }
             }
 
