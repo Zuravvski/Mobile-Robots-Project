@@ -11,6 +11,7 @@ namespace robotymobilne_projekt.Manual
         protected bool handbrakePressed;
         protected double SpeedL;
         protected double SpeedR;
+        protected bool nitro;
 
         /// <summary>
         /// Specifies the time controller is being polled for data.
@@ -23,6 +24,8 @@ namespace robotymobilne_projekt.Manual
 
         protected virtual void CalculateFinalSpeed(double motorL, double motorR, double steerL, double steerR, bool nitro, bool handbrake)
         {
+            this.nitro = nitro;
+
             motorL *= robotSettings.MaxSpeed;
             motorR *= robotSettings.MaxSpeed;
 
