@@ -1,7 +1,7 @@
-﻿using robotymobilne_projekt.GUI.Views.Settings;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
+using robotymobilne_projekt.GUI.ViewModels;
 
-namespace MobileRobots.GUI.Views.Settings
+namespace robotymobilne_projekt.GUI.Views.Settings
 {
     /// <summary>
     /// Interaction logic for TargetDeviceSettings.xaml

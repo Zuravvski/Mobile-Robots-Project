@@ -1,16 +1,9 @@
-﻿using MobileRobots.Utils.AppLogger;
+﻿using System.Windows;
+using robotymobilne_projekt.GUI;
 using robotymobilne_projekt.Settings;
 using robotymobilne_projekt.Utils.AppLogger;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Input;
 
-namespace MobileRobots
+namespace robotymobilne_projekt
 {
     /// <summary>
     /// Interaction logic for App.xaml

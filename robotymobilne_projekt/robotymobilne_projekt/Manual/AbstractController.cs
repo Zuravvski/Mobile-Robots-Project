@@ -1,6 +1,7 @@
-﻿using robotymobilne_projekt.Settings;
+﻿using System;
+using robotymobilne_projekt.Settings;
 
-namespace MobileRobots.Manual
+namespace robotymobilne_projekt.Manual
 {
     public abstract class AbstractController
     {
@@ -10,15 +11,6 @@ namespace MobileRobots.Manual
         protected bool handbrakePressed;
         protected double SpeedL;
         protected double SpeedR;
-
-
-        #region Constants
-        private const string noLights = "00";
-        private const string leftLight = "01";
-        private const string rightLight = "02";
-        private const string bothLights = "03";
-        #endregion
-
 
         /// <summary>
         /// Specifies the time controller is being polled for data.
@@ -60,54 +52,11 @@ namespace MobileRobots.Manual
             }
         }
 
-        protected virtual string CalculateFrame(double speedL, double speedR)
-        {
-            //set get robot
-            string frameLights = noLights, frameL = string.Empty, frameR = string.Empty;
-
-            if (robotSettings.UseLights)
-            {
-                if (speedL == speedR)
-                {
-                    frameLights = bothLights;
-                }
-                if (speedR > speedL)
-                {
-                    frameLights = rightLight;
-                }
-                if (speedL > speedR)
-                {
-                    frameLights = leftLight;
-                }
-            }
-
-            if (speedL >= 0)
-            {
-                frameL = ((int)speedL).ToString("X2");
-            }
-            else
-            {
-                frameL = ((int)speedL).ToString("X2").Substring(((int)speedL).ToString("X2").Length - 2);
-            }
-
-            if (speedR >= 0)
-            {
-                frameR = ((int)speedR).ToString("X2");
-            }
-            else
-            {
-                frameR = ((int)speedR).ToString("X2").Substring(((int)speedR).ToString("X2").Length - 2);
-            }
-            string finalFrame = frameLights + frameL + frameR;
-
-            return finalFrame;
-        }
-
         protected double mapValues(double value, double fromSource, double toSource, double fromTarget, double toTarget)
         {
             return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
         }
 
-        public abstract string execute();
+        public abstract Tuple<double, double> execute();
     }
 }

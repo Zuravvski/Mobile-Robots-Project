@@ -1,6 +1,4 @@
-﻿using MobileRobots.Utils;
-using MobileRobots.Utils.AppLogger;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace robotymobilne_projekt.Utils.AppLogger
 {
@@ -8,7 +6,7 @@ namespace robotymobilne_projekt.Utils.AppLogger
     {
         public InfoLevel(Logger logger) : base(logger)
         {
-            _intValue = LogLevel.INFO;
+            _intValue = INFO;
             _stringValue = "INFO";
         }
 
@@ -17,7 +15,7 @@ namespace robotymobilne_projekt.Utils.AppLogger
             string result = "";
             if (null != logger)
             {
-                if (LogLevel.INFO == level)
+                if (INFO == level)
                 {
                     logger.Foreground = Brushes.Black;
                     result = _stringValue;

@@ -1,4 +1,4 @@
-﻿using MobileRobots.Manual;
+﻿using System;
 
 namespace robotymobilne_projekt.Manual
 {
@@ -19,7 +19,7 @@ namespace robotymobilne_projekt.Manual
             this.name = name;
         }
 
-        public override string execute()
+        public override Tuple<double, double> execute()
         {
             return null;
         }

@@ -1,13 +1,10 @@
-﻿using MobileRobots;
-using MobileRobots.Manual;
-using robotymobilne_projekt.Devices.Network_utils;
+﻿using robotymobilne_projekt.Devices.Network_utils;
 using robotymobilne_projekt.Settings;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
-using System.Windows.Data;
-using System;
+using robotymobilne_projekt.Devices;
+using robotymobilne_projekt.Manual;
 
 namespace robotymobilne_projekt.GUI.ViewModels
 {
@@ -93,7 +90,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
             {
                 if(null == connect)
                 {
-                    connect = new DelegateCommand(delegate ()
+                    connect = new DelegateCommand(delegate
                     {
                         if (null != Robot && !Robot.DeviceName.Equals("NONE") && 
                             null != Controller && !Controller.ToString().Equals("NONE"))
@@ -119,7 +116,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
             {
                 if (null == disconnect)
                 {
-                    disconnect = new DelegateCommand(delegate ()
+                    disconnect = new DelegateCommand(delegate
                     {
                         if (null != Robot)
                         {
@@ -138,7 +135,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
             {
                 if (null == delete)
                 {
-                    delete = new DelegateCommand(delegate ()
+                    delete = new DelegateCommand(delegate
                     {
                         if (null != Robot && Robot.Connected)
                         {

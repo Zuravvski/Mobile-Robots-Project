@@ -1,5 +1,4 @@
-﻿using MobileRobots.Utils;
-using MobileRobots.Utils.AppLogger;
+﻿
 
 namespace robotymobilne_projekt.Utils.AppLogger
 {
@@ -9,12 +8,12 @@ namespace robotymobilne_projekt.Utils.AppLogger
         protected Logger logger;
         protected string _stringValue;
         protected int _intValue;
-        
-        public static readonly int INFO = 0;
-        public static readonly int WARNING = 1;
-        public static readonly int ERROR = 2;
 
-        public LogLevel(Logger logger)
+        public const int INFO = 0;
+        public const int WARNING = 1;
+        public const int ERROR = 2;
+
+        protected LogLevel(Logger logger)
         {
             this.logger = logger;
         }

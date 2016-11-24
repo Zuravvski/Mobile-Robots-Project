@@ -1,13 +1,11 @@
-﻿using MobileRobots.Utils.AppLogger;
-using robotymobilne_projekt.Devices.Network;
-using robotymobilne_projekt.Settings;
-using robotymobilne_projekt.Utils;
-using robotymobilne_projekt.Utils.AppLogger;
-using System;
+﻿using System;
 using System.Net.Sockets;
 using System.Threading;
+using robotymobilne_projekt.Devices.Network_utils;
+using robotymobilne_projekt.Utils;
+using robotymobilne_projekt.Utils.AppLogger;
 
-namespace MobileRobots
+namespace robotymobilne_projekt.Devices
 {
     public abstract class RemoteDevice : ObservableObject
     {
@@ -28,21 +26,6 @@ namespace MobileRobots
             get
             {
                 return deviceName;
-            }
-            set
-            {
-                deviceName = value;
-            }
-        }
-        public string IP
-        {
-            get
-            {
-                return ip;
-            }
-            set
-            {
-                ip = value;
             }
         }
         public int Port
@@ -106,7 +89,7 @@ namespace MobileRobots
             {
                 Status = StatusE.CONNECTING;
                 Logger.getLogger().log(LogLevel.INFO, string.Format("Connecting with device: {0}...", this));
-                tcpClient.BeginConnect(ip, port, new AsyncCallback(connectCallback), tcpClient);
+                tcpClient.BeginConnect(ip, port, connectCallback, tcpClient);
             }
         }
 
@@ -115,7 +98,8 @@ namespace MobileRobots
             try
             {
                 TcpClient client = (TcpClient)result.AsyncState;
-                tcpClient.EndConnect(result);
+                client.EndConnect(result);
+                //tcpClient.EndConnect(result);
                
                 if(tcpClient.Connected)
                 {
@@ -170,7 +154,7 @@ namespace MobileRobots
                     RobotFrame oFrame = new RobotFrame(data);
                     string stingFrame = oFrame.getString();
                     byte[] frameToSend = oFrame.getFrame();
-                    networkStream.BeginWrite(frameToSend, 0, frameToSend.Length, new AsyncCallback(sendCallback), tcpClient);
+                    networkStream.BeginWrite(frameToSend, 0, frameToSend.Length, sendCallback, tcpClient);
                 }
                 else
                 {
@@ -188,7 +172,6 @@ namespace MobileRobots
         {
             try
             {
-                TcpClient socket = (TcpClient)result.AsyncState;
                 networkStream.EndWrite(result);
             }
             catch(Exception ex)
@@ -206,7 +189,7 @@ namespace MobileRobots
             try
             {
                 byte[] receiveBuffer = new byte[28];
-                networkStream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, new AsyncCallback(receiveCallback), tcpClient);
+                networkStream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, receiveCallback, tcpClient);
             }
             catch(Exception)
             {
@@ -231,7 +214,6 @@ namespace MobileRobots
                 {
                     // Handle disconnection
                     disconnect();
-                    return;
                 }
             }
             catch (Exception)

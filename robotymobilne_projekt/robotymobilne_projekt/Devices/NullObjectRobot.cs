@@ -1,6 +1,4 @@
-﻿using MobileRobots;
-
-namespace robotymobilne_projekt.Devices
+﻿namespace robotymobilne_projekt.Devices
 {
     public class NullObjectRobot : RobotModel
     {

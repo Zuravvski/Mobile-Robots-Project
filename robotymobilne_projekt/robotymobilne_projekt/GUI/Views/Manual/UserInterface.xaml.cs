@@ -1,5 +1,4 @@
-﻿using MobileRobots;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace robotymobilne_projekt.GUI.Views.Manual
 {

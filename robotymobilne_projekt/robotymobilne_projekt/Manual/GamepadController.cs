@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK.Input;
 
-namespace MobileRobots.Manual
+namespace robotymobilne_projekt.Manual
 {
     public class GamepadController : AbstractController
     {
@@ -17,7 +17,7 @@ namespace MobileRobots.Manual
             }
         }
 
-        public GamepadController(int index) : base()
+        public GamepadController(int index)
         {
             this.index = index;
         }
@@ -89,11 +89,11 @@ namespace MobileRobots.Manual
             B = Joystick.GetState(index).GetButton(JoystickButton.Button1);
         }
 
-        public override string execute()
+        public override Tuple<double, double> execute()
         {
             getXinput();
             calculateSpeed();
-            return CalculateFrame(SpeedL, SpeedR);
+            return new Tuple<double, double>(SpeedL, SpeedR);
         }
 
         public override string ToString()

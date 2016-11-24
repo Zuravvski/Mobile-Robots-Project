@@ -1,11 +1,9 @@
-﻿using robotymobilne_projekt.Utils;
-using robotymobilne_projekt.Utils.AppLogger;
-using System;
+﻿using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace MobileRobots.Utils.AppLogger
+namespace robotymobilne_projekt.Utils.AppLogger
 {
     class Logger : TextBlock
     {
@@ -28,7 +26,7 @@ namespace MobileRobots.Utils.AppLogger
             }
         }
 
-        private Logger() : base()
+        private Logger()
         {
             // Look and feel settings 
             Padding = new Thickness(5, 5, 5, 5);

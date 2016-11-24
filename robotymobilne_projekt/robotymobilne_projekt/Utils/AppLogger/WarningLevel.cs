@@ -1,12 +1,4 @@
-﻿using MobileRobots.Utils;
-using MobileRobots.Utils.AppLogger;
-using robotymobilne_projekt.Utils.AppLogger;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace robotymobilne_projekt.Utils.AppLogger
 {
@@ -14,7 +6,7 @@ namespace robotymobilne_projekt.Utils.AppLogger
     {
         public WarningLevel(Logger logger) : base(logger)
         {
-            _intValue = LogLevel.WARNING;
+            _intValue = WARNING;
             _stringValue = "WARNING";
         }
 
@@ -23,7 +15,7 @@ namespace robotymobilne_projekt.Utils.AppLogger
             string result = "";
             if (null != logger)
             {
-                if (LogLevel.INFO == level)
+                if (INFO == level)
                 {
                     logger.Foreground = Brushes.Orange;
                     result = _stringValue;

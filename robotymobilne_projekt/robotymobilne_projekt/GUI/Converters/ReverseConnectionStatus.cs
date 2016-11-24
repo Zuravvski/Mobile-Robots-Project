@@ -1,7 +1,7 @@
-﻿using MobileRobots;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using robotymobilne_projekt.Devices;
 
 namespace robotymobilne_projekt.GUI.Converters
 {

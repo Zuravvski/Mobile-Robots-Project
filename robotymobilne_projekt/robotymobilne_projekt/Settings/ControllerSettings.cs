@@ -1,5 +1,4 @@
-﻿using MobileRobots.Manual;
-using OpenTK.Input;
+﻿using OpenTK.Input;
 using robotymobilne_projekt.Manual;
 using System;
 using System.Collections.ObjectModel;
@@ -83,7 +82,7 @@ namespace robotymobilne_projekt.Settings
             }
         }
 
-        public void addDefaultKeyboardControllers()
+        private void addDefaultKeyboardControllers()
         {
             controllers.Add(new NullObjectController("NONE"));
             controllers.Add(new KeyboardController(0, Keyboard.GetState(), Key.Up, Key.Down, Key.Left,

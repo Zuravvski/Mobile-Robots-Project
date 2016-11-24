@@ -1,4 +1,4 @@
-﻿<Application x:Class="MobileRobots.App"
+﻿<Application x:Class="robotymobilne_projekt.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              ShutdownMode="OnMainWindowClose"

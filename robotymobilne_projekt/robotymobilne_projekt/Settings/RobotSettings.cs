@@ -1,6 +1,4 @@
-﻿using MobileRobots;
-using MobileRobots.Utils.AppLogger;
-using robotymobilne_projekt.Devices;
+﻿using robotymobilne_projekt.Devices;
 using robotymobilne_projekt.Utils;
 using robotymobilne_projekt.Utils.AppLogger;
 using System;
@@ -23,6 +21,12 @@ namespace robotymobilne_projekt.Settings
         private const double defaultSteeringSensibity = 35;
         private const double defaultNitroFactor = 1.1;
         private const int defaultReconnectAttempts = 3;
+        #endregion
+        #region Constants
+        public const string noLights = "00";
+        public const string leftLight = "01";
+        public const string rightLight = "02";
+        public const string bothLights = "03";
         #endregion
 
         private ObservableCollection<RobotModel> robots;

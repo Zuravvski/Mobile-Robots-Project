@@ -1,5 +1,4 @@
-﻿using MobileRobots.Utils.AppLogger;
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace robotymobilne_projekt.Utils.AppLogger
 {

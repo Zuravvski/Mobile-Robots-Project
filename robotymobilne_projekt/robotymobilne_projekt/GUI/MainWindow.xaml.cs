@@ -1,10 +1,6 @@
 ﻿using FirstFloor.ModernUI.Windows.Controls;
-using MahApps.Metro.Controls;
-using MobileRobots.Manual;
-using robotymobilne_projekt.Settings;
-using System.Collections.Generic;
 
-namespace MobileRobots
+namespace robotymobilne_projekt.GUI
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
