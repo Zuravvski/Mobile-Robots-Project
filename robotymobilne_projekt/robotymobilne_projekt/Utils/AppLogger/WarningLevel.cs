@@ -12,13 +12,12 @@ namespace robotymobilne_projekt.Utils.AppLogger
 
         public override string calculate(int level, string log)
         {
-            string result = "";
+            string result = _stringValue;
             if (null != logger)
             {
                 if (INFO == level)
                 {
                     logger.Foreground = Brushes.Orange;
-                    result = _stringValue;
                 }
                 else
                 {

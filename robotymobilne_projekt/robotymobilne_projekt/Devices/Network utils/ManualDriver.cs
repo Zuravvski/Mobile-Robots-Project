@@ -1,25 +1,20 @@
 ﻿using robotymobilne_projekt.Settings;
 using System;
 using System.Threading;
+using OpenTK.Input;
 using robotymobilne_projekt.Manual;
 
 namespace robotymobilne_projekt.Devices.Network_utils
 {
-    public class ManualDriver
+    public class ManualDriver : IDisposable
     {
         private RobotModel robot;
         private AbstractController controller;
-        private Thread handlerThread;
-
-        // Settings instances
-        private RobotSettings robotSettings = RobotSettings.Instance;
+        private readonly Thread handlerThread;
 
         public RobotModel Robot
         {
-            get
-            {
-                return robot;
-            }
+            get { return robot; }
         }
 
         public ManualDriver(RobotModel robot, AbstractController controller)
@@ -27,9 +22,8 @@ namespace robotymobilne_projekt.Devices.Network_utils
             this.robot = robot;
             this.controller = controller;
 
-            ControllerSettings.Instance.reserveController(controller);
-            RobotSettings.Instance.reserveRobot(robot);
-            ControllerSettings.Instance.notifyObservers();
+            this.robot.IsNotReserved = false;
+            this.controller.IsNotReserved = false;
 
             handlerThread = new Thread(run);
             handlerThread.Start();
@@ -37,30 +31,34 @@ namespace robotymobilne_projekt.Devices.Network_utils
 
         private void run()
         {
-            while(Robot.Status == RemoteDevice.StatusE.CONNECTED || Robot.Status == RemoteDevice.StatusE.CONNECTING)
+            while (Robot.Status == RemoteDevice.StatusE.CONNECTED || Robot.Status == RemoteDevice.StatusE.CONNECTING)
             {
-                Tuple<double, double> reading = controller.execute();
-                robot.SpeedL = reading.Item1;
-                robot.SpeedR = reading.Item2;
-                string dataFrame = calculateFrame();
-
-                if (null != dataFrame)
+                try
                 {
-                    Robot.sendData("["+ dataFrame + "]");
+                    var reading = controller.execute();
+                    robot.SpeedL = reading.Item1;
+                    robot.SpeedR = reading.Item2;
+                    var dataFrame = calculateFrame();
+
+                    if (null != dataFrame)
+                    {
+                        Robot.sendData("[" + dataFrame + "]");
+                    }
+                }
+                catch (Exception)
+                {
+                    break;
                 }
                 Thread.Sleep(ControllerSettings.Instance.Latency);
             }
-
-            RobotSettings.Instance.freeRobot(robot);
-            ControllerSettings.Instance.freeController(controller);
-            robot.disconnect();
+            Dispose();
         }
 
         private string calculateFrame()
         {
             string frameLights = RobotSettings.noLights, frameL, frameR;
 
-            if (robotSettings.UseLights)
+            if (RobotSettings.Instance.UseLights)
             {
                 if (robot.SpeedL == robot.SpeedR)
                 {
@@ -96,6 +94,17 @@ namespace robotymobilne_projekt.Devices.Network_utils
             var finalFrame = frameLights + frameL + frameR;
 
             return finalFrame;
+        }
+
+        public void Dispose()
+        {
+            robot.IsNotReserved = true;
+            controller.IsNotReserved = true;
+            robot.Status = RemoteDevice.StatusE.DISCONNECTED;
+            robot.disconnect();
+            robot = null;
+            controller = null;
+            handlerThread.Abort();
         }
     }
 }

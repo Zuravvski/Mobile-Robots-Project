@@ -15,7 +15,7 @@ namespace robotymobilne_projekt
             MainWindow mainWindow = new MainWindow();
             ControllerSettings.Instance.initialize();
             RobotSettings.Instance.initialize();
-            Logger.getLogger().log(LogLevel.INFO, "Starting application...");
+            Logger.Instance.log(LogLevel.INFO, "Starting application...");
             mainWindow.Show();
         }
     }

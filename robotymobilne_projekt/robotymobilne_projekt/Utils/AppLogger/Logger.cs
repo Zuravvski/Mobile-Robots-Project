@@ -5,14 +5,19 @@ using System.Windows.Controls;
 
 namespace robotymobilne_projekt.Utils.AppLogger
 {
-    class Logger : TextBlock
+    public class Logger : TextBlock
     {
-        public static Logger INSTANCE = null;
-        private StreamWriter fileWriter;
+        private static readonly Lazy<Logger> instance = new Lazy<Logger>(() => new Logger());
+        private readonly StreamWriter fileWriter;
         private LogLevel infoLevel;
         private LogLevel warningLevel;
         private LogLevel errorLevel;
         private ScrollViewer parentScrollPane;
+
+        public static Logger Instance
+        {
+            get { return instance.Value; }
+        }
 
         public ScrollViewer PARENT
         {
@@ -33,7 +38,12 @@ namespace robotymobilne_projekt.Utils.AppLogger
             TextWrapping = TextWrapping.Wrap;
 
             // Creating file handler for logs
-            fileWriter = new StreamWriter("log " + TimestampUtilities.FileDatestamp + ".txt");
+            if (!Directory.Exists("Logs"))
+            {
+                Directory.CreateDirectory("Logs");
+            }
+            fileWriter = new StreamWriter("Logs\\log " + TimestampUtilities.FileDatestamp + ".txt");
+            
 
             // Creating logger's chain of responsibility
             infoLevel = new InfoLevel(this);
@@ -44,35 +54,22 @@ namespace robotymobilne_projekt.Utils.AppLogger
             warningLevel.setNextLevel(errorLevel);
         }
 
-        public static Logger getLogger()
-        {
-            if(null == INSTANCE)
-            {
-                INSTANCE = new Logger();
-            }
-            return INSTANCE;
-        }
-
         public void log(int level, string message)
         {
             try
             {
                 Dispatcher.BeginInvoke(new Action<int, string>((lvl, logToAdd) =>
                 {
-                    // TODO: Add [LEVEL] tag in file to make everything more selective
-                    string levelName = infoLevel.calculate(level, message);
+                    var levelName = infoLevel.calculate(level, message);
                     // Writing log in log console
                     Text += '[' + TimestampUtilities.Datestamp + "] " + message + '\n';
 
-                    if (null != parentScrollPane)
-                    {
-                        parentScrollPane.ScrollToBottom();
-                    }
-                }), new Object[] { level, message });
+                    parentScrollPane?.ScrollToBottom();
 
-                // Writing log to file
-                fileWriter.WriteLine('[' + TimestampUtilities.Datestamp + "] " + message);
-                fileWriter.Flush();
+                    // Writing log to file
+                    fileWriter.WriteLine('[' + levelName + "][" + TimestampUtilities.Datestamp + "] " + message);
+                    fileWriter.Flush();
+                }), new Object[] { level, message });
             }
             catch (Exception)
             {
@@ -86,20 +83,17 @@ namespace robotymobilne_projekt.Utils.AppLogger
             {
                 Dispatcher.BeginInvoke(new Action<int, string, Exception>((lvl, logToAdd, exceptionToNote) =>
                 {
-                    string levelName = infoLevel.calculate(level, message);
+                    var levelName = infoLevel.calculate(level, message);
                     // Writing log in log console
                     Text += '[' + TimestampUtilities.Datestamp + "] " + message + '\n' + ex.Message + '\n';
-                    if (null != parentScrollPane)
-                    {
-                        parentScrollPane.ScrollToBottom();
-                    }
+                    parentScrollPane?.ScrollToBottom();
+
+                    // Writing log to file
+                    fileWriter.WriteLine('[' + levelName + "][" + TimestampUtilities.Datestamp + "]");
+                    fileWriter.WriteLine(ex + " " + ex.StackTrace);
+                    fileWriter.WriteLine();
+                    fileWriter.Flush();
                 }), new Object[] { level, message, ex });
-                
-                // Writing log to file
-                fileWriter.WriteLine('[' + TimestampUtilities.Datestamp + "]");
-                fileWriter.WriteLine(ex + " " + ex.StackTrace);
-                fileWriter.WriteLine();
-                fileWriter.Flush();
             }
             catch(Exception)
             {

@@ -9,6 +9,8 @@ namespace robotymobilne_projekt.GUI.ViewModels
         private ICommand incrementAttempts;
         private ICommand decrementAttempts;
 
+        public RobotSettings Settings => RobotSettings.Instance;
+
         #region Actions
         public ICommand Reset
         {

@@ -4,7 +4,7 @@ namespace robotymobilne_projekt.Devices.Network_utils
 {
     public class RobotFrame : DataFrame<RobotModel>
     {
-        const int FRAME_SIZE = 28;
+        private const int FRAME_SIZE = 28; // 28 signs of data + [] 
 
         public RobotFrame(string data) : base(data)
         {
@@ -18,35 +18,39 @@ namespace robotymobilne_projekt.Devices.Network_utils
 
         public override void parseFrame(RobotModel obj)
         {
-            if (FRAME_SIZE != data.Length)
-            {
-                return;
-            }
-            obj.Battery = getBattery();
-            obj.Status = getStatus();
+            if (FRAME_SIZE != data.Length) return;
+
+            obj.Battery = getBattery(obj.Battery);
+            obj.Status = getStatus(obj.Status);
         }
 
-        private int getBattery()
+        private int getBattery(int oldValue)
         {
-            var bat1 = data.Substring(5, 2);
-            var bat2 = data.Substring(3, 2);
-            var bat3 = bat1 + bat2;
-            int batteryStatus = UInt16.Parse(bat3, System.Globalization.NumberStyles.HexNumber);
-            return batteryStatus;
+            try
+            {
+                var bat1 = data.Substring(5, 2);
+                var bat2 = data.Substring(3, 2);
+                var bat3 = bat1 + bat2;
+                return UInt16.Parse(bat3, System.Globalization.NumberStyles.HexNumber);
+            }
+            catch (Exception)
+            {
+                return oldValue;
+            }
         }
 
-        private RemoteDevice.StatusE getStatus()
+        private RemoteDevice.StatusE getStatus(RemoteDevice.StatusE oldStatus)
         {
-            var statusFrame = data.Substring(0, 2);
-            var statusInt = int.Parse(statusFrame, System.Globalization.NumberStyles.HexNumber);
-            if(statusInt == 5)
+            try
             {
-                return RemoteDevice.StatusE.DISCONNECTED;
+                var statusFrame = data.Substring(1, 2);
+                var statusInt = int.Parse(statusFrame, System.Globalization.NumberStyles.HexNumber);
+                return statusInt == 5 ? RemoteDevice.StatusE.DISCONNECTED : RemoteDevice.StatusE.CONNECTED;
             }
-            else
+            catch (Exception)
             {
-                return RemoteDevice.StatusE.CONNECTED;
-            }
+                return oldStatus;
+            } 
         }
     }
 }

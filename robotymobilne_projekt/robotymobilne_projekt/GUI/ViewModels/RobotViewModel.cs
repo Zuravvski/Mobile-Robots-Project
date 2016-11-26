@@ -1,4 +1,5 @@
-﻿using robotymobilne_projekt.Devices.Network_utils;
+﻿using System;
+using robotymobilne_projekt.Devices.Network_utils;
 using robotymobilne_projekt.Settings;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -8,53 +9,43 @@ using robotymobilne_projekt.Manual;
 
 namespace robotymobilne_projekt.GUI.ViewModels
 {
-    class RobotViewModel : ViewModel, IObserver
+    public class RobotViewModel : ViewModel
     {
         private ICommand connect;
         private ICommand disconnect;
         private ICommand delete;
-        private ManualViewModel context;
-
-        // Collections
-        private ObservableCollection<AbstractController> controllers;
+        private readonly ManualViewModel context;
 
         // Currently selected
         private RobotModel robot;
         private AbstractController controller;
+        private ManualDriver driver;
 
         #region Setters & Getters
+
         public ObservableCollection<RobotModel> Robots
         {
             get
             {
-                ObservableCollection<RobotModel> filteredRobots = new ObservableCollection<RobotModel>(RobotSettings.Instance.Robots);
-                if(null != robot && !filteredRobots.Contains(robot))
+                ObservableCollection<RobotModel> filteredRobots =
+                    new ObservableCollection<RobotModel>(RobotSettings.Instance.Robots);
+                if (null != robot && !filteredRobots.Contains(robot))
                 {
                     filteredRobots.Add(robot);
                 }
                 return filteredRobots;
             }
         }
+
         public ObservableCollection<AbstractController> Controllers
         {
-            get
-            {
-                return controllers;
-            }
-            set
-            {
-                controllers = value;
-                NotifyPropertyChanged("Controllers");
-            }
+            get { return ControllerSettings.Instance.Controllers; }
         }
 
         // Accessors
         public AbstractController Controller
         {
-            get
-            {
-                return controller;
-            }
+            get { return controller; }
             set
             {
                 if (null != value)
@@ -68,39 +59,38 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 NotifyPropertyChanged("Controller");
             }
         }
+
         public RobotModel Robot
         {
-            get
-            {
-                return robot;
-            }
+            get { return robot; }
             set
             {
                 robot = value;
                 NotifyPropertyChanged("Robot");
             }
         }
-        public ManualDriver Driver;
+
         #endregion
 
         #region Actions
+
         public ICommand Connect
         {
             get
             {
-                if(null == connect)
+                if (null == connect)
                 {
                     connect = new DelegateCommand(delegate
                     {
-                        if (null != Robot && !Robot.DeviceName.Equals("NONE") && 
-                            null != Controller && !Controller.ToString().Equals("NONE"))
+                        try
                         {
-                            
-                            Robot.connect();
-                            Driver = new ManualDriver(robot, controller);
-                            
+                            if (robot.Status != RemoteDevice.StatusE.CONNECTED)
+                            {
+                                Robot.connect();
+                                driver = new ManualDriver(robot, controller);
+                            }
                         }
-                        else
+                        catch
                         {
                             MessageBox.Show("Please choose valid robot and controller.", "Invalid settings");
                         }
@@ -118,7 +108,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 {
                     disconnect = new DelegateCommand(delegate
                     {
-                        if (null != Robot)
+                        if (Robot != null && Robot.Status == RemoteDevice.StatusE.CONNECTED)
                         {
                             Robot.disconnect();
                         }
@@ -128,7 +118,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
             }
         }
 
-        // TODO: Handle deletion
         public ICommand Delete
         {
             get
@@ -139,10 +128,9 @@ namespace robotymobilne_projekt.GUI.ViewModels
                     {
                         if (null != Robot && Robot.Connected)
                         {
-                            Robot.disconnect();
+                            driver.Dispose();
                             Robot = null;
                             Controller = null;
-                            Driver = null;
                         }
                         context.RemoveUser.Execute(this);
                     });
@@ -155,19 +143,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
         public RobotViewModel(ManualViewModel context)
         {
             this.context = context;
-            Controllers = new ObservableCollection<AbstractController>(ControllerSettings.Instance.Controllers);
-            ControllerSettings.Instance.registerObserver(this);
-        }
-
-        public void notify()
-        {
-            ObservableCollection<AbstractController> refreshedControllers =
-                    new ObservableCollection<AbstractController>(ControllerSettings.Instance.Controllers);
-            if (null != controller && !controllers.Contains(controller))
-            {
-                refreshedControllers.Add(controller);
-            }
-            Controllers = refreshedControllers;
         }
     }
 }

@@ -6,13 +6,13 @@ using System.Threading;
 
 namespace robotymobilne_projekt.Settings
 {
-    public class ControllerSettings : Observable
+    public class ControllerSettings : IDisposable
     {
         private static readonly Lazy<ControllerSettings> instance = new Lazy<ControllerSettings>(() => new ControllerSettings());
-        private ObservableCollection<AbstractController> controllers;
+        private readonly ObservableCollection<AbstractController> controllers;
         private Thread scanningThread;
-        private int latency;
-        private int scanTime;
+        private readonly int latency;
+        private readonly int scanTime;
 
         #region Default values
         private const int defaultLatency = 100;
@@ -66,7 +66,6 @@ namespace robotymobilne_projekt.Settings
                         if (!controllers.Contains(newGamepad))
                         {
                             Controllers.Add(newGamepad);
-                            notifyObservers();  
                         }
                     }
                     else
@@ -74,7 +73,6 @@ namespace robotymobilne_projekt.Settings
                         if(controllers.Contains(newGamepad))
                         {
                             Controllers.Remove(newGamepad);
-                            notifyObservers();
                         }
                     }
                 }
@@ -91,21 +89,14 @@ namespace robotymobilne_projekt.Settings
                 Key.T, Key.Y, Key.LShift, Key.H));
         }
 
-        public void reserveController(AbstractController controllerToReserve)
-        {
-            controllers.Remove(controllerToReserve);
-        }
-
-        public void freeController(AbstractController controllerToFree)
-        {
-            controllers.Add(controllerToFree);
-        }
-
         public void initialize()
         {
             addDefaultKeyboardControllers();
         }
 
-        
+        public void Dispose()
+        {
+            scanningThread.Abort();
+        }
     }
 }

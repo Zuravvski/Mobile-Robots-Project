@@ -1,9 +1,11 @@
 ﻿using System;
+using FirstFloor.ModernUI.Presentation;
 using robotymobilne_projekt.Settings;
+using robotymobilne_projekt.Utils;
 
 namespace robotymobilne_projekt.Manual
 {
-    public abstract class AbstractController
+    public abstract class AbstractController : ObservableObject
     {
         protected ControllerSettings controllerSettings;
         protected RobotSettings robotSettings;
@@ -12,6 +14,20 @@ namespace robotymobilne_projekt.Manual
         protected double SpeedL;
         protected double SpeedR;
         protected bool nitro;
+        protected bool isNotReserved;
+
+        public bool IsNotReserved
+        {
+            get
+            {
+                return isNotReserved;
+            }
+            set
+            {
+                isNotReserved = value;
+                NotifyPropertyChanged("IsNotReserved");
+            }
+        }
 
         /// <summary>
         /// Specifies the time controller is being polled for data.
@@ -20,6 +36,7 @@ namespace robotymobilne_projekt.Manual
         {
             controllerSettings = ControllerSettings.Instance;
             robotSettings = RobotSettings.Instance;
+            isNotReserved = true;
         }
 
         protected virtual void CalculateFinalSpeed(double motorL, double motorR, double steerL, double steerR, bool nitro, bool handbrake)

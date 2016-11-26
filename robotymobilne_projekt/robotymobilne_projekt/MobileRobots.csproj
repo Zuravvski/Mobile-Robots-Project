@@ -114,9 +114,6 @@
     <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="GUI\ViewModels\RobotViewModel.cs" />
     <Compile Include="GUI\ViewModels\ViewModel.cs" />
-    <Compile Include="GUI\Views\Settings\ControllerSettings.xaml.cs">
-      <DependentUpon>ControllerSettings.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Views\Settings\TargetDeviceSettings.xaml.cs">
       <DependentUpon>TargetDeviceSettings.xaml</DependentUpon>
     </Compile>
@@ -155,10 +152,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\Views\Settings\Appearance.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\Views\Settings\ControllerSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

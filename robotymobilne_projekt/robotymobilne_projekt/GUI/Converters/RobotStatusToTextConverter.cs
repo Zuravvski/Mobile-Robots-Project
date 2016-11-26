@@ -9,6 +9,7 @@ namespace robotymobilne_projekt.GUI.Converters
     {
         private const string connected = "Connected";
         private const string connecting = "Connecting";
+        private const string reconnecting = "Reconnecting";
         private const string disconnected = "Disconnected";
         private const string unknownStatus = "Unknown";
 
@@ -24,6 +25,9 @@ namespace robotymobilne_projekt.GUI.Converters
 
                     case RemoteDevice.StatusE.CONNECTING:
                         return connecting;
+
+                    case RemoteDevice.StatusE.RECONNECTING:
+                        return reconnecting;
 
                     default:
                         return disconnected;
@@ -41,6 +45,9 @@ namespace robotymobilne_projekt.GUI.Converters
 
                 case connecting:
                     return RemoteDevice.StatusE.CONNECTING;
+
+                case reconnecting:
+                    return RemoteDevice.StatusE.RECONNECTING;
 
                 default:
                     return RemoteDevice.StatusE.DISCONNECTED;

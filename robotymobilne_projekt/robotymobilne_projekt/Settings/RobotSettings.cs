@@ -8,7 +8,7 @@ namespace robotymobilne_projekt.Settings
 {
     public class RobotSettings : ObservableObject
     {
-        private static Lazy<RobotSettings> instance = new Lazy<RobotSettings>(() => new RobotSettings());
+        private static readonly Lazy<RobotSettings> instance = new Lazy<RobotSettings>(() => new RobotSettings());
         private bool useLights;
         private double maxSpeed;
         private double steeringSensivity;
@@ -29,7 +29,7 @@ namespace robotymobilne_projekt.Settings
         public const string bothLights = "03";
         #endregion
 
-        private ObservableCollection<RobotModel> robots;
+        private readonly ObservableCollection<RobotModel> robots;
 
         #region Setters & Getters
         public double MaxSpeed
@@ -135,7 +135,7 @@ namespace robotymobilne_projekt.Settings
             }
             else
             {
-                Logger.INSTANCE.log(LogLevel.INFO, "Initialization can be called only once");
+                Logger.Instance.log(LogLevel.INFO, "Initialization can be called only once");
             }
         }
 
@@ -145,17 +145,6 @@ namespace robotymobilne_projekt.Settings
             {
                 return instance.Value;
             }
-        }
-
-        public void reserveRobot(RobotModel robot)
-        {
-            Robots.Remove(robot);
-        }
-
-        // TODO: Fix need here
-        public void freeRobot(RobotModel robot)
-        {
-            Robots.Add(robot);
         }
     }
 }
