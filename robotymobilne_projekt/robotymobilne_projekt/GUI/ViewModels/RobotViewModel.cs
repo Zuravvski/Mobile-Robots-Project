@@ -1,5 +1,4 @@
 ﻿using System;
-using robotymobilne_projekt.Devices.Network_utils;
 using robotymobilne_projekt.Settings;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -27,13 +26,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
         {
             get
             {
-                ObservableCollection<RobotModel> filteredRobots =
-                    new ObservableCollection<RobotModel>(RobotSettings.Instance.Robots);
-                if (null != robot && !filteredRobots.Contains(robot))
-                {
-                    filteredRobots.Add(robot);
-                }
-                return filteredRobots;
+                return RobotSettings.Instance.Robots;
             }
         }
 
@@ -84,15 +77,20 @@ namespace robotymobilne_projekt.GUI.ViewModels
                     {
                         try
                         {
-                            if (robot.Status != RemoteDevice.StatusE.CONNECTED)
-                            {
-                                Robot.connect();
-                                driver = new ManualDriver(robot, controller);
-                            }
+                            if (robot.Status == RemoteDevice.StatusE.CONNECTED) return;
+
+                            Robot.connect();
+                            driver = new ManualDriver(robot, controller);
+                        }
+                        catch (NotSupportedException)
+                        {
+                            // NONE (1st element in list) throws exception in order for this message to be handled
+                            MessageBox.Show("Please choose valid robot and controller.", "Invalid settings");
                         }
                         catch
                         {
-                            MessageBox.Show("Please choose valid robot and controller.", "Invalid settings");
+                            // Workaround. C# does not always manage its resources well when it comes to sockets.
+                            robot.disconnect();
                         }
                     });
                 }
@@ -128,9 +126,9 @@ namespace robotymobilne_projekt.GUI.ViewModels
                     {
                         if (null != Robot && Robot.Connected)
                         {
-                            driver.Dispose();
                             Robot = null;
                             Controller = null;
+                            driver?.Dispose();
                         }
                         context.RemoveUser.Execute(this);
                     });

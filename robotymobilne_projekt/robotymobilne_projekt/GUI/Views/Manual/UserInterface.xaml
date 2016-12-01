@@ -34,18 +34,14 @@
         <ComboBox x:Name="comboBoxRobots" HorizontalAlignment="Left" Margin="10,12,0,0" VerticalAlignment="Top" Width="95" ItemsSource="{Binding Robots, Mode=OneWay}" Height="22" SelectedIndex="0" SelectedItem="{Binding Robot, Mode=OneWayToSource}" IsEnabled="{Binding ElementName=comboBoxRobots, Path=DataContext.Robot.Status, Converter={StaticResource statusToBoolConverter}, FallbackValue=true}">
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">
-                    <Setter
-                        Property="IsEnabled"
-                        Value="{Binding IsNotReserved, FallbackValue = true}"/>
+                    <Setter Property="IsEnabled" Value="{Binding IsNotReserved, Mode = OneWay, FallbackValue = true}"/>
                 </Style>
             </ComboBox.ItemContainerStyle>
         </ComboBox>
         <ComboBox x:Name="comboBoxControllers" HorizontalAlignment="Left" Margin="115,12,0,0" VerticalAlignment="Top" Width="95" ItemsSource="{Binding Controllers, Mode=OneWay}" Height="22" SelectedIndex="0" SelectedItem="{Binding Controller, Mode=OneWayToSource}" IsEnabled="{Binding ElementName=comboBoxControllers, Path=DataContext.Robot.Status, Converter={StaticResource statusToBoolConverter}, FallbackValue=true}">
             <ComboBox.ItemContainerStyle>
                 <Style TargetType="ComboBoxItem">
-                    <Setter
-                        Property="IsEnabled"
-                        Value="{Binding IsNotReserved, FallbackValue = true}"/>
+                    <Setter Property="IsEnabled" Value="{Binding IsNotReserved, FallbackValue = true}"/>
                 </Style>
             </ComboBox.ItemContainerStyle>
         </ComboBox>

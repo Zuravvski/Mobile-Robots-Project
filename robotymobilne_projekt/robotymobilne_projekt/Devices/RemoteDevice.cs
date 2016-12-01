@@ -1,7 +1,5 @@
 ﻿using System;
-using System.IO;
 using System.Net.Sockets;
-using System.Threading;
 using robotymobilne_projekt.Utils;
 using robotymobilne_projekt.Utils.AppLogger;
 
@@ -15,18 +13,17 @@ namespace robotymobilne_projekt.Devices
         {
             CONNECTED,
             DISCONNECTED,
-            CONNECTING,
-            RECONNECTING
+            CONNECTING
         };
 
         #endregion
 
         protected readonly string deviceName;
-        protected string ip;
-        protected int port;
+        private readonly string ip;
+        private readonly int port;
         protected TcpClient tcpClient;
         protected NetworkStream networkStream;
-        protected StatusE status;
+        private StatusE status;
 
         #region Setters & Getters
 
@@ -35,15 +32,10 @@ namespace robotymobilne_projekt.Devices
             get { return deviceName; }
         }
 
-        public int Port
-        {
-            get { return port; }
-            set { port = value; }
-        }
-
         public TcpClient TcpClient
         {
             get { return tcpClient; }
+            set { tcpClient = value; }
         }
 
         public bool Connected
@@ -77,7 +69,6 @@ namespace robotymobilne_projekt.Devices
             // Network settings
             this.ip = ip;
             this.port = port;
-            tcpClient = new TcpClient(AddressFamily.InterNetwork);
             Status = StatusE.DISCONNECTED;
         }
 
@@ -85,7 +76,12 @@ namespace robotymobilne_projekt.Devices
 
         public virtual void connect()
         {
-            if (tcpClient.Connected) return;
+            if (null == tcpClient)
+            {
+                tcpClient = new TcpClient(AddressFamily.InterNetwork);
+            }
+
+            if (status == StatusE.CONNECTING || status == StatusE.CONNECTED) return;
 
             Status = StatusE.CONNECTING;
             Logger.Instance.log(LogLevel.INFO, string.Format("Connecting with device: {0}...", this));
@@ -104,10 +100,9 @@ namespace robotymobilne_projekt.Devices
                     // run all 
                     networkStream = tcpClient.GetStream();
                     receiveData();
+                    Status = StatusE.CONNECTED;
+                    Logger.Instance.log(LogLevel.INFO, string.Format("Connected to {0}.", this));
                 }
-
-                Status = StatusE.CONNECTED;
-                Logger.Instance.log(LogLevel.INFO, string.Format("Connected to {0}.", this));
             }
             catch (Exception ex)
             {
@@ -124,92 +119,32 @@ namespace robotymobilne_projekt.Devices
         {
             try
             {
-                if (!tcpClient.Connected) return;
-
-                tcpClient.GetStream().Close();
-                tcpClient.Close();
-                tcpClient = new TcpClient(AddressFamily.InterNetwork);
+                networkStream?.Close();
+                TcpClient?.Close();
+                TcpClient = null;
+                networkStream = null;
+                
                 Status = StatusE.DISCONNECTED;
-
                 Logger.Instance.log(LogLevel.INFO, string.Format("{0} disconnected.", this));
             }
             catch (Exception ex)
             {
                 Status = StatusE.DISCONNECTED;
                 Logger.Instance
-                    .log(LogLevel.ERROR, string.Format("An error occurred while disconnecting with device: {0}.", this),
-                        ex);
+                    .log(LogLevel.ERROR, string.Format("An error occurred while disconnecting with device: {0}.", this), ex);
             }
         }
 
         #endregion
 
         #region Sending Data
-
-        public virtual void sendData(string data)
-        {
-            try
-            {
-                var frameToSend = System.Text.Encoding.ASCII.GetBytes(data);
-                networkStream.BeginWrite(frameToSend, 0, frameToSend.Length, sendCallback, tcpClient);
-            }
-            catch (IOException)
-            {
-                Status = StatusE.DISCONNECTED;
-                Logger.Instance
-                    .log(LogLevel.INFO, string.Format("Lost connection with {0}. Connection terminated by host.", this));
-            }
-            catch
-            {
-                Logger.Instance.log(LogLevel.INFO, "Could not send data to device: " + deviceName);
-            }
-        }
-
-        protected void sendCallback(IAsyncResult result)
-        {
-            try
-            {
-                networkStream.EndWrite(result);
-            }
-            catch (Exception)
-            {
-                Status = StatusE.DISCONNECTED;
-                disconnect();
-            }
-        }
-
+        public abstract void sendData(string data);
+        protected abstract void sendCallback(IAsyncResult result);
         #endregion
 
         #region Receiving Data
-
-        protected virtual void receiveData()
-        {
-            try
-            {
-                var receiveBuffer = new byte[28];
-                networkStream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, receiveCallback, tcpClient);
-            }
-            catch
-            {
-                disconnect();
-                Logger.Instance.log(LogLevel.WARNING, "Lost connection with remote device.");
-            }
-        }
-
-        protected void receiveCallback(IAsyncResult result)
-        {
-            try
-            {
-                var bytesRead = networkStream.EndRead(result);
-                Thread.Sleep(1000);
-                receiveData();
-            }
-            catch (Exception)
-            {
-                disconnect();
-                Logger.Instance.log(LogLevel.WARNING, "Lost connection with remote device.");
-            }
-        }
+        protected abstract void receiveData();
+        protected abstract void receiveCallback(IAsyncResult result);
         #endregion
     }
 }

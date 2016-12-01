@@ -26,9 +26,6 @@ namespace robotymobilne_projekt.GUI.Converters
                     case RemoteDevice.StatusE.CONNECTING:
                         return connecting;
 
-                    case RemoteDevice.StatusE.RECONNECTING:
-                        return reconnecting;
-
                     default:
                         return disconnected;
                 }
@@ -45,9 +42,6 @@ namespace robotymobilne_projekt.GUI.Converters
 
                 case connecting:
                     return RemoteDevice.StatusE.CONNECTING;
-
-                case reconnecting:
-                    return RemoteDevice.StatusE.RECONNECTING;
 
                 default:
                     return RemoteDevice.StatusE.DISCONNECTED;
