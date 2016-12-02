@@ -87,6 +87,9 @@
     <Compile Include="GUI\Converters\RobotStatusToBoolConverter.cs" />
     <Compile Include="GUI\Converters\TextToNumberConverter.cs" />
     <Compile Include="GUI\Converters\ValToPercentConverter.cs" />
+    <Compile Include="GUI\Views\Automatic\Automatic.xaml.cs">
+      <DependentUpon>Automatic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Views\CoverPanel.xaml.cs">
       <DependentUpon>CoverPanel.xaml</DependentUpon>
     </Compile>
@@ -135,6 +138,10 @@
     <Compile Include="Utils\AppLogger\Logger.cs" />
     <Compile Include="Utils\Timestamp.cs" />
     <Compile Include="Utils\AppLogger\WarningLevel.cs" />
+    <Page Include="GUI\Views\Automatic\Automatic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Views\CoverPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

@@ -20,10 +20,7 @@
 
         <mui:LinkGroup DisplayName="Automatic">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="destination point" Source="/GUI/Views/HomePage.xaml" />
-                <mui:Link DisplayName="Click &amp; go" Source="/GUI/Views/HomePage.xaml" />
-                <mui:Link DisplayName="Mouse follow" Source="/GUI/Views/HomePage.xaml" />
-                <mui:Link DisplayName="Line follow" Source="/GUI/Views/HomePage.xaml" />
+                <mui:Link DisplayName="" Source="/GUI/Views/Automatic\Automatic.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="Debugging">
