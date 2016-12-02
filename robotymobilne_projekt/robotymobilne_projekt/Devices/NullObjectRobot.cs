@@ -1,4 +1,4 @@
-﻿using MobileRobots;
+﻿using System;
 
 namespace robotymobilne_projekt.Devices
 {
@@ -11,27 +11,17 @@ namespace robotymobilne_projekt.Devices
 
         public override void connect()
         {
-            
+            throw new NotSupportedException();
         }
 
         public override void disconnect()
         {
-            
+            throw new NotSupportedException();
         }
 
         public override void sendData(string data)
         {
-            
+            throw new NotSupportedException();
         }
-
-        //public override void run()
-        //{
-           
-        //}
-
-        //public override void handleController()
-        //{
-           
-        //}
     }
 }

@@ -1,9 +1,9 @@
-﻿using FirstFloor.ModernUI.Presentation;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Linq;
 using System.Windows.Media;
+using FirstFloor.ModernUI.Presentation;
 
-namespace MobileRobots.Pages.Settings
+namespace robotymobilne_projekt.GUI.ViewModels
 {
     /// <summary>
     /// A simple view model for configuring theme, font and accent colors.

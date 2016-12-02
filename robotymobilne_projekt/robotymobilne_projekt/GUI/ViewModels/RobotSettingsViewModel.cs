@@ -1,22 +1,15 @@
-﻿using robotymobilne_projekt.GUI.ViewModels;
+﻿using System.Windows.Input;
 using robotymobilne_projekt.Settings;
-using System.Windows.Input;
 
-namespace robotymobilne_projekt.GUI.Views.Settings
+namespace robotymobilne_projekt.GUI.ViewModels
 {
     public class RobotSettingsViewModel : ViewModel
     {
-        ICommand reset;
-        ICommand incrementAttempts;
-        ICommand decrementAttempts;
+        private ICommand reset;
+        private ICommand incrementAttempts;
+        private ICommand decrementAttempts;
 
-        public RobotSettings Settings
-        {
-            get
-            {
-                return RobotSettings.Instance;
-            }
-        }
+        public RobotSettings Settings => RobotSettings.Instance;
 
         #region Actions
         public ICommand Reset
@@ -25,9 +18,9 @@ namespace robotymobilne_projekt.GUI.Views.Settings
             {
                 if (null == reset)
                 {
-                    reset = new DelegateCommand(delegate ()
+                    reset = new DelegateCommand(delegate 
                     {
-                        Settings.reset();
+                        RobotSettings.Instance.reset();
                     });
                 }
                 return reset;
@@ -39,7 +32,7 @@ namespace robotymobilne_projekt.GUI.Views.Settings
             {
                 if (null == incrementAttempts)
                 {
-                    incrementAttempts = new DelegateCommand(delegate ()
+                    incrementAttempts = new DelegateCommand(delegate 
                     {  
                         RobotSettings.Instance.ReconnectAttempts++;
                     });
@@ -53,7 +46,7 @@ namespace robotymobilne_projekt.GUI.Views.Settings
             {
                 if (null == decrementAttempts)
                 {
-                    decrementAttempts = new DelegateCommand(delegate ()
+                    decrementAttempts = new DelegateCommand(delegate
                     {
                         RobotSettings.Instance.ReconnectAttempts--;
                     });

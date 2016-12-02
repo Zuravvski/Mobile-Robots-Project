@@ -1,16 +1,16 @@
 ﻿using System;
 using OpenTK.Input;
 
-namespace MobileRobots.Manual
+namespace robotymobilne_projekt.Manual
 {
     public class KeyboardController : AbstractController
     {
-        private int index;
+        private readonly int index;
         private KeyboardState key;
-        private Key forward;
-        private Key backward;
-        private Key left;
-        private Key right;
+        private readonly Key forward;
+        private readonly Key backward;
+        private readonly Key left;
+        private readonly Key right;
         private readonly Key leftTurn;
         private readonly Key rightTurn;
         private readonly Key nitro;
@@ -31,11 +31,12 @@ namespace MobileRobots.Manual
             this.handbrake = handbrake;
         }
 
-        public override string execute()
+        public override Tuple<double, double> execute()
         {
             key = Keyboard.GetState();
             getKinput();
-            return CalculateFrame(SpeedL, SpeedR);
+            
+            return new Tuple<double, double>(SpeedL, SpeedR);
         }
 
         private void getKinput()
@@ -78,7 +79,6 @@ namespace MobileRobots.Manual
             {
                 speedR = 1;
                 speedL = -1;
-                speed = 1;
             }
 
             if (key.IsKeyDown(nitro))  //nitro

@@ -14,7 +14,7 @@ namespace robotymobilne_projekt.GUI.Converters
 
         public BatteryStatusToColorConverter()
         {
-            BrushConverter converter = new BrushConverter();
+            var converter = new BrushConverter();
             goodLevel = (SolidColorBrush)converter.ConvertFrom(greenColorHex);
             lowLevel = (SolidColorBrush)converter.ConvertFrom(redColorHex);
         }
@@ -35,7 +35,7 @@ namespace robotymobilne_projekt.GUI.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
 
         private int mapValues(double value, double fromSource, double toSource, double fromTarget, double toTarget)

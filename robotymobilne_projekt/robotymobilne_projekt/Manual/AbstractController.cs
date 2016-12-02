@@ -1,8 +1,11 @@
-﻿using robotymobilne_projekt.Settings;
+﻿using System;
+using FirstFloor.ModernUI.Presentation;
+using robotymobilne_projekt.Settings;
+using robotymobilne_projekt.Utils;
 
-namespace MobileRobots.Manual
+namespace robotymobilne_projekt.Manual
 {
-    public abstract class AbstractController
+    public abstract class AbstractController : ObservableObject
     {
         protected ControllerSettings controllerSettings;
         protected RobotSettings robotSettings;
@@ -11,15 +14,20 @@ namespace MobileRobots.Manual
         protected double SpeedL;
         protected double SpeedR;
         protected bool nitro;
+        protected bool isNotReserved;
 
-
-        #region Constants
-        private const string noLights = "00";
-        private const string leftLight = "01";
-        private const string rightLight = "02";
-        private const string bothLights = "03";
-        #endregion
-
+        public bool IsNotReserved
+        {
+            get
+            {
+                return isNotReserved;
+            }
+            set
+            {
+                isNotReserved = value;
+                NotifyPropertyChanged("IsNotReserved");
+            }
+        }
 
         /// <summary>
         /// Specifies the time controller is being polled for data.
@@ -28,6 +36,7 @@ namespace MobileRobots.Manual
         {
             controllerSettings = ControllerSettings.Instance;
             robotSettings = RobotSettings.Instance;
+            isNotReserved = true;
         }
 
         protected virtual void CalculateFinalSpeed(double motorL, double motorR, double steerL, double steerR, bool nitro, bool handbrake)
@@ -63,58 +72,11 @@ namespace MobileRobots.Manual
             }
         }
 
-        protected virtual string CalculateFrame(double speedL, double speedR)
-        {
-            //set get robot
-            string frameLights = noLights, frameL = string.Empty, frameR = string.Empty;
-
-            if (robotSettings.UseLights)
-            {
-                if (speedL == speedR)
-                {
-                    frameLights = noLights;
-                }
-                if (speedR > speedL)
-                {
-                    frameLights = rightLight;
-                }
-                if (speedL > speedR)
-                {
-                    frameLights = leftLight;
-                }
-                if (nitro)
-                {
-                    frameLights = bothLights;
-                }
-            }
-
-            if (speedL >= 0)
-            {
-                frameL = ((int)speedL).ToString("X2");
-            }
-            else
-            {
-                frameL = ((int)speedL).ToString("X2").Substring(((int)speedL).ToString("X2").Length - 2);
-            }
-
-            if (speedR >= 0)
-            {
-                frameR = ((int)speedR).ToString("X2");
-            }
-            else
-            {
-                frameR = ((int)speedR).ToString("X2").Substring(((int)speedR).ToString("X2").Length - 2);
-            }
-            string finalFrame = frameLights + frameL + frameR;
-
-            return finalFrame;
-        }
-
         protected double mapValues(double value, double fromSource, double toSource, double fromTarget, double toTarget)
         {
             return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
         }
 
-        public abstract string execute();
+        public abstract Tuple<double, double> execute();
     }
 }

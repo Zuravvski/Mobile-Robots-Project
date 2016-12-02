@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MobileRobots.Properties
+namespace robotymobilne_projekt.Properties
 {
 
 

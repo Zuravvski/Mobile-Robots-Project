@@ -1,10 +1,6 @@
 ﻿using System.Windows.Controls;
-using OpenTK.Input;
-using System.Windows.Threading;
-using System;
-using System.Net.Sockets;
 
-namespace MobileRobots.GUI.Views
+namespace robotymobilne_projekt.GUI.Views
 {
     /// <summary>
     /// Interaction logic for HomePage.xaml

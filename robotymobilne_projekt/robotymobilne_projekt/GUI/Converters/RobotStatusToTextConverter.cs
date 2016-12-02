@@ -1,7 +1,7 @@
-﻿using MobileRobots;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using robotymobilne_projekt.Devices;
 
 namespace robotymobilne_projekt.GUI.Converters
 {
@@ -9,6 +9,7 @@ namespace robotymobilne_projekt.GUI.Converters
     {
         private const string connected = "Connected";
         private const string connecting = "Connecting";
+        private const string reconnecting = "Reconnecting";
         private const string disconnected = "Disconnected";
         private const string unknownStatus = "Unknown";
 
@@ -25,7 +26,6 @@ namespace robotymobilne_projekt.GUI.Converters
                     case RemoteDevice.StatusE.CONNECTING:
                         return connecting;
 
-                    case RemoteDevice.StatusE.DISCONNECTED:
                     default:
                         return disconnected;
                 }
@@ -43,7 +43,6 @@ namespace robotymobilne_projekt.GUI.Converters
                 case connecting:
                     return RemoteDevice.StatusE.CONNECTING;
 
-                case "disconnected":
                 default:
                     return RemoteDevice.StatusE.DISCONNECTED;
             }

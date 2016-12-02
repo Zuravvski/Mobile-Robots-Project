@@ -1,19 +1,18 @@
-﻿using MobileRobots.Manual;
-using OpenTK.Input;
+﻿using OpenTK.Input;
 using robotymobilne_projekt.Manual;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading;
+using robotymobilne_projekt.Utils;
 
 namespace robotymobilne_projekt.Settings
 {
-    public class ControllerSettings : Observable
+    public class ControllerSettings : IDisposable
     {
         private static readonly Lazy<ControllerSettings> instance = new Lazy<ControllerSettings>(() => new ControllerSettings());
-        private ObservableCollection<AbstractController> controllers;
-        private Thread scanningThread;
-        private int latency;
-        private int scanTime;
+        private readonly Thread scanningThread;
+        private readonly int latency;
+        private readonly int scanTime;
 
         #region Default values
         private const int defaultLatency = 100;
@@ -28,22 +27,15 @@ namespace robotymobilne_projekt.Settings
                 return latency;
             }
         }
-        public ObservableCollection<AbstractController> Controllers
-        {
-            get
-            {
-                return controllers;
-            }
-        }
+        public AsyncObservableCollection<AbstractController> Controllers { get; }
         #endregion
 
         private ControllerSettings()
         {
             latency = defaultLatency;
             scanTime = defaultScanTime;
-            controllers = new ObservableCollection<AbstractController>();
-            scanningThread = new Thread(scanPads);
-            scanningThread.IsBackground = true;
+            Controllers = new AsyncObservableCollection<AbstractController>();
+            scanningThread = new Thread(scanPads) {IsBackground = true};
             scanningThread.Start();
         }
 
@@ -64,18 +56,16 @@ namespace robotymobilne_projekt.Settings
                     AbstractController newGamepad = new GamepadController(i);
                     if (Joystick.GetState(i).IsConnected)
                     {
-                        if (!controllers.Contains(newGamepad))
+                        if (!Controllers.Contains(newGamepad))
                         {
                             Controllers.Add(newGamepad);
-                            notifyObservers();  
-                        }
+                        } 
                     }
                     else
                     {
-                        if(controllers.Contains(newGamepad))
+                        if(Controllers.Contains(newGamepad))
                         {
                             Controllers.Remove(newGamepad);
-                            notifyObservers();
                         }
                     }
                 }
@@ -83,23 +73,13 @@ namespace robotymobilne_projekt.Settings
             }
         }
 
-        public void addDefaultKeyboardControllers()
+        private void addDefaultKeyboardControllers()
         {
-            controllers.Add(new NullObjectController("NONE"));
-            controllers.Add(new KeyboardController(0, Keyboard.GetState(), Key.Up, Key.Down, Key.Left,
+            Controllers.Add(new NullObjectController("NONE"));
+            Controllers.Add(new KeyboardController(0, Keyboard.GetState(), Key.Up, Key.Down, Key.Left,
                 Key.Right, Key.Comma, Key.Period, Key.RShift, Key.Space));
-            controllers.Add(new KeyboardController(1, Keyboard.GetState(), Key.W, Key.S, Key.A, Key.D,
+            Controllers.Add(new KeyboardController(1, Keyboard.GetState(), Key.W, Key.S, Key.A, Key.D,
                 Key.T, Key.Y, Key.LShift, Key.H));
-        }
-
-        public void reserveController(AbstractController controllerToReserve)
-        {
-            controllers.Remove(controllerToReserve);
-        }
-
-        public void freeController(AbstractController controllerToFree)
-        {
-            controllers.Add(controllerToFree);
         }
 
         public void initialize()
@@ -107,6 +87,9 @@ namespace robotymobilne_projekt.Settings
             addDefaultKeyboardControllers();
         }
 
-        
+        public void Dispose()
+        {
+            scanningThread.Abort();
+        }
     }
 }

@@ -1,63 +1,44 @@
-﻿using MobileRobots;
-using MobileRobots.Manual;
-using robotymobilne_projekt.Devices.Network_utils;
+﻿using System;
 using robotymobilne_projekt.Settings;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 using System.Windows;
-using System.Windows.Data;
-using System;
+using robotymobilne_projekt.Devices;
+using robotymobilne_projekt.Manual;
 
 namespace robotymobilne_projekt.GUI.ViewModels
 {
-    class RobotViewModel : ViewModel, IObserver
+    public class RobotViewModel : ViewModel
     {
         private ICommand connect;
         private ICommand disconnect;
         private ICommand delete;
-        private ManualViewModel context;
-
-        // Collections
-        private ObservableCollection<AbstractController> controllers;
+        private readonly ManualViewModel context;
 
         // Currently selected
         private RobotModel robot;
         private AbstractController controller;
+        private ManualDriver driver;
 
         #region Setters & Getters
+
         public ObservableCollection<RobotModel> Robots
         {
             get
             {
-                ObservableCollection<RobotModel> filteredRobots = new ObservableCollection<RobotModel>(RobotSettings.Instance.Robots);
-                if(null != robot && !filteredRobots.Contains(robot))
-                {
-                    filteredRobots.Add(robot);
-                }
-                return filteredRobots;
+                return RobotSettings.Instance.Robots;
             }
         }
+
         public ObservableCollection<AbstractController> Controllers
         {
-            get
-            {
-                return controllers;
-            }
-            set
-            {
-                controllers = value;
-                NotifyPropertyChanged("Controllers");
-            }
+            get { return ControllerSettings.Instance.Controllers; }
         }
 
         // Accessors
         public AbstractController Controller
         {
-            get
-            {
-                return controller;
-            }
+            get { return controller; }
             set
             {
                 if (null != value)
@@ -71,41 +52,45 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 NotifyPropertyChanged("Controller");
             }
         }
+
         public RobotModel Robot
         {
-            get
-            {
-                return robot;
-            }
+            get { return robot; }
             set
             {
                 robot = value;
                 NotifyPropertyChanged("Robot");
             }
         }
-        public ManualDriver Driver;
+
         #endregion
 
         #region Actions
+
         public ICommand Connect
         {
             get
             {
-                if(null == connect)
+                if (null == connect)
                 {
-                    connect = new DelegateCommand(delegate ()
+                    connect = new DelegateCommand(delegate
                     {
-                        if (null != Robot && !Robot.DeviceName.Equals("NONE") && 
-                            null != Controller && !Controller.ToString().Equals("NONE"))
+                        try
                         {
-                            
+                            if (robot.Status == RemoteDevice.StatusE.CONNECTED) return;
+
                             Robot.connect();
-                            Driver = new ManualDriver(robot, controller);
-                            
+                            driver = new ManualDriver(robot, controller);
                         }
-                        else
+                        catch (NotSupportedException)
                         {
+                            // NONE (1st element in list) throws exception in order for this message to be handled
                             MessageBox.Show("Please choose valid robot and controller.", "Invalid settings");
+                        }
+                        catch
+                        {
+                            // Workaround. C# does not always manage its resources well when it comes to sockets.
+                            robot.disconnect();
                         }
                     });
                 }
@@ -119,9 +104,9 @@ namespace robotymobilne_projekt.GUI.ViewModels
             {
                 if (null == disconnect)
                 {
-                    disconnect = new DelegateCommand(delegate ()
+                    disconnect = new DelegateCommand(delegate
                     {
-                        if (null != Robot)
+                        if (Robot != null && Robot.Status == RemoteDevice.StatusE.CONNECTED)
                         {
                             Robot.disconnect();
                         }
@@ -131,21 +116,19 @@ namespace robotymobilne_projekt.GUI.ViewModels
             }
         }
 
-        // TODO: Handle deletion
         public ICommand Delete
         {
             get
             {
                 if (null == delete)
                 {
-                    delete = new DelegateCommand(delegate ()
+                    delete = new DelegateCommand(delegate
                     {
                         if (null != Robot && Robot.Connected)
                         {
-                            Robot.disconnect();
                             Robot = null;
                             Controller = null;
-                            Driver = null;
+                            driver?.Dispose();
                         }
                         context.RemoveUser.Execute(this);
                     });
@@ -158,19 +141,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
         public RobotViewModel(ManualViewModel context)
         {
             this.context = context;
-            Controllers = new ObservableCollection<AbstractController>(ControllerSettings.Instance.Controllers);
-            ControllerSettings.Instance.registerObserver(this);
-        }
-
-        public void notify()
-        {
-            ObservableCollection<AbstractController> refreshedControllers =
-                    new ObservableCollection<AbstractController>(ControllerSettings.Instance.Controllers);
-            if (null != controller && !controllers.Contains(controller))
-            {
-                refreshedControllers.Add(controller);
-            }
-            Controllers = refreshedControllers;
         }
     }
 }

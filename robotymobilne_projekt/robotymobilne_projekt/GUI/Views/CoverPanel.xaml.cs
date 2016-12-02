@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace MobileRobots.GUI.Views
+namespace robotymobilne_projekt.GUI.Views
 {
     /// <summary>
     /// Interaction logic for CoverPanel.xaml

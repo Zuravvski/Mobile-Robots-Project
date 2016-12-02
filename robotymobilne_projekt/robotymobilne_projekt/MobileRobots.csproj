@@ -71,10 +71,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Automatic\LineFollower.cs" />
+    <Compile Include="Automatic\LineFollowerDriver.cs" />
     <Compile Include="Devices\Network utils\DataFrame.cs" />
-    <Compile Include="Devices\Network utils\ManualDriver.cs" />
+    <Compile Include="Devices\Network utils\FrameParser.cs" />
+    <Compile Include="GUI\Views\Automatic\AutomaticView.xaml.cs">
+      <DependentUpon>AutomaticView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Views\Automatic\LineFollowerView.xaml.cs">
+      <DependentUpon>LineFollowerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Manual\ManualDriver.cs" />
+    <Compile Include="Devices\Network utils\RobotFrameParser.cs" />
     <Compile Include="Devices\Network utils\RobotFrame.cs" />
-    <Compile Include="Devices\Network utils\RobotTransmitFrame.cs" />
     <Compile Include="Devices\NullObjectRobot.cs" />
     <Compile Include="Devices\RemoteDevice.cs" />
     <Compile Include="Devices\RobotModel.cs" />
@@ -87,9 +96,6 @@
     <Compile Include="GUI\Converters\RobotStatusToBoolConverter.cs" />
     <Compile Include="GUI\Converters\TextToNumberConverter.cs" />
     <Compile Include="GUI\Converters\ValToPercentConverter.cs" />
-    <Compile Include="GUI\Views\Automatic\Automatic.xaml.cs">
-      <DependentUpon>Automatic.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Views\CoverPanel.xaml.cs">
       <DependentUpon>CoverPanel.xaml</DependentUpon>
     </Compile>
@@ -115,12 +121,10 @@
     <Compile Include="Manual\NullObjectController.cs" />
     <Compile Include="Settings\IObservable.cs" />
     <Compile Include="Settings\IObserver.cs" />
+    <Compile Include="Utils\AsyncObservableCollection.cs" />
     <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="GUI\ViewModels\RobotViewModel.cs" />
     <Compile Include="GUI\ViewModels\ViewModel.cs" />
-    <Compile Include="GUI\Views\Settings\ControllerSettings.xaml.cs">
-      <DependentUpon>ControllerSettings.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Views\Settings\TargetDeviceSettings.xaml.cs">
       <DependentUpon>TargetDeviceSettings.xaml</DependentUpon>
     </Compile>
@@ -138,7 +142,11 @@
     <Compile Include="Utils\AppLogger\Logger.cs" />
     <Compile Include="Utils\Timestamp.cs" />
     <Compile Include="Utils\AppLogger\WarningLevel.cs" />
-    <Page Include="GUI\Views\Automatic\Automatic.xaml">
+    <Page Include="GUI\Views\Automatic\AutomaticView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Views\Automatic\LineFollowerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -163,10 +171,6 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\Views\Settings\Appearance.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="GUI\Views\Settings\ControllerSettings.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -219,9 +223,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Automatic\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

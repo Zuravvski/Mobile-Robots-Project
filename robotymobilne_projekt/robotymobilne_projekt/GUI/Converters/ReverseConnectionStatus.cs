@@ -1,7 +1,7 @@
-﻿using MobileRobots;
-using System;
+﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using robotymobilne_projekt.Devices;
 
 namespace robotymobilne_projekt.GUI.Converters
 {
@@ -22,7 +22,7 @@ namespace robotymobilne_projekt.GUI.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }

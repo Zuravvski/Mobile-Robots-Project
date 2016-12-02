@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace MobileRobots.Pages.Settings
+namespace robotymobilne_projekt.GUI.Views.Automatic
 {
     /// <summary>
-    /// Interaction logic for ControllerSettings.xaml
+    /// Interaction logic for LineFollowerView.xaml
     /// </summary>
-    public partial class ControllerSettings : UserControl
+    public partial class LineFollowerView : UserControl
     {
-        public ControllerSettings()
+        public LineFollowerView()
         {
             InitializeComponent();
         }

@@ -1,20 +1,13 @@
-﻿using System.Text.RegularExpressions;
-
-namespace robotymobilne_projekt.Devices.Network
+﻿namespace robotymobilne_projekt.Devices.Network_utils
 {
     // Simple wrapper for managing data frames
-    public abstract class DataFrame<T>
+    public abstract class DataFrame
     {
-        protected string data;
+        protected readonly string data;
 
         public DataFrame(string data)
         {
             this.data = "[" + data + "]";
-        }
-
-        public DataFrame(byte[] data)
-        {
-            this.data = System.Text.Encoding.ASCII.GetString(data);
         }
 
         /// <summary>
@@ -40,10 +33,5 @@ namespace robotymobilne_projekt.Devices.Network
         {
             return data;
         }
-
-        /// <summary>
-        /// Updates given model with retreived data from frame.
-        /// </summary>
-        public abstract void parseFrame(T obj);
     }
 }
