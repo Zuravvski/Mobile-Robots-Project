@@ -2,7 +2,7 @@
 
 namespace robotymobilne_projekt.Utils
 {
-    class TimestampUtilities
+    public static class TimestampUtilities
     {
         public static string Datestamp
         {

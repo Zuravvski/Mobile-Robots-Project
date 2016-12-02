@@ -4,22 +4,43 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:robotymobilne_projekt.GUI.Views.Automatic"
-             mc:Ignorable="d" Width="436.667" Height="230">
-    <Grid RenderTransformOrigin="0.5,0.5" Margin="0,0,0,1">
-        <Grid.RenderTransform>
-            <TransformGroup>
-                <ScaleTransform/>
-                <SkewTransform/>
-                <RotateTransform Angle="0.028"/>
-                <TranslateTransform/>
-            </TransformGroup>
-        </Grid.RenderTransform>
-        <Canvas HorizontalAlignment="Left" Height="200" Margin="13,11,0,0" VerticalAlignment="Top" Width="200" Background="White"/>
-        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="221,11,0,0" VerticalAlignment="Top" Width="120"/>
-        <ProgressBar HorizontalAlignment="Left" Height="90" Margin="226,49,0,0" VerticalAlignment="Top" Width="26"/>
-        <ProgressBar HorizontalAlignment="Left" Height="90" Margin="262,48,0,0" VerticalAlignment="Top" Width="28"/>
-        <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="300,58,0,0" VerticalAlignment="Top" Width="37"/>
-        <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="302,83,0,0" VerticalAlignment="Top" Width="31"/>
-        <ProgressBar HorizontalAlignment="Left" Height="24" Margin="298,111,0,0" VerticalAlignment="Top" Width="96"/>
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <ProgressBar x:Name="progressBarSensor1" HorizontalAlignment="Left" Height="16" Margin="69,10,0,0" VerticalAlignment="Top" Width="100"/>
+        <ProgressBar x:Name="progressBarSensor2" HorizontalAlignment="Left" Height="16" Margin="69,31,0,0" VerticalAlignment="Top" Width="100"/>
+        <ProgressBar x:Name="progressBarSensor3" HorizontalAlignment="Left" Height="16" Margin="69,52,0,0" VerticalAlignment="Top" Width="100"/>
+        <ProgressBar x:Name="progressBarSensor4" HorizontalAlignment="Left" Height="16" Margin="69,73,0,0" VerticalAlignment="Top" Width="100"/>
+        <ProgressBar x:Name="progressBarSensor5" HorizontalAlignment="Left" Height="16" Margin="69,94,0,0" VerticalAlignment="Top" Width="100"/>
+        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="124,126,0,0" VerticalAlignment="Top" Width="95"/>
+        <Slider x:Name="slider1" HorizontalAlignment="Left" Margin="124,154,0,0" VerticalAlignment="Top" Width="95" Height="23"/>
+        <Label x:Name="labelSensor1" Content="Sensor 1:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelSensor2" Content="Sensor 2:" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelSensor3" Content="Sensor 3:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelSensor4" Content="Sensor 4:" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelSensor5" Content="Sensor 5:" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelDerivativeGain" Content="Derivative Gain:" HorizontalAlignment="Left" Margin="13,161,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelProportionalGain" Content="Proportional Gain:" HorizontalAlignment="Left" Margin="13,132,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelError" Content="Error:" HorizontalAlignment="Left" Margin="13,188,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.164"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label x:Name="labelErrorVal" Content="0" HorizontalAlignment="Left" Margin="49,189,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.164"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+
     </Grid>
 </UserControl>

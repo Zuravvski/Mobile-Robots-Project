@@ -75,6 +75,9 @@
     <Compile Include="Automatic\LineFollowerDriver.cs" />
     <Compile Include="Devices\Network utils\DataFrame.cs" />
     <Compile Include="Devices\Network utils\FrameParser.cs" />
+    <Compile Include="GUI\Views\Automatic\AutomaticView.xaml.cs">
+      <DependentUpon>AutomaticView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Views\Automatic\LineFollowerView.xaml.cs">
       <DependentUpon>LineFollowerView.xaml</DependentUpon>
     </Compile>
@@ -139,6 +142,10 @@
     <Compile Include="Utils\AppLogger\Logger.cs" />
     <Compile Include="Utils\Timestamp.cs" />
     <Compile Include="Utils\AppLogger\WarningLevel.cs" />
+    <Page Include="GUI\Views\Automatic\AutomaticView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="GUI\Views\Automatic\LineFollowerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

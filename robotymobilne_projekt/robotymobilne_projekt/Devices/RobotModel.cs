@@ -142,8 +142,7 @@ namespace robotymobilne_projekt.Devices
             {
                 if (Status != StatusE.CONNECTED) return;
 
-                var oFrame = new RobotFrame(data);
-                var frameToSend = oFrame.getFrame();
+                var frameToSend = new RobotFrame(data).getFrame();
                 networkStream.BeginWrite(frameToSend, 0, frameToSend.Length, sendCallback, tcpClient);
             }
             catch (IOException)
