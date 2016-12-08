@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Threading;
 using System.Windows;
@@ -17,7 +18,7 @@ namespace robotymobilne_projekt.Devices
         private double speedL;
         private double speedR;
         private bool isNotReserved;
-        private int[] sensors;
+        private ObservableCollection<int> sensors;
 
         private readonly RobotFrameParser robotFrameParser;
 
@@ -116,10 +117,14 @@ namespace robotymobilne_projekt.Devices
             }
         }
 
-        public int[] Sensors
+        public ObservableCollection<int> Sensors
         {
             get { return sensors; }
-            set { sensors = value; }
+            set
+            {
+                sensors = value;
+                NotifyPropertyChanged("Sensors");
+            }
         }
 
         #endregion
@@ -127,7 +132,7 @@ namespace robotymobilne_projekt.Devices
         public RobotModel(string name, string ip, int port) : base(name, ip, port)
         {
             isNotReserved = true;
-            sensors = new[] {0, 0, 0, 0, 0};
+            sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0};
             robotFrameParser = new RobotFrameParser(this);
         }
 

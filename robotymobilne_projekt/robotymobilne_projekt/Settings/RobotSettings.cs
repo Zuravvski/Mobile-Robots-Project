@@ -126,10 +126,10 @@ namespace robotymobilne_projekt.Settings
             if(0 == robots.Count)
             {
                 robots.Add(new NullObjectRobot("NONE", "", 0));
-                robots.Add(new RobotModel("ID: 30", "127.0.0.1", 23));
-                for (int i = 1; i < 6; i++)
+                //robots.Add(new RobotModel("ID: 30", "127.0.0.1", 23));
+                for (int i = 0; i < 6; i++)
                 {
-                    RobotModel newRobot = new RobotModel("ID: 3" + i, "192.168.2.3" + i, 8000);
+                    var newRobot = new RobotModel("ID: 3" + i, "192.168.2.3" + i, 8000);
                     robots.Add(newRobot);
                 }
             }

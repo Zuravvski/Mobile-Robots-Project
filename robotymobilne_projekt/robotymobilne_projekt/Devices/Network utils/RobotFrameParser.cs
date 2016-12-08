@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
 
 namespace robotymobilne_projekt.Devices.Network_utils
 {
@@ -43,9 +45,9 @@ namespace robotymobilne_projekt.Devices.Network_utils
             return statusInt == 5 ? RemoteDevice.StatusE.DISCONNECTED : RemoteDevice.StatusE.CONNECTED;
         }
 
-        private int[] getSensors(string data)
+        private ObservableCollection<int> getSensors(string data)
         {
-            int[] newSensorsValues = { 0, 0, 0, 0, 0 };
+            ObservableCollection<int> newSensorsValues = new ObservableCollection<int>() { 0, 0, 0, 0, 0 };
             for (int i = 0, step = 7; i < 5; i++, step += 4)
             {
                 var temp1 = data.Substring(step + 2, 2);
@@ -53,6 +55,7 @@ namespace robotymobilne_projekt.Devices.Network_utils
                 var sensor = temp1 + temp2;
 
                 newSensorsValues[i] = int.Parse(sensor, System.Globalization.NumberStyles.HexNumber);
+                //Debug.WriteLine(string.Format("Sensor {0} value is {1}", i+1, newSensorsValues[i]));
             }
             return newSensorsValues;
         }

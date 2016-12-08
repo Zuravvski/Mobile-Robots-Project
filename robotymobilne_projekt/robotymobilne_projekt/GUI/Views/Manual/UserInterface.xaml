@@ -17,7 +17,7 @@
         <converters:BatteryStatusToColorConverter x:Key="batteryColorConverter"/>
     </UserControl.Resources>
 
-    <Grid x:Name="mainPanel">
+    <Grid x:Name="mainPanel" Focusable="False">
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition Height="0*"/>

@@ -12,7 +12,7 @@ namespace robotymobilne_projekt
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow();
+            var mainWindow = new MainWindow();
             ControllerSettings.Instance.initialize();
             RobotSettings.Instance.initialize();
             Logger.Instance.log(LogLevel.INFO, "Starting application...");

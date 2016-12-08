@@ -7,13 +7,13 @@
              mc:Ignorable="d">
     <Viewbox>
         <Grid x:Name="MainGrid" TextOptions.TextFormattingMode="Ideal" Height="213" Width="421">
-            <Canvas HorizontalAlignment="Left" Height="181" Margin="13,11,0,0" VerticalAlignment="Top" Width="188" Background="White"/>
             <ComboBox x:Name="comboBoxMode" HorizontalAlignment="Left" Margin="221,11,0,0" VerticalAlignment="Top" Width="120"/>
             <ProgressBar x:Name="progressBarSpeedL" HorizontalAlignment="Left" Height="90" Margin="226,49,0,0" VerticalAlignment="Top" Width="26"/>
             <ProgressBar x:Name="progressBarSpeedR" HorizontalAlignment="Left" Height="90" Margin="262,48,0,0" VerticalAlignment="Top" Width="28"/>
             <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="300,58,0,0" VerticalAlignment="Top" Width="37"/>
             <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="302,83,0,0" VerticalAlignment="Top" Width="31"/>
             <ProgressBar x:Name="progressBarBattery" HorizontalAlignment="Left" Height="24" Margin="298,111,0,0" VerticalAlignment="Top" Width="96"/>
+            <Viewbox HorizontalAlignment="Left" Height="192" Margin="10,11,0,0" VerticalAlignment="Top" Width="198"/>
         </Grid>
     </Viewbox>
 </UserControl>

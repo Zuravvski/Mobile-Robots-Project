@@ -12,6 +12,10 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using robotymobilne_projekt.Automatic;
+using robotymobilne_projekt.Devices;
+using robotymobilne_projekt.GUI.ViewModels;
+using robotymobilne_projekt.Settings;
 
 namespace robotymobilne_projekt.GUI.Views.Automatic
 {
@@ -22,7 +26,9 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
     {
         public LineFollowerView()
         {
-            InitializeComponent();
+            // TODO: Delete hardcode
+            RobotSettings.Instance.Robots[1].connect();
+            DataContext = new LineFollowerViewModel(RobotSettings.Instance.Robots[1], new LineFollower());
         }
     }
 }

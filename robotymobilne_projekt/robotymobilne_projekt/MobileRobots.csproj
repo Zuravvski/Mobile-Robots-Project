@@ -75,6 +75,10 @@
     <Compile Include="Automatic\LineFollowerDriver.cs" />
     <Compile Include="Devices\Network utils\DataFrame.cs" />
     <Compile Include="Devices\Network utils\FrameParser.cs" />
+    <Compile Include="GUI\Converters\IntToDoubleConverter.cs" />
+    <Compile Include="GUI\ViewModels\Automatic\AutomaticViewModel.cs" />
+    <Compile Include="GUI\ViewModels\Automatic\LineFollowerViewModel.cs" />
+    <Compile Include="GUI\Views\Automatic\AutomaticPanelFactory.cs" />
     <Compile Include="GUI\Views\Automatic\AutomaticView.xaml.cs">
       <DependentUpon>AutomaticView.xaml</DependentUpon>
     </Compile>

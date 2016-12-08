@@ -31,8 +31,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
                     {
                         if (Users.Count < 4)
                         {
-                            UserInterface newUser = new UserInterface();
-                            newUser.DataContext = new RobotViewModel(this);
+                            var newUser = new UserInterface {DataContext = new RobotViewModel(this)};
                             Users.Add(newUser);
                             manageLayout();
                         }
