@@ -17,8 +17,8 @@ namespace robotymobilne_projekt.Settings
 
         #region Default values
         private const bool defaultUseLights = false;
-        private const double defaultMaxSpeed = 80;
-        private const double defaultSteeringSensibity = 35;
+        private const double defaultMaxSpeed = 20;
+        private const double defaultSteeringSensibity = 15;
         private const double defaultNitroFactor = 1.1;
         private const int defaultReconnectAttempts = 3;
         #endregion

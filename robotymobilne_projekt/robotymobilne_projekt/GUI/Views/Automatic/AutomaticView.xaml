@@ -4,10 +4,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:robotymobilne_projekt.GUI.Views.Automatic"
+             xmlns:converters="clr-namespace:robotymobilne_projekt.GUI.Converters"
              mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:EnumToStringConverter x:Key="eNumToStringConverter"/>
+    </UserControl.Resources>
+    
     <Viewbox>
         <Grid x:Name="MainGrid" TextOptions.TextFormattingMode="Ideal" Height="210" Width="332">
-            <ComboBox x:Name="comboBoxMode" HorizontalAlignment="Left" Margin="220,11,0,0" VerticalAlignment="Top" Width="103"/>
+            <ComboBox x:Name="comboBoxMode" HorizontalAlignment="Left" Margin="220,11,0,0" VerticalAlignment="Top" Width="103" ItemsSource="{Binding Modes, Mode=OneWay, Converter={StaticResource eNumToStringConverter}}"/>
             <ProgressBar x:Name="progressBarSpeedL" HorizontalAlignment="Left" Height="70" Margin="220,55,0,0" VerticalAlignment="Top" Width="15" BorderBrush="Gray" BorderThickness="1"/>
             <ProgressBar x:Name="progressBarSpeedR" HorizontalAlignment="Left" Height="70" Margin="240,55,0,0" VerticalAlignment="Top" Width="15" BorderBrush="Gray" BorderThickness="1"/>
             <Label x:Name="label" Content="posX:" HorizontalAlignment="Left" Margin="270,70,0,0" VerticalAlignment="Top" Width="37"/>

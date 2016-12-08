@@ -22,7 +22,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
             {
                 currentMode = value;
                 NotifyPropertyChanged("CurrentMode");
-                CurrentPanel = panelFactory.getPanel(currentMode);
+                //CurrentPanel = panelFactory.getPanel(currentMode);
             }
         }
 

@@ -14,7 +14,6 @@
 
     <Grid>
         <Label x:Name="label_maxSpeed" Content="Max speed:" HorizontalAlignment="Left" Margin="41,10,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="label_reconnectAttemps" Content="Reconnect attempts:" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_steeringSensivity" Content="Steering sensivity:" HorizontalAlignment="Left" Margin="10,39,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_nitroFactor" Content="Nitro factor:" HorizontalAlignment="Left" Margin="41,64,0,0" VerticalAlignment="Top"/>
         <Label x:Name="label_lights" Content="Lights:" HorizontalAlignment="Left" Margin="191,113,0,0" VerticalAlignment="Top"/>
@@ -23,9 +22,6 @@
         <Slider x:Name="slider_nitroFactor" HorizontalAlignment="Left" Margin="118,64,0,0" VerticalAlignment="Top" Width="172" Maximum="2.0" LargeChange="0.1" Minimum="1" Value="{Binding NitroFactor, Mode=TwoWay}" AutoToolTipPrecision="1" AutoToolTipPlacement="TopLeft" DataContext="{Binding Settings}"/>
         <Button x:Name="button_RestoreDefaults" Content="Reset" HorizontalAlignment="Left" Margin="205,185,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Reset}"/>
         <Controls:ToggleSwitch  OnLabel="On" OffLabel="Off" Margin="191,131,0,0" RenderTransformOrigin="-4.5,0.9" MaxWidth="104" Foreground="#FFC1C1C1" ThumbIndicatorBrush="#FFC1C1C1" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding UseLights}" DataContext="{Binding Settings}"/>
-        <TextBox x:Name="textBox" Height="23" Margin="13,138,0,0" TextWrapping="Wrap" Text="{Binding ReconnectAttempts, Converter={StaticResource numberConverter}}" VerticalAlignment="Top" HorizontalAlignment="Left" Width="51" MaxLength="2" TextAlignment="Center" DataContext="{Binding Settings}" Background="#FFC1C1C1" Foreground="#FF333333"/>
-        <Button x:Name="buttonAdd" Content="+" HorizontalAlignment="Left" Margin="64,138,0,0" VerticalAlignment="Top" Width="47" Height="23" TextOptions.TextFormattingMode="Display" Command="{Binding IncrementAttempts}"/>
-        <Button x:Name="buttonSubtract" Content="-" HorizontalAlignment="Left" Margin="111,138,0,0" VerticalAlignment="Top" Width="47" Height="23" RenderTransformOrigin="0.5,0.5" TextOptions.TextFormattingMode="Display" Command="{Binding DecrementAttempts}"/>
 
     </Grid>
 </UserControl>

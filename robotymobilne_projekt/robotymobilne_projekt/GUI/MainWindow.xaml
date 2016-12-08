@@ -9,7 +9,7 @@
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="Home page">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="let's get started" Source="/GUI/Views/HomePage.xaml" />
+                <mui:Link DisplayName="" Source="/GUI/Views/HomePage.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="Manual">
@@ -20,12 +20,7 @@
 
         <mui:LinkGroup DisplayName="Automatic">
             <mui:LinkGroup.Links>
-                <mui:Link DisplayName="" Source="/GUI/Views/Automatic/LineFollowerView.xaml" />
-            </mui:LinkGroup.Links>
-        </mui:LinkGroup>
-        <mui:LinkGroup DisplayName="Debugging">
-            <mui:LinkGroup.Links>
-                <mui:Link DisplayName="let's get started" Source="/GUI/Views/HomePage.xaml" />
+                <mui:Link DisplayName="" Source="/GUI/Views/Automatic/AutomaticView.xaml" />
             </mui:LinkGroup.Links>
         </mui:LinkGroup>
         <mui:LinkGroup DisplayName="Settings" GroupKey="settings">
