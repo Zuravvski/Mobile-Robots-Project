@@ -6,14 +6,22 @@
              xmlns:local="clr-namespace:robotymobilne_projekt.GUI.Views.Automatic"
              mc:Ignorable="d">
     <Viewbox>
-        <Grid x:Name="MainGrid" TextOptions.TextFormattingMode="Ideal" Height="213" Width="421">
-            <ComboBox x:Name="comboBoxMode" HorizontalAlignment="Left" Margin="221,11,0,0" VerticalAlignment="Top" Width="120"/>
-            <ProgressBar x:Name="progressBarSpeedL" HorizontalAlignment="Left" Height="90" Margin="226,49,0,0" VerticalAlignment="Top" Width="26"/>
-            <ProgressBar x:Name="progressBarSpeedR" HorizontalAlignment="Left" Height="90" Margin="262,48,0,0" VerticalAlignment="Top" Width="28"/>
-            <Label x:Name="label" Content="Label" HorizontalAlignment="Left" Margin="300,58,0,0" VerticalAlignment="Top" Width="37"/>
-            <Label x:Name="label1" Content="Label" HorizontalAlignment="Left" Margin="302,83,0,0" VerticalAlignment="Top" Width="31"/>
-            <ProgressBar x:Name="progressBarBattery" HorizontalAlignment="Left" Height="24" Margin="298,111,0,0" VerticalAlignment="Top" Width="96"/>
-            <Viewbox HorizontalAlignment="Left" Height="192" Margin="10,11,0,0" VerticalAlignment="Top" Width="198"/>
+        <Grid x:Name="MainGrid" TextOptions.TextFormattingMode="Ideal" Height="210" Width="332">
+            <ComboBox x:Name="comboBoxMode" HorizontalAlignment="Left" Margin="220,11,0,0" VerticalAlignment="Top" Width="103"/>
+            <ProgressBar x:Name="progressBarSpeedL" HorizontalAlignment="Left" Height="70" Margin="220,55,0,0" VerticalAlignment="Top" Width="15" BorderBrush="Gray" BorderThickness="1"/>
+            <ProgressBar x:Name="progressBarSpeedR" HorizontalAlignment="Left" Height="70" Margin="240,55,0,0" VerticalAlignment="Top" Width="15" BorderBrush="Gray" BorderThickness="1"/>
+            <Label x:Name="label" Content="posX:" HorizontalAlignment="Left" Margin="270,70,0,0" VerticalAlignment="Top" Width="37"/>
+            <Label x:Name="label1" Content="posY:" HorizontalAlignment="Left" Margin="270,85,0,0" VerticalAlignment="Top" Width="31"/>
+            <ProgressBar x:Name="progressBarBattery" HorizontalAlignment="Left" Height="20" Margin="270,105,0,0" VerticalAlignment="Top" Width="55" BorderBrush="Gray" BorderThickness="1"/>
+            <Label x:Name="label2" Content="ID:" HorizontalAlignment="Left" Margin="270,55,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="labelID" Content="lab" HorizontalAlignment="Left" Margin="305,55,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="labelPosX" Content="lab" HorizontalAlignment="Left" Margin="305,70,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="labelPosY" Content="lab" HorizontalAlignment="Left" Margin="305,85,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="label6" Content="L" HorizontalAlignment="Left" Margin="225,40,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="label7" Content="R" HorizontalAlignment="Left" Margin="245,40,0,0" VerticalAlignment="Top"/>
+            <Rectangle Fill="Gray" HorizontalAlignment="Left" Height="10" Margin="325,110,0,0" VerticalAlignment="Top" Width="5"/>
+            <Viewbox x:Name="viewboxMapArea" HorizontalAlignment="Left" Height="200" Margin="5,5,0,0" VerticalAlignment="Top" Width="200"/>
+            <Viewbox HorizontalAlignment="Left" Height="72" Margin="220,130,0,0" VerticalAlignment="Top" Width="107"/>
         </Grid>
     </Viewbox>
 </UserControl>
