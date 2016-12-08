@@ -1,7 +1,10 @@
 ﻿using robotymobilne_projekt.Utils.AppLogger;
 using System;
 using System.Diagnostics;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
 using robotymobilne_projekt.GUI.ViewModels.Automatic;
 
 namespace robotymobilne_projekt.GUI.Views.Automatic
@@ -13,7 +16,7 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
     {
         public AutomaticView()
         {
-            DataContext = new AutomaticViewModel();
+            DataContext = new AutomaticViewModel(this);
         }
     }
 }

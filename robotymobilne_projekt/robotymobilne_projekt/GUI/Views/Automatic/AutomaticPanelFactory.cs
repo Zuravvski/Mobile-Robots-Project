@@ -13,10 +13,8 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
                     panel = new LineFollowerView();
                     break;
 
-                case AutomaticMode.TRAJECTORY:
-                    //return new TrajectoryView();
-                case AutomaticMode.INVALID:
-                    panel = null;
+                case AutomaticMode.ROAD_TRACKING:
+                    panel = new RoadTrackingView();
                     break;
             }
             return panel;
@@ -25,8 +23,8 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
 
     public enum AutomaticMode
     {
-        INVALID,
+        NONE,
         LINE_FOLLOWER,
-        TRAJECTORY
+        ROAD_TRACKING
     };
 }

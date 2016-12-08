@@ -10,7 +10,6 @@
 
     <Grid x:Name="gridPane" TextOptions.TextFormattingMode="Ideal">
         <Button x:Name="button" Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Background="Green" Margin="0,-26,0,0" Command="{Binding AddUser}"/>
-
         <Viewbox Stretch="Uniform">
         <ItemsControl Grid.Row="1" ItemsSource="{Binding Users}">
             <ItemsControl.ItemsPanel>

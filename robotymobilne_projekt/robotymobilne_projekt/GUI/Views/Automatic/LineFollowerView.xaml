@@ -5,21 +5,21 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:robotymobilne_projekt.GUI.Views.Automatic"
              xmlns:converters="clr-namespace:robotymobilne_projekt.GUI.Converters"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             mc:Ignorable="d">
     
     <UserControl.Resources>
         <converters:IntToDoubleConverter x:Key="intToDoubleConverter"/>
+        <converters:TextToNumberConverter x:Key="stringToInt"/>
     </UserControl.Resources>
 
-    <Grid>
+    <Grid Width="228">
         <ProgressBar x:Name="progressBarSensor1" HorizontalAlignment="Left" Height="16" Margin="69,10,0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor1, Path=DataContext.LineFollower.Sensors[0], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" SmallChange="1" Maximum="2000"/>
         <ProgressBar x:Name="progressBarSensor2" HorizontalAlignment="Left" Height="16" Margin="69,31,0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor2, Path=DataContext.LineFollower.Sensors[1], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" Maximum="2000" SmallChange="1"/>
         <ProgressBar x:Name="progressBarSensor3" HorizontalAlignment="Left" Height="16" Margin="69,52,0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor3, Path=DataContext.LineFollower.Sensors[2], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" Maximum="2000" SmallChange="1"/>
         <ProgressBar x:Name="progressBarSensor4" HorizontalAlignment="Left" Height="16" Margin="69,73,0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor4, Path=DataContext.LineFollower.Sensors[3], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" Maximum="2000" SmallChange="1"/>
         <ProgressBar x:Name="progressBarSensor5" HorizontalAlignment="Left" Height="16" Margin="69,94,0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor5, Path=DataContext.LineFollower.Sensors[4], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" Maximum="2000" SmallChange="1"/>
-        <Slider x:Name="slider" HorizontalAlignment="Left" Margin="124,126,0,0" VerticalAlignment="Top" Width="95"/>
-        <Slider x:Name="slider1" HorizontalAlignment="Left" Margin="124,154,0,0" VerticalAlignment="Top" Width="95" Height="23"/>
+        <Slider x:Name="sliderKP" HorizontalAlignment="Left" Margin="124,126,0,0" VerticalAlignment="Top" Width="95" Value="{Binding ElementName=sliderKP, Path=DataContext.LineFollower.K_P, Converter={StaticResource intToDoubleConverter}, FallbackValue=0}"/>
+        <Slider x:Name="slideKD" HorizontalAlignment="Left" Margin="124,154,0,0" VerticalAlignment="Top" Width="95" Height="23" Value="{Binding ElementName=slideKD, Path=DataContext.LineFollower.K_D, Converter={StaticResource intToDoubleConverter}, FallbackValue=0}"/>
         <Label x:Name="labelSensor1" Content="Sensor 1:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelSensor2" Content="Sensor 2:" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelSensor3" Content="Sensor 3:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
@@ -37,7 +37,7 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Label x:Name="labelErrorVal" Content="0" HorizontalAlignment="Left" Margin="49,189,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
+        <Label x:Name="labelErrorVal" Content="{Binding ElementName=labelErrorVal, Path=DataContext.LineFollower.PreviousError, Converter={StaticResource stringToInt},FallbackValue=0}" HorizontalAlignment="Left" Margin="49,189,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -47,7 +47,6 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <Button x:Name="button" Content="You spin me right round" HorizontalAlignment="Left" Margin="60,239,0,0" VerticalAlignment="Top" Width="172"/>
 
     </Grid>
 </UserControl>

@@ -8,12 +8,10 @@ namespace robotymobilne_projekt.GUI.Views.Manual
     /// </summary>
     public partial class ManualView : Page
     {
-        private readonly ManualViewModel model;
         public ManualView()
         {
             InitializeComponent();
-            model = new ManualViewModel();
-            DataContext = model;
+            DataContext = new ManualViewModel();
         }
     }
 }

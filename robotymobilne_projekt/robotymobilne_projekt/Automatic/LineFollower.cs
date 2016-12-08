@@ -9,10 +9,10 @@ namespace robotymobilne_projekt.Automatic
     {
         // TODO: Tune controller
         // Proportional part
-        private const int KP = 1; 
+        private int KP = 4; 
 
         // Derative part
-        private const int KD = 1;
+        private int KD = 3;
 
         // Integral part
         private int integral;
@@ -21,8 +21,45 @@ namespace robotymobilne_projekt.Automatic
         private int lastError;
         private int previousReading;
 
+        #region Setters & Getters
         public ObservableCollection<int> Sensors { private get; set; }
 
+        public int K_P
+        {
+            get
+            {
+                return KP;
+            }
+            set
+            {
+                KP = value;
+                NotifyPropertyChanged("K_P");
+            }
+        }
+        public int K_D
+        {
+            get
+            {
+                return KD;
+            }
+            set
+            {
+                KD = value;
+                NotifyPropertyChanged("K_D");
+            }
+        }
+
+        public int PreviousError
+        {
+            get { return lastError; }
+            set
+            {
+                lastError = value;
+                NotifyPropertyChanged("PreviousError");
+            }
+        }
+
+        #endregion
 
         public override Tuple<double, double> execute()
         {

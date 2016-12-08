@@ -11,7 +11,7 @@ namespace robotymobilne_projekt.GUI.Converters
             double result = 0;
             if (value is int)
             {
-                result = (int)value;
+                result = System.Convert.ToDouble(value);
             }
             return result;
         }
@@ -21,7 +21,7 @@ namespace robotymobilne_projekt.GUI.Converters
             int result = 0;
             if (value is double)
             {
-                result = (int) value;
+                result = System.Convert.ToInt32(value);
             }
             return result;
         }

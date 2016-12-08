@@ -75,7 +75,8 @@
     <Compile Include="Automatic\LineFollowerDriver.cs" />
     <Compile Include="Devices\Network utils\DataFrame.cs" />
     <Compile Include="Devices\Network utils\FrameParser.cs" />
-    <Compile Include="GUI\Converters\EnumToStringConverter.cs" />
+    <Compile Include="GUI\Converters\AutoModeCollToStringColl.cs" />
+    <Compile Include="GUI\Converters\AutoModeToStringConverter.cs" />
     <Compile Include="GUI\Converters\IntToDoubleConverter.cs" />
     <Compile Include="GUI\ViewModels\Automatic\AutomaticViewModel.cs" />
     <Compile Include="GUI\ViewModels\Automatic\LineFollowerViewModel.cs" />
@@ -85,6 +86,9 @@
     </Compile>
     <Compile Include="GUI\Views\Automatic\LineFollowerView.xaml.cs">
       <DependentUpon>LineFollowerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GUI\Views\Automatic\RoadTrackingView.xaml.cs">
+      <DependentUpon>RoadTrackingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Manual\ManualDriver.cs" />
     <Compile Include="Devices\Network utils\RobotFrameParser.cs" />
@@ -152,6 +156,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\Views\Automatic\LineFollowerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Views\Automatic\RoadTrackingView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
