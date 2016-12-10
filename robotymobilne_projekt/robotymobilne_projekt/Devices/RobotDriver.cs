@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Threading;
-using robotymobilne_projekt.Devices;
+using robotymobilne_projekt.Manual;
 using robotymobilne_projekt.Settings;
 
-namespace robotymobilne_projekt.Manual
+namespace robotymobilne_projekt.Devices
 {
-    public class ManualDriver : IDisposable
+    public class RobotDriver : IDisposable
     {
-        private RobotModel robot;
-        private AbstractController controller;
-        private readonly Thread handlerThread;
+        protected RobotModel robot;
+        protected AbstractController controller;
+        protected Thread handlerThread;
 
         public RobotModel Robot
         {
             get { return robot; }
         }
 
-        public ManualDriver(RobotModel robot, AbstractController controller)
+        public RobotDriver(RobotModel robot, AbstractController controller)
         {
             this.robot = robot;
             this.controller = controller;
@@ -28,7 +28,7 @@ namespace robotymobilne_projekt.Manual
             handlerThread.Start();
         }
 
-        private void run()
+        protected virtual void run()
         {
             while (null != robot && null != controller && robot.Status != RemoteDevice.StatusE.DISCONNECTED)
             {
@@ -45,7 +45,7 @@ namespace robotymobilne_projekt.Manual
                     }
 
                     if (!ControllerSettings.Instance.Controllers.Contains(controller))
-                            throw new InvalidOperationException();
+                        throw new InvalidOperationException();
                 }
                 catch (Exception)
                 {
@@ -57,7 +57,7 @@ namespace robotymobilne_projekt.Manual
         }
 
         // Clean-up code
-        public void Dispose()
+        public virtual void Dispose()
         {
             robot.IsNotReserved = true;
             controller.IsNotReserved = true;

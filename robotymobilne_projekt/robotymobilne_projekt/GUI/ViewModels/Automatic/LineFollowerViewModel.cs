@@ -1,17 +1,40 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using robotymobilne_projekt.Automatic;
+using robotymobilne_projekt.Automatic.LineFollower;
 using robotymobilne_projekt.Devices;
-using robotymobilne_projekt.Settings;
 
 namespace robotymobilne_projekt.GUI.ViewModels
 {
     public class LineFollowerViewModel : ViewModel
     {
-        private LineFollower lineFollower;
+        private LineFollowerController lineFollower;
+        private List<LineFollowerAlgorithm.Type> algorithms =
+            new List<LineFollowerAlgorithm.Type>() { LineFollowerAlgorithm.Type.P, LineFollowerAlgorithm.Type.PID };
+        private LineFollowerAlgorithm.Type currentAlgorithm;
+        private readonly LineFollowerAlgorithmFactory algorithmFactory;
+        private RobotDriver driver;
 
         public RobotModel Robot { get; set; }
 
-        public LineFollower LineFollower
+        public List<LineFollowerAlgorithm.Type> Algorithms
+        {
+            get { return algorithms; }
+        }
+
+        public LineFollowerAlgorithm.Type CurrentAlgorithm
+        {
+            get { return currentAlgorithm; }
+            set
+            {
+                currentAlgorithm = value;
+                lineFollower.Algorithm = algorithmFactory.getAlgorithm(currentAlgorithm);
+                NotifyPropertyChanged("CurrentAlgorithm");
+            }
+        }
+
+
+        public LineFollowerController LineFollower
         {
             get
             {
@@ -24,22 +47,11 @@ namespace robotymobilne_projekt.GUI.ViewModels
             }
         }
 
-        private LineFollowerDriver driver;
-
         public LineFollowerViewModel()
         {
-            LineFollower = new LineFollower {Sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0}};
-
-            // Hardcode for testing purpose
-            var hardcodedRobot = RobotSettings.Instance.Robots[1]; // ID: 30
-            lineFollower = new LineFollower();
-
-            if (hardcodedRobot.Status == RemoteDevice.StatusE.DISCONNECTED)
-            {
-                hardcodedRobot.connect();
-                driver = new LineFollowerDriver(hardcodedRobot, lineFollower);
-            }
-        }
-       
+            lineFollower = new LineFollowerController {Sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0}};
+            algorithmFactory = new LineFollowerAlgorithmFactory();
+            CurrentAlgorithm = LineFollowerAlgorithm.Type.P;
+        }   
     }
 }

@@ -3,26 +3,25 @@ using System.Collections.ObjectModel;
 using robotymobilne_projekt.Manual;
 using robotymobilne_projekt.Settings;
 
-namespace robotymobilne_projekt.Automatic
+namespace robotymobilne_projekt.Automatic.LineFollower
 {
-    public class LineFollower : AbstractController
+    public class LFPID : LineFollowerAlgorithm
     {
-        // TODO: Tune controller
+        private Collection<int> sensors;
+
         // Proportional part
-        private int KP = 1; 
+        private int KP = 1;
 
         // Derative part
         private int KD = 1;
 
         // Integral part
+        private int KI = 1;
         private int integral;
 
         // General part
         private int lastError;
         private int previousReading;
-
-        #region Setters & Getters
-        public ObservableCollection<int> Sensors { private get; set; }
 
         public int K_P
         {
@@ -49,50 +48,31 @@ namespace robotymobilne_projekt.Automatic
             }
         }
 
-        public int PreviousError
+        public int K_I
         {
-            get { return lastError; }
+            get
+            {
+                return KI;
+            }
             set
             {
-                lastError = value;
-                NotifyPropertyChanged("PreviousError");
+                KI = value;
+                NotifyPropertyChanged("K_I");
             }
         }
 
-        #endregion
-
-        public override Tuple<double, double> execute()
+        public override Tuple<double, double> execute(Collection<int> sensors)
         {
-            return secondVariant();
-        }
+            this.sensors = sensors;
 
-        private Tuple<double, double> firstVariant()
-        {
-            var position = readLine();
-            var error = position - 2000;
-            var motorSpeed = KP * error + KD * (error - lastError);
-            lastError = error;
-
-            var motorL = 2 + motorSpeed;
-            var motorR = 2 - motorSpeed;
-
-            if (motorL < 0)
-                motorL = 0;
-
-            if (motorR < 0)
-                motorR = 0;
-
-            return new Tuple<double, double>(motorL, motorR);
-        }
-
-        private Tuple<double, double> secondVariant()
-        {
             var motorL = RobotSettings.Instance.MaxSpeed;
             var motorR = RobotSettings.Instance.MaxSpeed;
             var position = readLine();
+            var error = 0;
 
             // The "proportional" term should be 0 when we are on the line.
-            var error = position - 2000;
+            if (position != 0)
+                error = position - 2000;
 
             // Compute the derivative and integral of the
             // position.
@@ -102,25 +82,24 @@ namespace robotymobilne_projekt.Automatic
             // Remember the last position.
             lastError = error;
 
-            // Compute the difference between the two motor power settings,
-            // m1 - m2.  If this is a positive number the robot will turn
-            // to the right.  If it is a negative number, the robot will
-            // turn to the left, and the magnitude of the number determines
-            // the sharpness of the turn.
             var powerDifference = error / 20 + integral / 10000 + derivative * 3 / 2;
 
-            // Compute the actual motor settings.  We never set either motor
-            // to a negative value.
             if (powerDifference > RobotSettings.Instance.MaxSpeed)
                 powerDifference = (int)RobotSettings.Instance.MaxSpeed;
-
-            if (powerDifference < 0)
-                powerDifference = 0;
-
-            if (powerDifference < 0)
-                motorR += powerDifference;
             else
-                motorL += powerDifference;
+            {
+                powerDifference = (int)RobotSettings.Instance.MaxSpeed * -1;
+            }
+
+            if (powerDifference < 0)
+            {
+                motorR += Math.Abs(powerDifference);
+            }
+
+            else
+            {
+                motorL += Math.Abs(powerDifference);
+            }
 
             return new Tuple<double, double>(motorL, motorR);
         }
@@ -133,9 +112,9 @@ namespace robotymobilne_projekt.Automatic
 
             callibrateSensors();
 
-            for (var i = 0; i < Sensors.Count; i++)
+            for (var i = 0; i < sensors.Count; i++)
             {
-                var value = Sensors[i];
+                var value = sensors[i];
 
                 // keep track of whether we see the line at all
                 if (value > 200)
@@ -154,24 +133,24 @@ namespace robotymobilne_projekt.Automatic
             if (!isOnLine)
             {
                 // If it last read to the left of center, return 0.
-                if (previousReading < (Sensors.Count - 1) * 1000 / 2)
+                if (previousReading < (sensors.Count - 1) * 1000 / 2)
                     return 0;
 
                 // If it last read to the right of center, return the max.
                 else
-                    return (Sensors.Count - 1) * 1000;
+                    return (sensors.Count - 1) * 1000;
             }
 
-            previousReading = (int) (avg / sum);
+            previousReading = (int)(avg / sum);
 
             return previousReading;
         }
 
         private void callibrateSensors()
         {
-            for (var i = 0; i < Sensors.Count; i++)
+            for (var i = 0; i < sensors.Count; i++)
             {
-                Sensors[i] = (int) mapValues(Sensors[i], 0, 2000, 0, 1000);
+                sensors[i] = (int)AbstractController.mapValues(sensors[i], 0, 2000, 0, 1000);
             }
         }
     }

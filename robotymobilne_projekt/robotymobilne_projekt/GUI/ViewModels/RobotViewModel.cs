@@ -18,7 +18,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
         // Currently selected
         private RobotModel robot;
         private AbstractController controller;
-        private ManualDriver driver;
+        private RobotDriver driver;
 
         #region Setters & Getters
 
@@ -80,7 +80,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
                             if (robot.Status == RemoteDevice.StatusE.CONNECTED) return;
 
                             Robot.connect();
-                            driver = new ManualDriver(robot, controller);
+                            driver = new RobotDriver(robot, controller);
                         }
                         catch (NotSupportedException)
                         {

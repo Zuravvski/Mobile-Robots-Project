@@ -71,13 +71,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Automatic\LineFollower.cs" />
-    <Compile Include="Automatic\LineFollowerDriver.cs" />
+    <Compile Include="Automatic\LineFollower\LineFollowerAlgorithm.cs" />
+    <Compile Include="Automatic\LineFollower\LFPID.cs" />
+    <Compile Include="Automatic\LineFollower\LineFollowerAlgorithmFactory.cs" />
+    <Compile Include="Automatic\LineFollower\LineFollowerController.cs" />
+    <Compile Include="Automatic\LineFollower\LineFollowerDriver.cs" />
     <Compile Include="Devices\Network utils\DataFrame.cs" />
     <Compile Include="Devices\Network utils\FrameParser.cs" />
+    <Compile Include="Devices\RobotDriver.cs" />
     <Compile Include="GUI\Converters\AutoModeCollToStringColl.cs" />
     <Compile Include="GUI\Converters\AutoModeToStringConverter.cs" />
+    <Compile Include="GUI\Converters\PIDToBoolConverter.cs" />
     <Compile Include="GUI\Converters\IntToDoubleConverter.cs" />
+    <Compile Include="GUI\Converters\LFAlgorithmsCollToStringCollConverter.cs" />
+    <Compile Include="GUI\Converters\LFAlgorithmToStringConverter.cs" />
+    <Compile Include="GUI\Converters\ProportionalToBoolConverter.cs" />
     <Compile Include="GUI\ViewModels\Automatic\AutomaticViewModel.cs" />
     <Compile Include="GUI\ViewModels\Automatic\LineFollowerViewModel.cs" />
     <Compile Include="GUI\Views\Automatic\AutomaticPanelFactory.cs" />
@@ -90,7 +98,6 @@
     <Compile Include="GUI\Views\Automatic\RoadTrackingView.xaml.cs">
       <DependentUpon>RoadTrackingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Manual\ManualDriver.cs" />
     <Compile Include="Devices\Network utils\RobotFrameParser.cs" />
     <Compile Include="Devices\Network utils\RobotFrame.cs" />
     <Compile Include="Devices\NullObjectRobot.cs" />

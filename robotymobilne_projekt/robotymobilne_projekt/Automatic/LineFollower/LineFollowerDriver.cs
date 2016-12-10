@@ -8,10 +8,10 @@ namespace robotymobilne_projekt.Automatic
     public class LineFollowerDriver : IDisposable
     {
         private RobotModel robot;
-        private LineFollower controller;
+        private LineFollowerController controller;
         private readonly Thread handlerThread;
 
-        public LineFollowerDriver(RobotModel robot, LineFollower controller)
+        public LineFollowerDriver(RobotModel robot, LineFollowerController controller)
         {
             this.robot = robot;
             this.controller = controller;

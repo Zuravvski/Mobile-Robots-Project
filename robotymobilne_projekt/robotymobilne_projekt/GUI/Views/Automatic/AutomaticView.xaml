@@ -11,24 +11,38 @@
     <UserControl.Resources>
         <converters:AutoModeCollToStringColl x:Key="modesToString"/>
         <converters:AutoModeToStringConverter x:Key="modeToString"/>
+        <converters:RobotStatusToBoolConverter x:Key="statusToBoolConverter"/>
+        <converters:AbsoluteSpeedConverter x:Key="speedConverter"/>
+        <converters:DirectionToColorConverter x:Key="directionConverter"/>
+        <converters:ReverseConnectionStatus x:Key="reverseStatusConverter"/>
+        <converters:ValToPercentConverter x:Key="batteryValueConverter" />
+        <converters:BatteryStatusToColorConverter x:Key="batteryColorConverter"/>
     </UserControl.Resources>
 
     <Viewbox x:Name="MainView">
         <Grid x:Name="MainGrid" TextOptions.TextFormattingMode="Ideal" Width="389" Height="204">
             <ComboBox x:Name="comboBoxMode" HorizontalAlignment="Left" Margin="266,6,0,0" VerticalAlignment="Top" Width="110" ItemsSource="{Binding Modes, Converter={StaticResource modesToString}}" SelectedItem="{Binding CurrentMode, Converter={StaticResource modeToString}}"/>
-            <ProgressBar x:Name="progressBarSpeedL" HorizontalAlignment="Left" Height="70" Margin="266,50,0,0" VerticalAlignment="Top" Width="15" BorderBrush="Gray" BorderThickness="1"/>
-            <ProgressBar x:Name="progressBarSpeedR" HorizontalAlignment="Left" Height="70" Margin="286,50,0,0" VerticalAlignment="Top" Width="15" BorderBrush="Gray" BorderThickness="1"/>
-            <Label x:Name="label" Content="posX:" HorizontalAlignment="Left" Margin="316,65,0,0" VerticalAlignment="Top" Width="37"/>
-            <Label x:Name="label1" Content="posY:" HorizontalAlignment="Left" Margin="316,80,0,0" VerticalAlignment="Top" Width="31"/>
-            <ProgressBar x:Name="progressBarBattery" HorizontalAlignment="Left" Height="20" Margin="316,100,0,0" VerticalAlignment="Top" Width="55" BorderBrush="Gray" BorderThickness="1"/>
-            <Label x:Name="label2" Content="ID:" HorizontalAlignment="Left" Margin="316,50,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="labelID" Content="lab" HorizontalAlignment="Left" Margin="351,50,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="labelPosX" Content="lab" HorizontalAlignment="Left" Margin="351,65,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="labelPosY" Content="lab" HorizontalAlignment="Left" Margin="351,80,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="label6" Content="L" HorizontalAlignment="Left" Margin="271,35,0,0" VerticalAlignment="Top"/>
-            <Label x:Name="label7" Content="R" HorizontalAlignment="Left" Margin="291,35,0,0" VerticalAlignment="Top"/>
-            <Rectangle Fill="Gray" HorizontalAlignment="Left" Height="10" Margin="371,106,0,0" VerticalAlignment="Top" Width="5"/>
+            <ProgressBar x:Name="progressBarSpeedL" HorizontalAlignment="Left" Height="76" Margin="227,89,0,0" VerticalAlignment="Top" Width="21" BorderBrush="Gray" BorderThickness="1" Value="{Binding ElementName=progressBarSpeedL, Path=DataContext.CurrentRobot.SpeedL,Mode=OneWay, Converter={StaticResource speedConverter}}" Foreground="{Binding ElementName=progressBarSpeedL, Path=DataContext.CurrentRobot.SpeedL, Mode=OneWay, Converter={StaticResource directionConverter}}"/>
+            <ProgressBar x:Name="progressBarSpeedR" HorizontalAlignment="Left" Height="76" Margin="254,89,0,0" VerticalAlignment="Top" Width="21" BorderBrush="Gray" BorderThickness="1" Value="{Binding ElementName=progressBarSpeedR, Path=DataContext.CurrentRobot.SpeedR, Mode=OneWay, Converter={StaticResource speedConverter}}" Foreground="{Binding ElementName=progressBarSpeedR, Path=DataContext.CurrentRobot.SpeedR, Mode=OneWay, Converter={StaticResource directionConverter}}"/>
+            <Label x:Name="labelX" Content="X:" HorizontalAlignment="Left" Margin="295,89,0,0" VerticalAlignment="Top" Width="26" Height="24"/>
+            <Label x:Name="labelY" Content="Y:" HorizontalAlignment="Left" Margin="296,113,0,0" VerticalAlignment="Top" Width="25" Height="24"/>
+            <ProgressBar x:Name="progressBarBattery" HorizontalAlignment="Left" Height="22" Margin="295,143,0,0" VerticalAlignment="Top" Width="74" BorderBrush="Gray" BorderThickness="1" Value="{Binding ElementName=progressBarBattery, Path=DataContext.CurrentRobot.Battery, Converter={StaticResource batteryValueConverter}, FallbackValue=0}" Foreground="{Binding ElementName=progressBarBattery, Path=DataContext.CurrentRobot.Battery,Converter={StaticResource batteryColorConverter}, FallbackValue=#FFFF0000}"/>
+            <Label x:Name="label6" Content="L" HorizontalAlignment="Left" Margin="226,70,0,0" VerticalAlignment="Top" Height="24" Width="22"/>
+            <Label x:Name="label7" Content="R" HorizontalAlignment="Left" Margin="252,70,0,0" VerticalAlignment="Top" Height="24" Width="23"/>
+            <Rectangle Fill="Gray" HorizontalAlignment="Left" Height="11" Margin="369,150,0,0" VerticalAlignment="Top" Width="7"/>
             <Viewbox x:Name="viewboxModeArea" Width="200" Height="200" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Visible"/>
+            <Label x:Name="labelMode" Content="Mode:" HorizontalAlignment="Left" Margin="217,6,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="labelRobot" Content="Robot:" HorizontalAlignment="Left" Margin="217,37,0,0" VerticalAlignment="Top"/>
+            <Button x:Name="buttonConnect" Content="Connect" HorizontalAlignment="Left" Margin="226,180,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Connect}" IsEnabled="{Binding ElementName=buttonConnect, Path=DataContext.CurrentRobot.Status, Converter={StaticResource statusToBoolConverter}, FallbackValue=true}"/>
+            <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Margin="306,180,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Disconnect}" IsEnabled="{Binding ElementName=buttonDisconnect, Path=DataContext.CurrentRobot.Status, Converter={StaticResource reverseStatusConverter}, FallbackValue=False}"/>
+            <ComboBox x:Name="comboBoxRobots" HorizontalAlignment="Left" Margin="266,37,0,0" VerticalAlignment="Top" Width="110" ItemsSource="{Binding Robots, Mode=OneWay}" SelectedIndex="0" SelectedItem="{Binding CurrentRobot, Mode=OneWayToSource}" IsEnabled="{Binding ElementName=comboBoxRobots, Path=DataContext.CurrentRobot.Status, Converter={StaticResource statusToBoolConverter}, FallbackValue=true}">
+                <ComboBox.ItemContainerStyle>
+                    <Style TargetType="ComboBoxItem">
+                        <Setter Property="IsEnabled" Value="{Binding Path=IsNotReserved, Mode = OneWay, FallbackValue = true}"/>
+                    </Style>
+                </ComboBox.ItemContainerStyle>
+            </ComboBox>
+
         </Grid>
     </Viewbox>
 </UserControl>
