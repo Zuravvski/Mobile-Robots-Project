@@ -1,6 +1,7 @@
 ﻿using System.Collections.ObjectModel;
 using robotymobilne_projekt.Automatic;
 using robotymobilne_projekt.Devices;
+using robotymobilne_projekt.Settings;
 
 namespace robotymobilne_projekt.GUI.ViewModels
 {
@@ -27,8 +28,17 @@ namespace robotymobilne_projekt.GUI.ViewModels
 
         public LineFollowerViewModel()
         {
-            LineFollower = new LineFollower();
-            LineFollower.Sensors = new ObservableCollection<int>() {700, 200, 300, 400, 1500};
+            LineFollower = new LineFollower {Sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0}};
+
+            // Hardcode for testing purpose
+            var hardcodedRobot = RobotSettings.Instance.Robots[1]; // ID: 30
+            lineFollower = new LineFollower();
+
+            if (hardcodedRobot.Status == RemoteDevice.StatusE.DISCONNECTED)
+            {
+                hardcodedRobot.connect();
+                driver = new LineFollowerDriver(hardcodedRobot, lineFollower);
+            }
         }
        
     }

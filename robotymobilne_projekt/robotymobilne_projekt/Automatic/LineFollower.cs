@@ -9,10 +9,10 @@ namespace robotymobilne_projekt.Automatic
     {
         // TODO: Tune controller
         // Proportional part
-        private int KP = 4; 
+        private int KP = 1; 
 
         // Derative part
-        private int KD = 3;
+        private int KD = 1;
 
         // Integral part
         private int integral;
