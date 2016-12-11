@@ -1,17 +1,15 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using robotymobilne_projekt.Devices;
 using robotymobilne_projekt.Settings;
 
-namespace robotymobilne_projekt.Automatic.LineFollower
+namespace robotymobilne_projekt.Manual
 {
-    public class LineFollowerDriver : RobotDriver
+    public class ManualRobotDriver : RobotDriver
     {
-        public LineFollowerDriver(RobotModel robot, LineFollowerController controller) : base(robot, controller)
+        public ManualRobotDriver(RobotModel robot, AbstractController controller) : base(robot, controller)
         {
-            this.robot = robot;
-            this.controller = controller;
-            handlerThread = new Thread(run) {IsBackground = true};
-            handlerThread.Start();
+
         }
 
         protected override void run()
@@ -20,7 +18,6 @@ namespace robotymobilne_projekt.Automatic.LineFollower
             {
                 try
                 {
-                    ((LineFollowerController)controller).Sensors = robot.Sensors;
                     var reading = controller.execute();
                     robot.SpeedL = reading.Item1;
                     robot.SpeedR = reading.Item2;
@@ -30,12 +27,15 @@ namespace robotymobilne_projekt.Automatic.LineFollower
                     {
                         Robot.sendData(dataFrame);
                     }
-                    Thread.Sleep(ControllerSettings.Instance.Latency);
+
+                    if (!ControllerSettings.Instance.Controllers.Contains(controller))
+                        throw new InvalidOperationException();
                 }
                 catch
                 {
                     break;
                 }
+                Thread.Sleep(ControllerSettings.Instance.Latency);
             }
             Dispose();
         }

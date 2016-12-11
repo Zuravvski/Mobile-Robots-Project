@@ -19,10 +19,10 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
         // Fields
         private readonly List<AutomaticMode> modes = new List<AutomaticMode>(){AutomaticMode.LINE_FOLLOWER, AutomaticMode.ROAD_TRACKING };
         private readonly AutomaticPanelFactory panelFactory;
+        private ObservableCollection<UserControl> currentPanel;
+        private RobotViewModel currentPanelDataContext;
         private AutomaticMode currentMode;
-        private readonly AutomaticView context;
         private RobotModel currentRobot;
-        private RobotDriver driver;
 
         #region Setters & Getters
 
@@ -35,10 +35,9 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
             set
             {
                 currentRobot = value;
-                if (CurrentPanel != null && CurrentPanel is LineFollowerView)
+                if (null != currentPanelDataContext)
                 {
-                    // TODO : Provide common Abstraction
-                    ((LineFollowerViewModel) CurrentPanel.DataContext).Robot = currentRobot;      
+                    currentPanelDataContext.Robot = currentRobot;
                 }
                 NotifyPropertyChanged("CurrentRobot");
             }
@@ -47,7 +46,14 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
         {
             get { return RobotSettings.Instance.Robots; }
         }
-        public UserControl CurrentPanel { get; set; }
+
+        public ObservableCollection<UserControl> CurrentPanel
+        {
+            get
+            {
+                return currentPanel;
+            }
+        }
 
         public AutomaticMode CurrentMode
         {
@@ -58,8 +64,15 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
             set
             {
                 currentMode = value;
-                CurrentPanel = panelFactory.getPanel(currentMode);
-                context.viewboxModeArea.Child = CurrentPanel;
+                CurrentPanel[0] = panelFactory.getPanel(currentMode);
+                if (null != currentPanel[0])
+                {
+                    currentPanelDataContext = (RobotViewModel)currentPanel[0].DataContext;
+                }
+                else
+                {
+                    currentPanelDataContext = null;
+                }
                 NotifyPropertyChanged("CurrentMode");
             }
         }
@@ -79,22 +92,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
                 {
                     connect = new DelegateCommand(delegate
                     {
-                        try
-                        {
-                            if (currentRobot.Status == RemoteDevice.StatusE.CONNECTED) return;
-
-                            CurrentRobot.connect();
-                        }
-                        catch (NotSupportedException)
-                        {
-                            // NONE (1st element in list) throws exception in order for this message to be handled
-                            MessageBox.Show("Please choose valid robot and controller.", "Invalid settings");
-                        }
-                        catch
-                        {
-                            // Workaround. C# does not always manage its resources well when it comes to sockets.
-                            currentRobot.disconnect();
-                        }
+                        currentPanelDataContext?.Connect.Execute(null);
                     });
                 }
                 return connect;
@@ -109,22 +107,19 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
                 {
                     disconnect = new DelegateCommand(delegate
                     {
-                        if (CurrentRobot != null && CurrentRobot.Status == RemoteDevice.StatusE.CONNECTED)
-                        {
-                            CurrentRobot.disconnect();
-                        }
-                    });
+                        currentPanelDataContext?.Disconnect.Execute(null);
+                    }); 
                 }
                 return disconnect;
             }
         }
         #endregion
 
-        public AutomaticViewModel(AutomaticView context)
+        public AutomaticViewModel()
         {
             panelFactory = new AutomaticPanelFactory();
             currentMode = AutomaticMode.NONE;
-            this.context = context;
+            currentPanel = new ObservableCollection<UserControl>() {null};
         }
     }
 }

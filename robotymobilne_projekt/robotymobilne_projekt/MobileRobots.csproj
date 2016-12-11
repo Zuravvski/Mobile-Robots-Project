@@ -88,6 +88,7 @@
     <Compile Include="GUI\Converters\ProportionalToBoolConverter.cs" />
     <Compile Include="GUI\ViewModels\Automatic\AutomaticViewModel.cs" />
     <Compile Include="GUI\ViewModels\Automatic\LineFollowerViewModel.cs" />
+    <Compile Include="GUI\ViewModels\Manual\UserViewModel.cs" />
     <Compile Include="GUI\Views\Automatic\AutomaticPanelFactory.cs" />
     <Compile Include="GUI\Views\Automatic\AutomaticView.xaml.cs">
       <DependentUpon>AutomaticView.xaml</DependentUpon>
@@ -133,7 +134,8 @@
     </Compile>
     <Compile Include="GUI\ViewModels\AppearanceViewModel.cs" />
     <Compile Include="GUI\ViewModels\DelegateCommand.cs" />
-    <Compile Include="GUI\ViewModels\ManualViewModel.cs" />
+    <Compile Include="GUI\ViewModels\Manual\ManualViewModel.cs" />
+    <Compile Include="Manual\ManualRobotDriver.cs" />
     <Compile Include="Manual\NullObjectController.cs" />
     <Compile Include="Settings\IObservable.cs" />
     <Compile Include="Settings\IObserver.cs" />

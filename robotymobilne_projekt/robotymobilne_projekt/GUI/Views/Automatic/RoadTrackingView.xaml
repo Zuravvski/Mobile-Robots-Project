@@ -7,9 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
-        <Canvas HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300" Background="White">
-            <Label Content="TO BE DONE" Foreground="Red" Canvas.Left="109" Canvas.Top="136"/>
-        </Canvas>
+        <Canvas x:Name="canvasBoard" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300" Background="White" MouseMove="Canvas_MouseMove" MouseDown="canvasBoard_MouseDown" MouseUp="canvasBoard_MouseUp"/>
 
     </Grid>
 </UserControl>

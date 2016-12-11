@@ -1,5 +1,6 @@
 ﻿using robotymobilne_projekt.GUI.ViewModels;
 using System.Windows.Controls;
+using robotymobilne_projekt.GUI.ViewModels.Manual;
 
 namespace robotymobilne_projekt.GUI.Views.Manual
 {

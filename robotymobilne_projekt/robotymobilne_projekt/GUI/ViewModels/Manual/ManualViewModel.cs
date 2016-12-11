@@ -2,7 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace robotymobilne_projekt.GUI.ViewModels
+namespace robotymobilne_projekt.GUI.ViewModels.Manual
 {
     public class ManualViewModel : ViewModel
     {
@@ -31,7 +31,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
                     {
                         if (Users.Count < 4)
                         {
-                            var newUser = new UserInterface {DataContext = new RobotViewModel(this)};
+                            var newUser = new UserInterface {DataContext = new UserViewModel(this)};
                             Users.Add(newUser);
                             manageLayout();
                         }
