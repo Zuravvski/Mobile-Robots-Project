@@ -31,13 +31,13 @@ namespace robotymobilne_projekt.GUI.ViewModels
             LineFollower = new LineFollower {Sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0}};
 
             // Hardcode for testing purpose
-            var hardcodedRobot = RobotSettings.Instance.Robots[1]; // ID: 30
-            lineFollower = new LineFollower();
+            Robot = RobotSettings.Instance.Robots[2]; // ID: 30
+            //LineFollower = new LineFollower();
 
-            if (hardcodedRobot.Status == RemoteDevice.StatusE.DISCONNECTED)
+            if (Robot.Status == RemoteDevice.StatusE.DISCONNECTED)
             {
-                hardcodedRobot.connect();
-                driver = new LineFollowerDriver(hardcodedRobot, lineFollower);
+                Robot.connect();
+                driver = new LineFollowerDriver(Robot, LineFollower);
             }
         }
        

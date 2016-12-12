@@ -20,11 +20,11 @@
         <ProgressBar x:Name="progressBarSensor5" HorizontalAlignment="Left" Height="16" Margin="69,94,0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor5, Path=DataContext.LineFollower.Sensors[4], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" Maximum="2000" SmallChange="1"/>
         <Slider x:Name="sliderKP" HorizontalAlignment="Left" Margin="124,126,0,0" VerticalAlignment="Top" Width="95" Value="{Binding ElementName=sliderKP, Path=DataContext.LineFollower.K_P, Converter={StaticResource intToDoubleConverter}, FallbackValue=0}"/>
         <Slider x:Name="slideKD" HorizontalAlignment="Left" Margin="124,154,0,0" VerticalAlignment="Top" Width="95" Height="23" Value="{Binding ElementName=slideKD, Path=DataContext.LineFollower.K_D, Converter={StaticResource intToDoubleConverter}, FallbackValue=0}"/>
-        <Label x:Name="labelSensor1" Content="Sensor 1:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelSensor2" Content="Sensor 2:" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelSensor3" Content="Sensor 3:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelSensor4" Content="Sensor 4:" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelSensor5" Content="Sensor 5:" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelSensor1" Content="Sensor 0:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelSensor2" Content="Sensor 1:" HorizontalAlignment="Left" Margin="10,31,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelSensor3" Content="Sensor 2:" HorizontalAlignment="Left" Margin="10,52,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelSensor4" Content="Sensor 3:" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="labelSensor5" Content="Sensor 4:" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelDerivativeGain" Content="Derivative Gain:" HorizontalAlignment="Left" Margin="13,161,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelProportionalGain" Content="Proportional Gain:" HorizontalAlignment="Left" Margin="13,132,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelError" Content="Error:" HorizontalAlignment="Left" Margin="13,188,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">

@@ -57,6 +57,7 @@ namespace robotymobilne_projekt.Devices.Network_utils
                 newSensorsValues[i] = int.Parse(sensor, System.Globalization.NumberStyles.HexNumber);
                 //Debug.WriteLine(string.Format("Sensor {0} value is {1}", i+1, newSensorsValues[i]));
             }
+            Debug.WriteLine(string.Format(newSensorsValues[0].ToString() + "    " + newSensorsValues[1].ToString() + "    " + newSensorsValues[2].ToString() + "    " + newSensorsValues[3].ToString() + "    " + newSensorsValues[4].ToString()));
             return newSensorsValues;
         }
     }

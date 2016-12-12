@@ -14,7 +14,7 @@ namespace robotymobilne_projekt.Settings
         private readonly int scanTime;
 
         #region Default values
-        private const int defaultLatency = 100;
+        private const int defaultLatency = 20;
         private const int defaultScanTime = 3000; // 3s
         #endregion
 

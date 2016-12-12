@@ -15,14 +15,51 @@ namespace robotymobilne_projekt.Automatic
         private int KD = 1;
 
         // Integral part
-        private int integral;
+        //private int integral;
 
         // General part
         private int lastError;
         private int previousReading;
 
+        //MOJE
+        double error = 0;
+        double blackV = 1100;
+        double whiteV = 300;
+
+        //double Kp = (0 - RobotSettings.Instance.MaxSpeed)/(-offset - 0);
+        double Kc = 0.05;
+        double dt = 0.02;
+        double Pc = 0.38;
+
+
+
+        double Kp = 0;
+        double Ki = 0;
+        double Kd = 0;
+        double integral = 0;
+        double derivative = 0;
+        double lastErr = 0;
+
+        double turn = 0;
+
+        
+
+
+        private ObservableCollection<int> sensors;
+
         #region Setters & Getters
-        public ObservableCollection<int> Sensors { private get; set; }
+        public ObservableCollection<int> Sensors
+        {
+            private get
+            {
+                return sensors;
+            }
+            set
+            {
+                sensors = value;
+                NotifyPropertyChanged("Sensors");
+            }
+        }
 
         public int K_P
         {
@@ -61,9 +98,9 @@ namespace robotymobilne_projekt.Automatic
 
         #endregion
 
-        public override Tuple<double, double> execute()
+        public override Tuple<double, double> execute() 
         {
-            return secondVariant();
+            return sixthVariant();
         }
 
         private Tuple<double, double> firstVariant()
@@ -122,6 +159,123 @@ namespace robotymobilne_projekt.Automatic
             else
                 motorL += powerDifference;
 
+            return new Tuple<double, double>(motorL, motorR);
+        }
+
+        private Tuple<double, double> thirdVariant()
+        {
+            double motorL = 0;
+            double motorR = 0;
+            double deadbond = 100;
+            double x = 0;
+            
+            if (Sensors[2] > Sensors[0] && Sensors[2] > Sensors[1] && Sensors[2] > Sensors[3] && Sensors[2] > Sensors[4])
+            {
+                motorL = RobotSettings.Instance.MaxSpeed;
+                motorR = RobotSettings.Instance.MaxSpeed;
+            }
+            else if (Sensors[3] > Sensors[1] && Sensors[2] < Sensors[3])    //rotate RIGHT
+            {
+                //x = mapValues(Sensors[3] - Sensors[2], 0, 700, 0, 0.2);
+                x = (Sensors[3] - Sensors[2]) / Sensors[3];
+                motorL = RobotSettings.Instance.MaxSpeed + x * RobotSettings.Instance.MaxSpeed;
+                motorR = 0.5 * RobotSettings.Instance.MaxSpeed - x * RobotSettings.Instance.MaxSpeed;
+            }
+            else if (Sensors[1] > Sensors[3] && Sensors[1] > Sensors[2])    //rotate LEFT
+            {
+                //x = mapValues(Sensors[1] - Sensors[2], 0, 700, 0, 0.2);
+                x = 0.3*(double)(Sensors[1] - Sensors[2]) / (double)Sensors[1];
+                motorL = RobotSettings.Instance.MaxSpeed - x * RobotSettings.Instance.MaxSpeed;
+                motorR = RobotSettings.Instance.MaxSpeed + x * RobotSettings.Instance.MaxSpeed;
+            }
+            else if (Sensors[0] > Sensors[2] && Sensors[0] > Sensors[1] && Math.Abs(Sensors[0] - Sensors[2]) > deadbond)    //rotate LEFT HARD
+            {
+                //x = mapValues(Sensors[0] - Sensors[2], 0, 1300, 0, 0.7);
+                x = (Sensors[0] - Sensors[2]) / Sensors[0];
+                motorL = RobotSettings.Instance.MaxSpeed - x * RobotSettings.Instance.MaxSpeed;
+                motorR = RobotSettings.Instance.MaxSpeed + x * RobotSettings.Instance.MaxSpeed;
+            }
+            else if (Sensors[4] > Sensors[2] && Sensors[4] > Sensors[3] && Math.Abs(Sensors[4] - Sensors[2]) > deadbond)    //rotate RIGHT HARD
+            {
+                //x = mapValues(Sensors[3] - Sensors[2], 0, 1300, 0, 0.7);
+                x = 0.5*(double)(Sensors[3] - Sensors[2]) / (double)Sensors[3];
+                motorL = RobotSettings.Instance.MaxSpeed + x * RobotSettings.Instance.MaxSpeed;
+                motorR = 0.5 * RobotSettings.Instance.MaxSpeed - x * RobotSettings.Instance.MaxSpeed;
+            }
+            //return new Tuple<double, double>(motorL, motorR);
+            return new Tuple<double, double>(0, 0);
+        }
+
+
+        private Tuple<double, double> fourthVariant()   //P
+        {
+            double motorL = 0;
+            double motorR = 0;
+
+            double offset = (blackV + whiteV) / 2;
+            Kp = 0.6 * Kc;
+
+            error = (double)Sensors[2] - offset;
+            turn = Kp * error;
+
+            motorL = RobotSettings.Instance.MaxSpeed/2 + turn;
+            motorR = RobotSettings.Instance.MaxSpeed/2 - turn;
+
+            return new Tuple<double, double>(motorL, motorR);
+        }
+
+        private Tuple<double, double> fifthVariant()    //PI
+        {
+            double motorL = 0;
+            double motorR = 0;
+            
+            double offset = (blackV + whiteV) / 2;
+
+
+            error = (double)Sensors[2] - offset;
+            integral = (2/3) * integral + error;
+            turn = Kp * error + Ki * integral;
+
+            motorL = RobotSettings.Instance.MaxSpeed / 2 + turn;
+            motorR = RobotSettings.Instance.MaxSpeed / 2 - turn;
+
+            if (motorL < 0)
+                motorL = motorL * -1;
+            if (motorR < 0)
+                motorR = motorR * -1;
+
+
+            return new Tuple<double, double>(motorL, motorR);
+        }
+
+        private Tuple<double, double> sixthVariant()    //PID
+        {
+            double motorL = 0;
+            double motorR = 0;
+
+            Kp = 0.5 * Kc;
+            Ki = 0.1 * (2 * Kp * dt) / Pc;
+            Kd = 1 * (Kp * Pc) / (8 * dt);
+            //Ki = 0;
+            //Kd = 0;
+
+            double offset = (blackV + whiteV) / 2;
+            
+
+            error = (double)Sensors[2] - offset;
+            integral = (2 / 3) * integral + error;
+            derivative = error - lastErr;
+            turn = Kp * error + Ki * integral + Kd * derivative;
+
+            motorL = RobotSettings.Instance.MaxSpeed / 2 + turn;
+            motorR = RobotSettings.Instance.MaxSpeed / 2 - turn;
+
+            if (motorL < 0)
+                motorL = motorL * -1;
+            if (motorR < 0)
+                motorR = motorR * -1;
+
+            lastErr = error;
             return new Tuple<double, double>(motorL, motorR);
         }
 
