@@ -6,7 +6,7 @@ namespace robotymobilne_projekt.Automatic.LineFollower
 {
     public abstract class LineFollowerAlgorithm : ObservableObject
     {
-        public enum Type { P, PID } // Algorithm type
+        public enum Type { P, CUSTOM, PID } // Algorithm type
         protected Collection<int> sensors;
         private int previousReading;
 

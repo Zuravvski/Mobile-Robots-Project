@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Globalization;
 using System.Windows.Data;
+using robotymobilne_projekt.Manual;
 
 namespace robotymobilne_projekt.GUI.Converters
 {
@@ -11,7 +12,7 @@ namespace robotymobilne_projekt.GUI.Converters
             if(value is int)
             {
                 double toConvert = (int)value;
-                return mapValues(toConvert, 4300, 5000, 0, 100);
+                return AbstractController.mapValues(toConvert, 4300, 5000, 0, 100);
             }
             return 0;
         }
@@ -21,14 +22,9 @@ namespace robotymobilne_projekt.GUI.Converters
             if (value is double)
             {
                 double toConvert = (double)value;
-                return mapValues(toConvert, 0, 100, 4300, 5000);
+                return AbstractController.mapValues(toConvert, 0, 100, 4300, 5000);
             }
             return 0;
-        }
-
-        private int mapValues(double value, double fromSource, double toSource, double fromTarget, double toTarget)
-        {
-            return (int)((value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget);
         }
     }
 }

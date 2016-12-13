@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
-using robotymobilne_projekt.Automatic;
 using robotymobilne_projekt.Automatic.LineFollower;
 using robotymobilne_projekt.Devices;
 
@@ -14,7 +13,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
         private LineFollowerController lineFollower;
         private LineFollowerAlgorithm.Type currentAlgorithm;
         private readonly List<LineFollowerAlgorithm.Type> algorithms =
-            new List<LineFollowerAlgorithm.Type>() { LineFollowerAlgorithm.Type.P, LineFollowerAlgorithm.Type.PID };
+            new List<LineFollowerAlgorithm.Type>() { LineFollowerAlgorithm.Type.P, LineFollowerAlgorithm.Type.CUSTOM, LineFollowerAlgorithm.Type.PID };
         private readonly LineFollowerAlgorithmFactory algorithmFactory;
 
         #region Setters & Getters
