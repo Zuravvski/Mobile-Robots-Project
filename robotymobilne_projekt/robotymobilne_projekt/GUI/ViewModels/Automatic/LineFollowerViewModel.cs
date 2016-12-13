@@ -1,17 +1,41 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Input;
 using robotymobilne_projekt.Automatic;
+using robotymobilne_projekt.Automatic.LineFollower;
 using robotymobilne_projekt.Devices;
-using robotymobilne_projekt.Settings;
 
-namespace robotymobilne_projekt.GUI.ViewModels
+namespace robotymobilne_projekt.GUI.ViewModels.Automatic
 {
-    public class LineFollowerViewModel : ViewModel
+    public class LineFollowerViewModel : RobotViewModel
     {
-        private LineFollower lineFollower;
+        private LineFollowerController lineFollower;
+        private LineFollowerAlgorithm.Type currentAlgorithm;
+        private readonly List<LineFollowerAlgorithm.Type> algorithms =
+            new List<LineFollowerAlgorithm.Type>() { LineFollowerAlgorithm.Type.P, LineFollowerAlgorithm.Type.PID };
+        private readonly LineFollowerAlgorithmFactory algorithmFactory;
 
-        public RobotModel Robot { get; set; }
+        #region Setters & Getters
+        public List<LineFollowerAlgorithm.Type> Algorithms
+        {
+            get { return algorithms; }
+        }
 
-        public LineFollower LineFollower
+        public LineFollowerAlgorithm.Type CurrentAlgorithm
+        {
+            get { return currentAlgorithm; }
+            set
+            {
+                currentAlgorithm = value;
+                lineFollower.Algorithm = algorithmFactory.getAlgorithm(currentAlgorithm);
+                NotifyPropertyChanged("CurrentAlgorithm");
+            }
+        }
+
+
+        public LineFollowerController LineFollower
         {
             get
             {
@@ -23,23 +47,58 @@ namespace robotymobilne_projekt.GUI.ViewModels
                 NotifyPropertyChanged("LineFollower");
             }
         }
+        #endregion
 
-        private LineFollowerDriver driver;
+        #region Actions
+
+        public override ICommand Connect
+        {
+            get
+            {
+                if (null == connect)
+                {
+                    connect = new DelegateCommand(delegate
+                    {
+                        try
+                        {
+                            if (robot.Status == RemoteDevice.StatusE.CONNECTED) return;
+                            Robot.connect();
+                            driver = new LineFollowerDriver(robot, lineFollower);
+                        }
+                        catch (NotSupportedException)
+                        {
+                            // NONE (1st element in list) throws exception in order for this message to be handled
+                            MessageBox.Show("Please choose valid robot and controller.", "Invalid settings");
+                        }
+                        catch
+                        {
+                            // Workaround. C# does not always manage its resources well when it comes to sockets.
+                            robot.disconnect();
+                        }
+                    });
+                }
+                return connect;
+            }
+        }
+
+            // Hardcode for testing purpose
+            var hardcodedRobot = RobotSettings.Instance.Robots[1]; // ID: 30
+            lineFollower = new LineFollower();
+
+            if (hardcodedRobot.Status == RemoteDevice.StatusE.DISCONNECTED)
+            {
+                hardcodedRobot.connect();
+                driver = new LineFollowerDriver(hardcodedRobot, lineFollower);
+            }
+        }
+
+        #endregion
 
         public LineFollowerViewModel()
         {
-            LineFollower = new LineFollower {Sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0}};
-
-            // Hardcode for testing purpose
-            Robot = RobotSettings.Instance.Robots[2]; // ID: 30
-            //LineFollower = new LineFollower();
-
-            if (Robot.Status == RemoteDevice.StatusE.DISCONNECTED)
-            {
-                Robot.connect();
-                driver = new LineFollowerDriver(Robot, LineFollower);
-            }
-        }
-       
+            lineFollower = new LineFollowerController {Sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0}};
+            algorithmFactory = new LineFollowerAlgorithmFactory();
+            CurrentAlgorithm = LineFollowerAlgorithm.Type.P;
+        }   
     }
 }

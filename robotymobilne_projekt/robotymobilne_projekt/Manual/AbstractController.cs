@@ -71,7 +71,7 @@ namespace robotymobilne_projekt.Manual
             }
         }
 
-        protected double mapValues(double value, double fromSource, double toSource, double fromTarget, double toTarget)
+        public static double mapValues(double value, double fromSource, double toSource, double fromTarget, double toTarget)
         {
             return (value - fromSource) / (toSource - fromSource) * (toTarget - fromTarget) + fromTarget;
         }

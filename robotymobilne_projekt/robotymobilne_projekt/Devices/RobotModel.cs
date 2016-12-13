@@ -270,6 +270,7 @@ namespace robotymobilne_projekt.Devices
             SpeedR = 0;
             Battery = 0;
             Position = new Point(0,0);
+            Sensors = new ObservableCollection<int>() {0,0,0,0,0};
         }
     }
 }

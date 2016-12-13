@@ -1,17 +1,12 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using robotymobilne_projekt.Devices;
 using robotymobilne_projekt.Settings;
 
-namespace robotymobilne_projekt.Automatic
+namespace robotymobilne_projekt.Automatic.LineFollower
 {
-    public class LineFollowerDriver : IDisposable
+    public class LineFollowerDriver : RobotDriver
     {
-        private RobotModel robot;
-        private LineFollower controller;
-        private readonly Thread handlerThread;
-
-        public LineFollowerDriver(RobotModel robot, LineFollower controller)
+        public LineFollowerDriver(RobotModel robot, LineFollowerController controller) : base(robot, controller)
         {
             this.robot = robot;
             this.controller = controller;
@@ -19,13 +14,13 @@ namespace robotymobilne_projekt.Automatic
             handlerThread.Start();
         }
 
-        private void run()
+        protected override void run()
         {
-            while (robot.Status != RemoteDevice.StatusE.DISCONNECTED)
+            while (null != robot && null != controller && robot.Status != RemoteDevice.StatusE.DISCONNECTED)
             {
                 try
                 {
-                    controller.Sensors = robot.Sensors;
+                    ((LineFollowerController)controller).Sensors = robot.Sensors;
                     var reading = controller.execute();
                     robot.SpeedL = reading.Item1;
                     robot.SpeedR = reading.Item2;
@@ -33,9 +28,8 @@ namespace robotymobilne_projekt.Automatic
 
                     if (null != dataFrame)
                     {
-                        robot.sendData(dataFrame);
+                        Robot.sendData(dataFrame);
                     }
-
                     Thread.Sleep(ControllerSettings.Instance.Latency);
                 }
                 catch
@@ -44,15 +38,6 @@ namespace robotymobilne_projekt.Automatic
                 }
             }
             Dispose();
-        }
-
-        public void Dispose()
-        {
-            controller = null;
-            robot.Status = RemoteDevice.StatusE.DISCONNECTED;
-            robot.disconnect();
-            robot = null;
-            handlerThread.Abort();
         }
     }
 }
