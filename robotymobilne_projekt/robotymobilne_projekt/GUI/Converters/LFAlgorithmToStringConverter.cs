@@ -8,6 +8,7 @@ namespace robotymobilne_projekt.GUI.Converters
     public class LFAlgorithmToStringConverter : IValueConverter
     {
         private const string P = "P";
+        private const string Custom = "Custom";
         private const string PID = "PID";
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -19,10 +20,12 @@ namespace robotymobilne_projekt.GUI.Converters
                 switch (algorithm)
                 {
                     case LineFollowerAlgorithm.Type.PID:
-                    {
                         result = PID;
                         break;
-                    }
+
+                    case LineFollowerAlgorithm.Type.CUSTOM:
+                        result = Custom;
+                        break;
                 }
             }
             return result;

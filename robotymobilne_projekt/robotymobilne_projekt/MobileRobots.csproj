@@ -71,6 +71,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Automatic\LineFollower\CustomAlgorithm.cs" />
     <Compile Include="Automatic\LineFollower\LineFollowerAlgorithm.cs" />
     <Compile Include="Automatic\LineFollower\LFPID.cs" />
     <Compile Include="Automatic\LineFollower\LineFollowerAlgorithmFactory.cs" />

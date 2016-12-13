@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using robotymobilne_projekt.Automatic.LineFollower;
 using robotymobilne_projekt.Manual;
 
-namespace robotymobilne_projekt.Automatic
+namespace robotymobilne_projekt.Automatic.LineFollower
 {
     public class LineFollowerController : AbstractController
     {

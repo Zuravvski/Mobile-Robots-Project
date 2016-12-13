@@ -9,6 +9,7 @@ namespace robotymobilne_projekt.GUI.Converters
     public class LFAlgorithmsCollToStringCollConverter : IValueConverter
     {
         private const string P = "P";
+        private const string Custom = "Custom";
         private const string PID = "PID";
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -22,10 +23,13 @@ namespace robotymobilne_projekt.GUI.Converters
                 switch (algorithm)
                 {
                     case LineFollowerAlgorithm.Type.PID:
-                    {
                         result.Add(PID);
                         break;
-                    }
+                    
+
+                    case LineFollowerAlgorithm.Type.CUSTOM:
+                        result.Add(Custom);
+                        break;
                 }
             }
 

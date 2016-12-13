@@ -6,6 +6,8 @@
         {
             switch (type)
             {
+                case LineFollowerAlgorithm.Type.CUSTOM:
+                    return new CustomAlgorithm();
                 case LineFollowerAlgorithm.Type.P:
                 case LineFollowerAlgorithm.Type.PID:
                 default:
