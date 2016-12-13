@@ -80,24 +80,13 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
             }
         }
 
-            // Hardcode for testing purpose
-            var hardcodedRobot = RobotSettings.Instance.Robots[1]; // ID: 30
-            lineFollower = new LineFollower();
-
-            if (hardcodedRobot.Status == RemoteDevice.StatusE.DISCONNECTED)
+        public override ICommand Disconnect
+        {
+            get
             {
-                hardcodedRobot.connect();
-                driver = new LineFollowerDriver(hardcodedRobot, lineFollower);
+                throw new NotImplementedException();
             }
         }
-
         #endregion
-
-        public LineFollowerViewModel()
-        {
-            lineFollower = new LineFollowerController {Sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0}};
-            algorithmFactory = new LineFollowerAlgorithmFactory();
-            CurrentAlgorithm = LineFollowerAlgorithm.Type.P;
-        }   
     }
 }

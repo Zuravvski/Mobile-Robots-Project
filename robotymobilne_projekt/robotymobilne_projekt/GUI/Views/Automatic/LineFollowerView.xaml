@@ -30,58 +30,7 @@
         <Label x:Name="labelSensor4" Content="Sensor 4:" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelSensor5" Content="Sensor 5:" HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top"/>
         <Label x:Name="labelDerivativeGain" Content="Derivative Gain:" HorizontalAlignment="Left" Margin="13,161,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelProportionalGain" Content="Proportional Gain:" HorizontalAlignment="Left" Margin="13,132,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="labelError" Content="Error:" HorizontalAlignment="Left" Margin="13,188,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5">
-            <Label.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-89.536"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ProgressBar.RenderTransform>
-        </ProgressBar>
-        <ProgressBar x:Name="progressBarSensor2" HorizontalAlignment="Left" Height="20" Margin="30,80,0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor2, Path=DataContext.Robot.Sensors[1], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" Maximum="2000" SmallChange="1" RenderTransformOrigin="0.5,0.5">
-            <ProgressBar.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-89.086"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ProgressBar.RenderTransform>
-        </ProgressBar>
-        <ProgressBar x:Name="progressBarSensor3" HorizontalAlignment="Left" Height="20" Margin="60,80,0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor3, Path=DataContext.Robot.Sensors[2], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" Maximum="2000" SmallChange="1" RenderTransformOrigin="0.5,0.5">
-            <ProgressBar.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-89.25"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ProgressBar.RenderTransform>
-        </ProgressBar>
-        <ProgressBar x:Name="progressBarSensor4" HorizontalAlignment="Left" Height="20" Margin="90,80,0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor4, Path=DataContext.Robot.Sensors[3], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" Maximum="2000" SmallChange="1" RenderTransformOrigin="0.5,0.5">
-            <ProgressBar.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-89.801"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ProgressBar.RenderTransform>
-        </ProgressBar>
-        <ProgressBar x:Name="progressBarSensor5" HorizontalAlignment="Left" Height="20" Margin="120, 80, 0,0" VerticalAlignment="Top" Width="100" Value="{Binding ElementName=progressBarSensor5, Path=DataContext.Robot.Sensors[4], FallbackValue=0, Converter={StaticResource intToDoubleConverter}}" Maximum="2000" SmallChange="1" RenderTransformOrigin="0.5,0.5">
-            <ProgressBar.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform/>
-                    <SkewTransform/>
-                    <RotateTransform Angle="-90.021"/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </ProgressBar.RenderTransform>
-        </ProgressBar>
-        <Slider x:Name="sliderKP" HorizontalAlignment="Left" Margin="122,197,0,0" VerticalAlignment="Top" Width="96" Value="{Binding ElementName=sliderKP, Path=DataContext.LineFollower.Algorithm.K_P, Converter={StaticResource intToDoubleConverter}, FallbackValue=0}" IsEnabled="{Binding CurrentAlgorithm, Mode=OneWay, Converter={StaticResource proportionalToBoolConverter}, FallbackValue=false}" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0"/>
+        <Label x:Name="labelError" Content="Error:" HorizontalAlignment="Left" Margin="13,188,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,0.5"/>
         <Slider x:Name="sliderKI" HorizontalAlignment="Left" Margin="122,225,0,0" VerticalAlignment="Top" Width="96" Height="22" Value="{Binding ElementName=sliderKI,Path = DataContext.LineFollower.Algorithm.K_I, Converter={StaticResource intToDoubleConverter}, FallbackValue=0}" IsEnabled="{Binding CurrentAlgorithm, Mode=OneWay, Converter={StaticResource pidToBoolConverter}, FallbackValue=false}" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0"/>
         <Label x:Name="labelIntegralGain" Content="Integral Gain:" HorizontalAlignment="Left" Margin="36,224,0,0" VerticalAlignment="Top" Height="23"/>
         <Label x:Name="labelProportionalGain" Content="Proportional Gain:" HorizontalAlignment="Left" Margin="12,197,0,0" VerticalAlignment="Top" Height="22"/>
@@ -95,6 +44,5 @@
         <Label x:Name="labelAlgorithm" Content="Algorithm:" HorizontalAlignment="Left" Margin="51,166,0,0" VerticalAlignment="Top" Width="66" Height="25"/>
         <Slider x:Name="sliderKD" HorizontalAlignment="Left" Margin="122,252,0,0" VerticalAlignment="Top" Width="96" Height="22" Value="{Binding ElementName=sliderKD, Path=DataContext.LineFollower.Algorithm.K_D, Converter={StaticResource intToDoubleConverter}, FallbackValue=0}" IsEnabled="{Binding CurrentAlgorithm, Mode=OneWay, Converter={StaticResource pidToBoolConverter}, FallbackValue=false}" AutoToolTipPlacement="TopLeft" AutoToolTipPrecision="0"/>
         <Label x:Name="labelDerivative" Content="Derivative Gain:" HorizontalAlignment="Left" Margin="24,252,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.5,1.231" Height="21"/>
-
     </Grid>
 </UserControl>
