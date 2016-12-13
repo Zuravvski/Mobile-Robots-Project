@@ -7,20 +7,25 @@ namespace robotymobilne_projekt.Automatic.LineFollower
     public class LFPID : LineFollowerAlgorithm
     {
         // Proportional part
-        private int kp = 1;
+        private double kp;
 
         // Derative part
-        private int kd = 1;
+        private double kd;
+        private double derivative;
 
         // Integral part
-        private int ki = 1;
-        private int integral;
+        private double ki = 0;
+        private double integral;
 
         // General part
-        private int lastError;
+        private double error;
+        private double lastError;
+        private const double Kc = 0.05;
+        private const double dt = 0.02;
+        private const double Pc = 0.38;
 
         #region Setters & Getters
-        public int K_P
+        public double K_P
         {
             get
             {
@@ -32,7 +37,7 @@ namespace robotymobilne_projekt.Automatic.LineFollower
                 NotifyPropertyChanged("K_P");
             }
         }
-        public int K_D
+        public double K_D
         {
             get
             {
@@ -45,7 +50,7 @@ namespace robotymobilne_projekt.Automatic.LineFollower
             }
         }
 
-        public int K_I
+        public double K_I
         {
             get
             {
@@ -63,41 +68,34 @@ namespace robotymobilne_projekt.Automatic.LineFollower
         {
             this.sensors = sensors;
 
-            var motorL = RobotSettings.Instance.MaxSpeed;
-            var motorR = RobotSettings.Instance.MaxSpeed;
-            var position = readLine();
-            var error = 0;
+            var checksum = 0;
+            foreach (var sensor in sensors)
+            {
+                checksum += sensor;
+                if (checksum == 0 || checksum == sensors.Count*2000)
+                {
+                    return new Tuple<double, double>(0,0);
+                }
+            }
 
-            // The "proportional" term should be 0 when we are on the line.
-            if (position != 0)
-                error = position - 2000;
+            kp = 0.5 * Kc;
+            ki = 0.1 * (2 * kp * dt) / Pc;
+            kd = 1 * (kp * Pc) / (8 * dt);
 
-            // Compute the derivative and integral of the
-            // position.
-            var derivative = error - lastError;
-            integral += error;
+            error = readLine() - 2000;
+            integral = 0.66 * integral + error;
+            derivative = error - lastError;
+            var turn = kp * error + ki * integral + kd * derivative;
 
-            // Remember the last position.
+            var motorL = RobotSettings.Instance.MaxSpeed / 2 + turn;
+            var motorR = RobotSettings.Instance.MaxSpeed / 2 - turn;
+
+            if (motorL < 0)
+                motorL = Math.Abs(motorL);
+            if (motorR < 0)
+                motorR = Math.Abs(motorR);
+
             lastError = error;
-
-            var powerDifference = error / 20 + integral / 10000 + derivative * 3 / 2;
-
-            if (powerDifference > RobotSettings.Instance.MaxSpeed)
-                powerDifference = (int)RobotSettings.Instance.MaxSpeed;
-            else
-            {
-                powerDifference = (int)RobotSettings.Instance.MaxSpeed * -1;
-            }
-
-            if (powerDifference < 0)
-            {
-                motorR += Math.Abs(powerDifference);
-            }
-
-            else
-            {
-                motorL += Math.Abs(powerDifference);
-            }
 
             return new Tuple<double, double>(motorL, motorR);
         }

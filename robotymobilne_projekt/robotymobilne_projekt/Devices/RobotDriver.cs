@@ -9,14 +9,13 @@ namespace robotymobilne_projekt.Devices
         protected RobotModel robot;
         protected AbstractController controller;
         protected Thread handlerThread;
-        protected bool isDisposed;
 
         public RobotModel Robot
         {
             get { return robot; }
         }
 
-        public RobotDriver(RobotModel robot, AbstractController controller)
+        protected RobotDriver(RobotModel robot, AbstractController controller)
         {
             this.robot = robot;
             this.controller = controller;
@@ -33,8 +32,6 @@ namespace robotymobilne_projekt.Devices
         // Clean-up code
         public virtual void Dispose()
         {
-            if (isDisposed) return;
-
             robot.IsNotReserved = true;
             controller.IsNotReserved = true;
             robot.Status = RemoteDevice.StatusE.DISCONNECTED;
@@ -42,7 +39,6 @@ namespace robotymobilne_projekt.Devices
             robot = null;
             controller = null;
             handlerThread.Abort();
-            isDisposed = true; // mark as already disposed
         }
     }
 }
