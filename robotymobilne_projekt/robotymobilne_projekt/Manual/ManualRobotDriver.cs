@@ -30,12 +30,13 @@ namespace robotymobilne_projekt.Manual
 
                     if (!ControllerSettings.Instance.Controllers.Contains(controller))
                         throw new InvalidOperationException();
+
+                    Thread.Sleep(ControllerSettings.Instance.Latency);
                 }
                 catch
                 {
                     break;
-                }
-                Thread.Sleep(ControllerSettings.Instance.Latency);
+                } 
             }
             Dispose();
         }

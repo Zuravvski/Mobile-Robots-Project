@@ -8,10 +8,7 @@ namespace robotymobilne_projekt.Automatic.LineFollower
     {
         public LineFollowerDriver(RobotModel robot, LineFollowerController controller) : base(robot, controller)
         {
-            this.robot = robot;
-            this.controller = controller;
-            handlerThread = new Thread(run) {IsBackground = true};
-            handlerThread.Start();
+
         }
 
         protected override void run()
@@ -30,6 +27,7 @@ namespace robotymobilne_projekt.Automatic.LineFollower
                     {
                         Robot.sendData(dataFrame);
                     }
+
                     Thread.Sleep(ControllerSettings.Instance.Latency);
                 }
                 catch
