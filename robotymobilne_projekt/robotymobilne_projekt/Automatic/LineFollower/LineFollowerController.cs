@@ -15,6 +15,7 @@ namespace robotymobilne_projekt.Automatic.LineFollower
             private get { return sensors; }
             set
             {
+                if (value == null) return;
                 sensors = value;
                 NotifyPropertyChanged("Sensors");
             }
