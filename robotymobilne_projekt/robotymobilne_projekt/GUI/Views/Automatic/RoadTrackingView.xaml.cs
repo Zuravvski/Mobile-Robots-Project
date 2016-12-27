@@ -55,7 +55,7 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
                     Height = 5,
                     Width = 5,
                     StrokeThickness = 1,
-                    Stroke = SystemColors.WindowFrameBrush,
+                    Stroke = System.Windows.Media.Brushes.Red,
                 };
 
                 canvasBoard.Children.Add(ellipse);  //draw ellipse
