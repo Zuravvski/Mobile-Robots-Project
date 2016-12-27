@@ -78,14 +78,19 @@ namespace robotymobilne_projekt.Automatic.LineFollower
                 }
             }
 
-            kp = 0.5 * Kc;
-            ki = 0.1 * (2 * kp * dt) / Pc;
-            kd = 1 * (kp * Pc) / (8 * dt);
+            kp = 0.13 * Kc;
+            ki = 0 * (2 * kp) / Pc;
+            kd = 0.07 * (kp * Pc) / 8;
 
             error = readLine() - 2000;
-            integral = 0.66 * integral + error;
+            integral = 0.33 * integral + error;
             derivative = error - lastError;
             var turn = kp * error + ki * integral + kd * derivative;
+
+            if (turn > RobotSettings.Instance.MaxSpeed)
+            {
+                turn = RobotSettings.Instance.MaxSpeed;
+            }
 
             var motorL = RobotSettings.Instance.MaxSpeed / 2 + turn;
             var motorR = RobotSettings.Instance.MaxSpeed / 2 - turn;

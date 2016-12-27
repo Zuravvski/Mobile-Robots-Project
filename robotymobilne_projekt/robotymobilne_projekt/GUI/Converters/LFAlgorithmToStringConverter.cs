@@ -39,11 +39,14 @@ namespace robotymobilne_projekt.GUI.Converters
                 var algorithm = (string) value;
                 switch (algorithm)
                 {
+                    case Custom:
+                        result = LineFollowerAlgorithm.Type.CUSTOM;
+                        break;
+
                     case PID:
-                        {
-                            result = LineFollowerAlgorithm.Type.PID;
-                            break;
-                        }
+                        result = LineFollowerAlgorithm.Type.PID;
+                        break;
+                        
                 }
             }
             return result;
