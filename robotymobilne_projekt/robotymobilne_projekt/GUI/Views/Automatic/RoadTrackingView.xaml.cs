@@ -82,5 +82,12 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
         {
             isPainted = true;
         }
+
+        private void clean_Click(object sender, RoutedEventArgs e)
+        {
+            canvasBoard.Children.Clear();
+            points.Clear();
+            isPainted = false;
+        }
     }
 }
