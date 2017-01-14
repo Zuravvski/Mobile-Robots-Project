@@ -50,7 +50,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Robot.ico</ApplicationIcon>
+    <ApplicationIcon>
+    </ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FirstFloor.ModernUI">
@@ -67,6 +68,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.3.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
       <Private>True</Private>
@@ -108,6 +110,7 @@
     <Compile Include="GUI\Converters\ProportionalToBoolConverter.cs" />
     <Compile Include="GUI\ViewModels\Automatic\AutomaticViewModel.cs" />
     <Compile Include="GUI\ViewModels\Automatic\LineFollowerViewModel.cs" />
+    <Compile Include="GUI\ViewModels\Automatic\RoadTrackingViewModel.cs" />
     <Compile Include="GUI\ViewModels\Manual\UserViewModel.cs" />
     <Compile Include="GUI\Views\Automatic\AutomaticPanelFactory.cs" />
     <Compile Include="GUI\Views\Automatic\AutomaticView.xaml.cs">
@@ -266,12 +269,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Robot.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="13173457_999484530134518_2486788681879826951_o_sketch.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
       <Visible>False</Visible>
       <ProductName>Microsoft .NET Framework 4.5.2 %28x86 and x64%29</ProductName>
@@ -284,16 +281,12 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="background.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="148441890777498.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="148441890777498 %281%29.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="background2.jpg" />
+    <Resource Include="Resources\background.jpg" />
+    <Resource Include="Resources\background2.jpg" />
+    <Resource Include="Resources\Pause.png" />
+    <Resource Include="Resources\Play.png" />
+    <Resource Include="Resources\Robot.bmp" />
+    <Resource Include="Resources\Robot.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

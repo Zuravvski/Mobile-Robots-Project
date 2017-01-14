@@ -4,7 +4,8 @@
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         Title="Pololu 3π robot controller" IsTitleVisible="True"
         LogoData=""
-        ContentSource="/GUI/Views/HomePage.xaml">
+        ContentSource="/GUI/Views/HomePage.xaml"
+        Icon = "/Resources/Robot.ico">
 
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="Home">

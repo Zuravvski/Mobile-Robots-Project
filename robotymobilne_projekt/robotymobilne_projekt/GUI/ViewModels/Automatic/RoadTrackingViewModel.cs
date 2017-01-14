@@ -16,8 +16,8 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
 
         #region Constants
 
-        private const string PLAY_ICON = @"\Resources\Play.png";
-        private const string PAUSE_ICON = @"\Resources\Pause.png";
+        private const string PLAY_ICON = @"/Resources/Play.png";
+        private const string PAUSE_ICON = @"/Resources/Pause.png";
 
         #endregion
 

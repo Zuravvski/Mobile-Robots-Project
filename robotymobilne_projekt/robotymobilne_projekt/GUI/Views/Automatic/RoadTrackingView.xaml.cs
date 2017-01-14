@@ -24,8 +24,7 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
         public RoadTrackingView()
         {
             InitializeComponent();
-            DataContext = new LineFollowerViewModel();
-
+            DataContext = new RoadTrackingViewModel();
         }
 
         private void Canvas_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)

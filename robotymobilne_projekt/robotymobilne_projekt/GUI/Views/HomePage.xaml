@@ -9,7 +9,7 @@
     <Grid>
         <Viewbox>
             <ItemsControl>
-                <Image x:Name="home_background" Height="400" Source="/robotymobilne_projekt;component/background2.jpg" Width="1280">
+                <Image x:Name="home_background" Height="400" Source="/Resources/background2.jpg" Width="1280">
                     <Image.OpacityMask>
                         <RadialGradientBrush >
                             <GradientStop Color="Black" Offset="0.2"/>

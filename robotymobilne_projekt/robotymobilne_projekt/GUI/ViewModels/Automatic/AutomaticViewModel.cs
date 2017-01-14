@@ -119,7 +119,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
         {
             panelFactory = new AutomaticPanelFactory();
             currentMode = AutomaticMode.NONE;
-            currentPanel = new ObservableCollection<UserControl>() {null};
+            currentPanel = new ObservableCollection<UserControl>() {null};  
         }
     }
 }
