@@ -72,7 +72,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
                         catch
                         {
                             // Workaround. C# does not always manage its resources well when it comes to sockets.
-                            robot.disconnect();
+                            robot?.disconnect();
                         }
                     });
                 }

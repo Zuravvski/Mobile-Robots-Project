@@ -6,14 +6,20 @@
              xmlns:mui="http://firstfloorsoftware.com/ModernUI"
              mc:Ignorable="d" 
              d:DesignHeight="300" Width="654.8">
-    <Grid Style="{StaticResource ContentRoot}">
-        <ScrollViewer>
-            <StackPanel MinWidth="200">
-                <TextBlock Text="Welcome to Pololu 3π robot controller!" Style="{StaticResource Heading2}" />
-                <TextBlock Text="Use the navigation bar above to go to desired section." />
-                <TextBlock Text="Remember to connect to proper WiFi network (RobotyMobilne)." />
-                <TextBlock Text="*Please note that this is still alpha version and not all the options are available for this moment." FontSize="11"/>
-            </StackPanel>
-        </ScrollViewer>
+    <Grid>
+        <Viewbox>
+            <ItemsControl>
+                <Image x:Name="home_background" Height="400" Source="/robotymobilne_projekt;component/background2.jpg" Width="1280">
+                    <Image.OpacityMask>
+                        <RadialGradientBrush >
+                            <GradientStop Color="Black" Offset="0.2"/>
+                            <GradientStop Color="Transparent" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Image.OpacityMask>
+                </Image>
+            </ItemsControl>
+        </Viewbox>
+        <Label x:Name="label" Content="Welcome to our Pololu 3π controller!" HorizontalAlignment="Left" Margin="11,14,0,0" VerticalAlignment="Top" Width="625" Height="34"/>
+
     </Grid>
 </UserControl>

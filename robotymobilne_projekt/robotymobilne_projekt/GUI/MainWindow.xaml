@@ -7,7 +7,7 @@
         ContentSource="/GUI/Views/HomePage.xaml">
 
     <mui:ModernWindow.MenuLinkGroups>
-        <mui:LinkGroup DisplayName="Home page">
+        <mui:LinkGroup DisplayName="Home">
             <mui:LinkGroup.Links>
                 <mui:Link DisplayName="" Source="/GUI/Views/HomePage.xaml" />
             </mui:LinkGroup.Links>
