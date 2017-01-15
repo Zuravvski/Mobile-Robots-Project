@@ -17,11 +17,6 @@
         <converters:ReverseConnectionStatus x:Key="reverseStatusConverter"/>
         <converters:ValToPercentConverter x:Key="batteryValueConverter" />
         <converters:BatteryStatusToColorConverter x:Key="batteryColorConverter"/>
-
-        <Style TargetType="{x:Type Button}">
-            <Setter Property="FontSize" Value="12" />
-            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        </Style>
     </UserControl.Resources>
 
     <Viewbox x:Name="MainView">
@@ -37,8 +32,16 @@
             <Rectangle Fill="Gray" HorizontalAlignment="Left" Height="12" Margin="369,148,0,0" VerticalAlignment="Top" Width="7"/>
             <Label x:Name="labelMode" Content="Mode:" HorizontalAlignment="Left" Margin="217,6,0,0" VerticalAlignment="Top"/>
             <Label x:Name="labelRobot" Content="Robot:" HorizontalAlignment="Left" Margin="217,37,0,0" VerticalAlignment="Top"/>
-            <Button x:Name="buttonConnect" Content="Connect" HorizontalAlignment="Left" Margin="226,180,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Connect}" IsEnabled="{Binding ElementName=buttonConnect, Path=DataContext.CurrentRobot.Status, Converter={StaticResource statusToBoolConverter}, FallbackValue=true}"/>
-            <Button x:Name="buttonDisconnect" Content="Disconnect" HorizontalAlignment="Left" Margin="306,180,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Disconnect}" IsEnabled="{Binding ElementName=buttonDisconnect, Path=DataContext.CurrentRobot.Status, Converter={StaticResource reverseStatusConverter}, FallbackValue=False}"/>
+            <Button x:Name="buttonConnect" HorizontalAlignment="Left" Margin="226,180,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Connect}" IsEnabled="{Binding ElementName=buttonConnect, Path=DataContext.CurrentRobot.Status, Converter={StaticResource statusToBoolConverter}, FallbackValue=true}" Height="20">
+                <Viewbox>
+                    <TextBlock Text="Connect" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
+            </Button>
+            <Button x:Name="buttonDisconnect" HorizontalAlignment="Left" Margin="306,180,0,0" VerticalAlignment="Top" Width="75" Command="{Binding Disconnect}" IsEnabled="{Binding ElementName=buttonDisconnect, Path=DataContext.CurrentRobot.Status, Converter={StaticResource reverseStatusConverter}, FallbackValue=False}" Height="20">
+                <Viewbox>
+                    <TextBlock Text="Disconnect" TextWrapping="Wrap" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Viewbox>
+            </Button>
             <ComboBox x:Name="comboBoxRobots" HorizontalAlignment="Left" Margin="266,37,0,0" VerticalAlignment="Top" Width="110" ItemsSource="{Binding Robots, Mode=OneWay}" SelectedIndex="0" SelectedItem="{Binding CurrentRobot, Mode=OneWayToSource}" IsEnabled="{Binding ElementName=comboBoxRobots, Path=DataContext.CurrentRobot.Status, Converter={StaticResource statusToBoolConverter}, FallbackValue=true}">
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">

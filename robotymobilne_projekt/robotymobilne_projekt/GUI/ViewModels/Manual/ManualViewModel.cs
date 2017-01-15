@@ -8,8 +8,21 @@ namespace robotymobilne_projekt.GUI.ViewModels.Manual
     {
         private ICommand addUser;
         private ICommand removeUser;
+        private System.Windows.Visibility startInfoVisibility;
 
         #region Setters & Getters
+        public System.Windows.Visibility StartInfoVisibility
+        {
+            set
+            {
+                startInfoVisibility = value;
+                NotifyPropertyChanged("StartInfoVisibility");
+            }
+            get
+            {
+                return startInfoVisibility;
+            }
+        }
         public int Rows { set; get; }
         public int Cols { set; get; }
         public ObservableCollection<UserInterface> Users { get; }
@@ -18,6 +31,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Manual
         public ManualViewModel()
         {
             Users = new ObservableCollection<UserInterface>();
+            StartInfoVisibility = System.Windows.Visibility.Visible;
         }
 
         #region Actions
@@ -35,6 +49,8 @@ namespace robotymobilne_projekt.GUI.ViewModels.Manual
                             Users.Add(newUser);
                             manageLayout();
                         }
+
+                        StartInfoVisibility = System.Windows.Visibility.Hidden;
                     });
                 }
                 return addUser;
@@ -55,6 +71,11 @@ namespace robotymobilne_projekt.GUI.ViewModels.Manual
                                 Users.Remove(Users[i]);
                                 manageLayout();
                             }
+                        }
+
+                        if (Users.Count == 0)
+                        {
+                            StartInfoVisibility = System.Windows.Visibility.Visible;
                         }
                     });
                 }

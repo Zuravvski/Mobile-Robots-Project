@@ -6,7 +6,13 @@
              xmlns:local="clr-namespace:robotymobilne_projekt.GUI"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Opacity="0.41" Background="#FFCBCBCB" x:Name="coverPane">
-        <Button x:Name="button" Content="+" HorizontalAlignment="Left" Margin="110,99,0,0" VerticalAlignment="Top" Width="75" Foreground="White" RenderTransformOrigin="0.5,0" Click="button_Click"/>
+    <Grid x:Name="coverPane">
+        <Grid.Background>
+            <SolidColorBrush Color="Gray" Opacity="0.25" />
+        </Grid.Background>
+        <Button x:Name="button" HorizontalAlignment="Center" Margin="0,80,0,0" VerticalAlignment="Center" Foreground="White" RenderTransformOrigin="0.5,0" Click="button_Click">
+            <TextBlock Text="..." TextWrapping="Wrap" TextAlignment="Center"/>
+        </Button>
+        <TextBlock x:Name="textBlock" HorizontalAlignment="Center" TextWrapping="WrapWithOverflow" Text="TextBlock" VerticalAlignment="Center"/>
     </Grid>
 </UserControl>

@@ -10,8 +10,8 @@ namespace robotymobilne_projekt.GUI.Views
         public About()
         {
             InitializeComponent();
-            textblock_about.Text = "This is a simple application to controll Popolu 3π robot. It was created as a university project at " +
-                "West Pomeranian University of Technology. Our task was to build an app that could exchange data with mobile robot." +
+            textblock_about.Text = "This is a simple application to controll Popolu 3π robot. \nThis was created as a university project at " +
+                "West Pomeranian University of Technology. \nOur task was to build an app that could exchange data with mobile robot." +
                 "\n\nThe main assumptions were : " +
                 "\n\tRobots are placed on a board monitored by camera hung on the ceiling" +
                 "\n\tCamera tracks robots' positions" +

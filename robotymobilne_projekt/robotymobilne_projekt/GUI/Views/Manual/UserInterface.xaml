@@ -26,7 +26,7 @@
             <ColumnDefinition Width="83*"/>
         </Grid.ColumnDefinitions>
 
-        <Canvas HorizontalAlignment="Left" Height="200" Margin="10,39,0,0" VerticalAlignment="Top" Width="200" Background="White"/>
+        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="200" Margin="10,39,0,0" VerticalAlignment="Top" Width="200" Background="White"/>
         <ProgressBar x:Name="progressBarSpeedL" HorizontalAlignment="Left" Height="160" Margin="215,39,0,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Value="{Binding SpeedL, Mode=OneWay, Converter={StaticResource speedConverter}}" Background="{x:Null}" BorderThickness="2, 2, 2, 2" Grid.ColumnSpan="2" Foreground="{Binding SpeedL, Mode=OneWay, Converter={StaticResource directionConverter}}" DataContext="{Binding Robot}"/>
         <ProgressBar x:Name="progressBarSpeedR" HorizontalAlignment="Left" Height="160" Margin="256,39,0,0" VerticalAlignment="Top" Width="34" Background="{x:Null}" Orientation="Vertical" Value="{Binding SpeedR, Mode=OneWay, Converter={StaticResource speedConverter}}" BorderThickness="2, 2, 2, 2" DataContext="{Binding Robot}" Foreground="{Binding SpeedR, Mode=OneWay, Converter={StaticResource directionConverter}}"/>
         <ProgressBar x:Name="progressBarBattery" HorizontalAlignment="Left" Height="35" Margin="215,204,0,0" VerticalAlignment="Top" Width="75" Value="{Binding Battery, Converter={StaticResource batteryValueConverter}, FallbackValue=0}" Background="{x:Null}" BorderThickness="2, 2, 2, 2" Grid.ColumnSpan="2" DataContext="{Binding Robot}" Foreground="{Binding Battery,Converter={StaticResource batteryColorConverter}, FallbackValue=#FFFF0000}"/>

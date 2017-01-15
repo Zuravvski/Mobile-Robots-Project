@@ -1,5 +1,6 @@
 ﻿using robotymobilne_projekt.Devices;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Windows;
@@ -11,13 +12,15 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
     {
         private string playPauseIcon;
         private bool isRunning;
+        private bool isPainted;
+        private readonly List<Point> points; //to store all coordinates
 
         private ICommand playPause;
 
         #region Constants
 
-        private const string PLAY_ICON = @"/Resources/Play.png";
-        private const string PAUSE_ICON = @"/Resources/Pause.png";
+        public static readonly string PLAY_ICON = @"/Resources/Play.png";
+        public static readonly string PAUSE_ICON = @"/Resources/Pause.png";
 
         #endregion
 
@@ -35,9 +38,43 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
                 NotifyPropertyChanged("PlayPauseIcon");
             }
         }
+
+        public bool IsRunning
+        {
+            get
+            {
+                return isRunning;
+            }
+            set
+            {
+                isRunning = value;
+                NotifyPropertyChanged("IsRunning");
+            }
+        }
+
+        public bool IsPainted
+        {
+            get
+            {
+                return isPainted;
+            }
+            set
+            {
+                isPainted = value;
+                NotifyPropertyChanged("IsPainted");
+            }
+        }
+
+        public List<Point> Points
+        {
+            get
+            {
+                return points;
+            }
+        }
         #endregion
 
-        #region
+        #region Actions
         public override ICommand Connect
         {
             get
@@ -95,12 +132,14 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
                     {
                         if (isRunning)
                         {
-                            isRunning = false;
+                            IsRunning = false;
+                            IsPainted = points.Count > 0;
                             PlayPauseIcon = PLAY_ICON;
                         }
                         else
                         {
-                            isRunning = true;
+                            IsRunning = true;
+                            IsPainted = true;
                             PlayPauseIcon = PAUSE_ICON;
                         }
                     });
@@ -113,6 +152,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
         public RoadTrackingViewModel()
         {
             PlayPauseIcon = PLAY_ICON;
+            points = new List<Point>();
         }
     }
 }

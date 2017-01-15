@@ -14,22 +14,27 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
     public partial class RoadTrackingView : UserControl
     {
         private Point currentPoint;
-        private bool isPainted;
+        private RoadTrackingViewModel roadTrackingViewModel;
 
         private double Xactual = 0;
         private double Yactual = 0;
         private double XYdifference = 5;    //sensivity of line sampling
-        List<Point> points = new List<Point>(); //to store all coordinates
 
         public RoadTrackingView()
         {
             InitializeComponent();
-            DataContext = new RoadTrackingViewModel();
+            var roadTrackingViewModel = new RoadTrackingViewModel();
+            this.roadTrackingViewModel = roadTrackingViewModel;
+            DataContext = roadTrackingViewModel;
+
+
+            var coverPanel = new CoverPanel(canvasBoard, "Switch mode", "This feature requires server mode");
+            canvasBoard.Children.Add(coverPanel);
         }
 
         private void Canvas_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
-            if (e.LeftButton != MouseButtonState.Pressed || isPainted) return;
+            if (e.LeftButton != MouseButtonState.Pressed || roadTrackingViewModel.IsPainted || roadTrackingViewModel.IsRunning) return;
             var line = new Line
             {
                 Stroke = SystemColors.WindowFrameBrush,
@@ -43,7 +48,7 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
             //if distance in straight line from previous point is bigger than XYdifference
             if (Math.Sqrt(Math.Abs(currentPoint.X - Xactual) + Math.Abs(currentPoint.Y - Yactual)) > XYdifference)
             {
-                points.Add(currentPoint);   //add current point to list of coordinates
+                roadTrackingViewModel.Points.Add(currentPoint);   //add current point to list of coordinates
                 Xactual = currentPoint.X;
                 Yactual = currentPoint.Y;
 
@@ -80,14 +85,16 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
 
         private void canvasBoard_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            isPainted = true;
+            roadTrackingViewModel.IsPainted = true;
         }
 
         private void clean_Click(object sender, RoutedEventArgs e)
         {
             canvasBoard.Children.Clear();
-            points.Clear();
-            isPainted = false;
+            roadTrackingViewModel.Points.Clear();
+            roadTrackingViewModel.IsPainted = false;
+            roadTrackingViewModel.IsRunning = false;
+            roadTrackingViewModel.PlayPauseIcon = RoadTrackingViewModel.PLAY_ICON;
         }
     }
 }

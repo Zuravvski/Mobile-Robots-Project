@@ -10,14 +10,16 @@
 
     <Grid x:Name="gridPane" TextOptions.TextFormattingMode="Ideal">
         <Button x:Name="button" Content="+" HorizontalAlignment="Left" VerticalAlignment="Top" Width="45" Background="Green" Margin="0,-26,0,0" Command="{Binding AddUser}"/>
+        <Label x:Name="labello" Content="To use this mode add users with green plus sign above. &#10;Remember to remove all users before switching to another tab!" Visibility="{Binding StartInfoVisibility}"/>
         <Viewbox Stretch="Uniform">
-        <ItemsControl Grid.Row="1" ItemsSource="{Binding Users}">
-            <ItemsControl.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid Rows="{Binding Rows}" Columns="{Binding Cols}"/>
-                </ItemsPanelTemplate>
-            </ItemsControl.ItemsPanel>
-        </ItemsControl>
+            <ItemsControl Grid.Row="1" ItemsSource="{Binding Users}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Rows="{Binding Rows}" Columns="{Binding Cols}"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
         </Viewbox>
+
     </Grid>
 </Page>

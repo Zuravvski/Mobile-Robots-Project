@@ -5,7 +5,8 @@
         Title="Pololu 3π robot controller" IsTitleVisible="True"
         LogoData=""
         ContentSource="/GUI/Views/HomePage.xaml"
-        Icon = "/Resources/Robot.ico">
+        Icon="/Resources/Robot.ico"
+        MinHeight="480" MinWidth="640">
 
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="Home">
