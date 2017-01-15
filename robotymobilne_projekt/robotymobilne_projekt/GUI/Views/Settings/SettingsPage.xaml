@@ -7,11 +7,12 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid Style="{StaticResource ContentRoot}">
-        <mui:ModernTab Layout="List" SelectedSource="/GUI/Views/Settings/TargetDeviceSettings.xaml">
+        <mui:ModernTab Layout="List" SelectedSource="/GUI/Views/Settings/General.xaml">
             <mui:ModernTab.Links>
+                <mui:Link DisplayName="Genaral" Source="/GUI/Views/Settings/General.xaml" />
                 <mui:Link DisplayName="Target device settings" Source="/GUI/Views/Settings/TargetDeviceSettings.xaml" />
-                <mui:Link DisplayName="appearance" Source="/GUI/Views/Settings/Appearance.xaml" />
-                <mui:Link DisplayName="about" Source="/GUI/Views/About.xaml" />
+                <mui:Link DisplayName="Appearance" Source="/GUI/Views/Settings/Appearance.xaml" />
+                <mui:Link DisplayName="About" Source="/GUI/Views/About.xaml" />
             </mui:ModernTab.Links>
         </mui:ModernTab>
     </Grid>

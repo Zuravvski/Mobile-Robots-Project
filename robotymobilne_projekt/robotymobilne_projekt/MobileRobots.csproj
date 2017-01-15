@@ -146,6 +146,9 @@
       <DependentUpon>ManualView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ViewModels\RobotSettingsViewModel.cs" />
+    <Compile Include="GUI\Views\Settings\General.xaml.cs">
+      <DependentUpon>General.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Views\Settings\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
@@ -162,6 +165,7 @@
     <Compile Include="Manual\NullObjectController.cs" />
     <Compile Include="Settings\IObservable.cs" />
     <Compile Include="Settings\IObserver.cs" />
+    <Compile Include="Settings\ServerSettings.cs" />
     <Compile Include="Utils\AsyncObservableCollection.cs" />
     <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="GUI\ViewModels\RobotViewModel.cs" />
@@ -204,6 +208,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\Views\Manual\ManualView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Views\Settings\General.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

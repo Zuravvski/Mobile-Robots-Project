@@ -1,4 +1,10 @@
-﻿using FirstFloor.ModernUI.Windows.Controls;
+﻿using System;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Annotations;
+using System.Windows.Controls;
+using FirstFloor.ModernUI.Presentation;
+using FirstFloor.ModernUI.Windows.Controls;
 
 namespace robotymobilne_projekt.GUI
 {
