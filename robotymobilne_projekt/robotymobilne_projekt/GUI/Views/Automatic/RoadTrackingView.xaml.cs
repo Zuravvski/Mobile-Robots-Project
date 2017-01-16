@@ -5,6 +5,8 @@ using System.Windows.Shapes;
 using robotymobilne_projekt.GUI.ViewModels.Automatic;
 using System;
 using System.Collections.Generic;
+using FirstFloor.ModernUI.Presentation;
+using System.Windows.Media;
 
 namespace robotymobilne_projekt.GUI.Views.Automatic
 {
@@ -59,8 +61,9 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
                     Height = 5,
                     Width = 5,
                     StrokeThickness = 1,
-                    Stroke = System.Windows.Media.Brushes.Red,
+                    Stroke = new SolidColorBrush(AppearanceManager.Current.AccentColor),
                 };
+               
 
                 canvasBoard.Children.Add(ellipse);  //draw ellipse
 

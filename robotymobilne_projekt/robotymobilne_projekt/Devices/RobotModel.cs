@@ -224,7 +224,7 @@ namespace robotymobilne_projekt.Devices
             {
                 if (SpeedL == SpeedR)
                 {
-                    frameLights = RobotSettings.bothLights;
+                    frameLights = RobotSettings.noLights;
                 }
                 if (SpeedR > SpeedL)
                 {

@@ -1,10 +1,5 @@
-﻿using System;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Annotations;
-using System.Windows.Controls;
-using FirstFloor.ModernUI.Presentation;
-using FirstFloor.ModernUI.Windows.Controls;
+﻿using FirstFloor.ModernUI.Windows.Controls;
+using robotymobilne_projekt.GUI.ViewModels;
 
 namespace robotymobilne_projekt.GUI
 {
@@ -16,6 +11,21 @@ namespace robotymobilne_projekt.GUI
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainWindowViewModel();
+        }
+
+        private void ModernWindow_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case System.Windows.Input.Key.Tab:
+                case System.Windows.Input.Key.Up:
+                case System.Windows.Input.Key.Down:
+                case System.Windows.Input.Key.Left:
+                case System.Windows.Input.Key.Right:
+                    e.Handled = true;
+                    break;
+            }
         }
     }
 }

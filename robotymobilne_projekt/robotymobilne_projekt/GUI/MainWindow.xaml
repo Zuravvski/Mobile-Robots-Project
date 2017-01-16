@@ -1,13 +1,14 @@
-﻿<mui:ModernWindow x:Class="robotymobilne_projekt.GUI.MainWindow"
+﻿<mui:ModernWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
-        Title="Pololu 3π robot controller" IsTitleVisible="True"
-        LogoData=""
+        x:Class="robotymobilne_projekt.GUI.MainWindow"
+        Title="Pololu 3π controller" IsTitleVisible="True"
+        LogoData="{Binding Logo}"
         ContentSource="/GUI/Views/HomePage.xaml"
         Icon="/Resources/Robot.ico"
-        MinHeight="480" MinWidth="640">
-
+        MinHeight="480" MinWidth="640"
+        Keyboard.PreviewKeyDown="ModernWindow_PreviewKeyDown">
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="Home">
             <mui:LinkGroup.Links>
@@ -32,8 +33,8 @@
         </mui:LinkGroup>
     </mui:ModernWindow.MenuLinkGroups>
 
-        <mui:ModernWindow.TitleLinks>
-            <mui:Link DisplayName="settings" Source="/GUI/Views/Settings/SettingsPage.xaml" />
-            <mui:Link DisplayName="help" Source="https://github.com/Zuravvski/Roboty-Mobilne" />
-        </mui:ModernWindow.TitleLinks>
+    <mui:ModernWindow.TitleLinks>
+        <mui:Link DisplayName="settings" Source="/GUI/Views/Settings/SettingsPage.xaml" />
+        <mui:Link DisplayName="help" Source="https://github.com/Zuravvski/Roboty-Mobilne" />
+    </mui:ModernWindow.TitleLinks>
 </mui:ModernWindow>

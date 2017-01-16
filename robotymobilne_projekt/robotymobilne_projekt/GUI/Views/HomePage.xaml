@@ -21,7 +21,7 @@
                 </RadialGradientBrush>
             </Image.OpacityMask>
         </Image>
-        <TextBlock Grid.Column="0" Grid.Row="0" x:Name="label" Text="Welcome to Pololu 3π controller!&#10;Please use navigation bar above to go to the desired section.&#10;If you have any questions or issues with our app please let us know through GitHub (help section on top-right corner).&#10;Don't forget to set up app to your visual preferences through Settings -> Appearance." TextWrapping="WrapWithOverflow"/>
+        <TextBlock Grid.Column="0" Grid.Row="0" x:Name="label" Text="Welcome to Pololu 3π controller!&#10;Please use navigation bar above to go to the desired section.&#10;If you have any questions or issues with our app please let us know via GitHub (help section on top-right corner).&#10;Don't forget to set up app to your visual preferences through Settings -> Appearance." TextWrapping="WrapWithOverflow"/>
 
     </Grid>
 
