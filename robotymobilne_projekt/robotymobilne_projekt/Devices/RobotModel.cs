@@ -1,28 +1,53 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Threading;
+using System.Net.Sockets;
+using System.Text;
 using System.Windows;
-using robotymobilne_projekt.Devices.Network_utils;
+using robotymobilne_projekt.Network;
 using robotymobilne_projekt.Settings;
-using robotymobilne_projekt.Utils.AppLogger;
+using robotymobilne_projekt.Utils;
+using Server.Networking;
 
 namespace robotymobilne_projekt.Devices
 {
     [Serializable]
-    public class RobotModel : RemoteDevice
+    public class RobotModel : ObservableObject
     {
         // Robot data
+        private readonly string name;
         private Point position;
         private int battery;
         private double speedL;
         private double speedR;
-        private bool isNotReserved;
         private ObservableCollection<int> sensors;
 
-        private readonly RobotFrameParser robotFrameParser;
+        // Networking stuff
+        private bool isNotReserved;
+        private TcpClient socket;
+        private StatusE status;
+        private ConnectionMode connectionManager;
 
         #region Setters & Getters
+
+        public ConnectionMode Mode
+        {
+            get { return connectionManager; }
+            set
+            {
+                connectionManager = value;
+                NotifyPropertyChanged("Mode");
+            }
+        }
+
+        public string ID { get; }
+
+        public TcpClient Socket
+        {
+            get { return socket; }
+            set { socket = value; }
+        }
+
+        public bool Connected => null != socket && socket.Connected;
 
         public bool IsNotReserved
         {
@@ -49,7 +74,7 @@ namespace robotymobilne_projekt.Devices
             get { return battery; }
             set
             {
-                if (null != tcpClient && tcpClient.Connected && value >= 4300 && value <= 5000)
+                if (null != socket && socket.Connected && value >= 4300 && value <= 5000)
                 {
                     battery = value;
                 }
@@ -66,7 +91,7 @@ namespace robotymobilne_projekt.Devices
             get { return speedL; }
             set
             {
-                if (null != tcpClient && tcpClient.Connected)
+                if (null != socket && socket.Connected)
                 {
                     if (value > 127)
                     {
@@ -94,7 +119,7 @@ namespace robotymobilne_projekt.Devices
             get { return speedR; }
             set
             {
-                if (null != tcpClient && tcpClient.Connected)
+                if (null != socket && socket.Connected)
                 {
                     if (value > 127)
                     {
@@ -127,96 +152,71 @@ namespace robotymobilne_projekt.Devices
             }
         }
 
+        public StatusE Status
+        {
+            get { return status; }
+            set
+            {
+                status = value;
+                NotifyPropertyChanged("Status");
+            }
+        }
+
+        public string IP { get; }
+        public string Name { get; }
+        public int Port { get; }
+
         #endregion
 
-        public RobotModel(string name, string ip, int port) : base(name, ip, port)
+        public RobotModel(string name, string ip, int port)
         {
+            this.name = name;
             isNotReserved = true;
+            IP = ip;
+            Port = port;
+            Status = StatusE.DISCONNECTED;
+            socket = new TcpClient(AddressFamily.InterNetwork);
             sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0};
-            robotFrameParser = new RobotFrameParser(this);
+            connectionManager = new DirectMode(this);
+
+            if (ip.Length != 0)
+            {
+                ID = ip.Substring(ip.Length - 2, 2);
+            }
         }
 
         public override string ToString()
         {
-            return deviceName;
+            return name;
         }
 
-        public override void sendData(string data)
+        public virtual void connect()
         {
-            try
-            {
-                if (Status != StatusE.CONNECTED) return;
-
-                var frameToSend = new RobotFrame(data).getFrame();
-                networkStream.BeginWrite(frameToSend, 0, frameToSend.Length, sendCallback, tcpClient);
-            }
-            catch (IOException)
-            {
-                disconnect();
-                Logger.Instance.log(LogLevel.INFO,
-                    string.Format("Device {0} disconnected. Connection terminated by host.", this));
-            }
-            catch
-            {
-                Logger.Instance.log(LogLevel.INFO, "Could not send data to device: " + deviceName);
-            }
+            connectionManager.connect();
         }
 
-        protected override void sendCallback(IAsyncResult result)
+        public virtual void sendData(Packet data)
         {
-            try
-            {
-                networkStream.EndWrite(result);
-            }
-            catch
-            {
-                Logger.Instance.log(LogLevel.INFO, "Could not send data to device: " + deviceName);
-            }
-            
+            connectionManager.send(data);
         }
 
-        protected override void receiveData()
+        public virtual void disconnect()
         {
-            try
-            {
-                var receiveBuffer = new byte[1024];
-                networkStream.BeginRead(receiveBuffer, 0, receiveBuffer.Length, receiveCallback, receiveBuffer);
-            }
-            catch (IOException)
-            {
-                disconnect();
-                Logger.Instance.log(LogLevel.INFO,
-                    string.Format("Device {0} disconnected. Connection terminated by host.", this));
-            }
-            catch
-            {
-                Logger.Instance.log(LogLevel.INFO, string.Format("Could not retreive data from {0}", this));
-            }
+            connectionManager.disconnect();
+            cleanUpModel();
         }
 
-        protected override void receiveCallback(IAsyncResult result)
+        private void cleanUpModel()
         {
-            try
-            {
-                var receiveBuffer = (byte[]) result.AsyncState;
-                var bytesRead = networkStream.EndRead(result);  
-                Array.Resize(ref receiveBuffer, bytesRead);
-
-                if (RobotFrameParser.FRAME_SIZE == receiveBuffer.Length)
-                {
-                    robotFrameParser.parse(receiveBuffer);
-                }
-
-                Thread.Sleep(ControllerSettings.Instance.Latency); // to provide equal send-receive ratio
-                receiveData();
-            }
-            catch (Exception)
-            {
-                Logger.Instance.log(LogLevel.INFO, string.Format("Could not retreive data from {0}", this));
-            }
+            SpeedL = 0;
+            SpeedR = 0;
+            Battery = 0;
+            Position = new Point(0,0);
+            Sensors = new ObservableCollection<int>() {0,0,0,0,0};
+            Status = StatusE.DISCONNECTED;
         }
 
-        public string calculateFrame()
+        public Packet calculateFrame()
         {
             string frameLights = RobotSettings.noLights, frameL, frameR;
 
@@ -224,7 +224,7 @@ namespace robotymobilne_projekt.Devices
             {
                 if (SpeedL == SpeedR)
                 {
-                    frameLights = RobotSettings.noLights;
+                    frameLights = RobotSettings.bothLights;
                 }
                 if (SpeedR > SpeedL)
                 {
@@ -253,24 +253,16 @@ namespace robotymobilne_projekt.Devices
             {
                 frameR = ((int)SpeedR).ToString("X2").Substring(((int)SpeedR).ToString("X2").Length - 2);
             }
-            var finalFrame = frameLights + frameL + frameR;
+            var finalFrame = '[' + frameLights + frameL + frameR + ']';
 
-            return finalFrame;
+            return new Packet(Encoding.ASCII.GetBytes(finalFrame));
         }
 
-        public override void disconnect()
+        public enum StatusE
         {
-            base.disconnect();
-            cleanUpModel();
-        }
-
-        private void cleanUpModel()
-        {
-            SpeedL = 0;
-            SpeedR = 0;
-            Battery = 0;
-            Position = new Point(0,0);
-            Sensors = new ObservableCollection<int>() {0,0,0,0,0};
-        }
+            CONNECTED,
+            DISCONNECTED,
+            CONNECTING
+        };
     }
 }

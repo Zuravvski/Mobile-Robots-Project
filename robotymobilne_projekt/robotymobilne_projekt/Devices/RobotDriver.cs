@@ -34,7 +34,7 @@ namespace robotymobilne_projekt.Devices
         {
             robot.IsNotReserved = true;
             controller.IsNotReserved = true;
-            robot.Status = RemoteDevice.StatusE.DISCONNECTED;
+            robot.Status = RobotModel.StatusE.DISCONNECTED;
             robot.disconnect();
             robot = null;
             controller = null;

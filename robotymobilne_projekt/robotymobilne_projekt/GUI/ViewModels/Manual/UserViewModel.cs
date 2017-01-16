@@ -23,7 +23,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Manual
                     {
                         try
                         {
-                            if (robot.Status == RemoteDevice.StatusE.CONNECTED) return;
+                            if (robot.Status == RobotModel.StatusE.CONNECTED) return;
 
                             Robot.connect();
                             driver = new ManualRobotDriver(robot, controller);
@@ -52,7 +52,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Manual
                 {
                     disconnect = new DelegateCommand(delegate
                     {
-                        if (robot != null && robot.Status == RemoteDevice.StatusE.CONNECTED)
+                        if (robot != null && robot.Status == RobotModel.StatusE.CONNECTED)
                         {
                             robot.disconnect();
                         }

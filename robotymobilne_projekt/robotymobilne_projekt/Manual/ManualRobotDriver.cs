@@ -14,7 +14,7 @@ namespace robotymobilne_projekt.Manual
 
         protected override void run()
         {
-            while (null != robot && null != controller && robot.Status != RemoteDevice.StatusE.DISCONNECTED)
+            while (null != robot && null != controller && robot.Status != RobotModel.StatusE.DISCONNECTED)
             {
                 try
                 {
