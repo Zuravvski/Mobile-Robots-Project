@@ -1,4 +1,5 @@
 ﻿using System;
+using Server.Networking;
 
 namespace robotymobilne_projekt.Devices
 {
@@ -19,9 +20,9 @@ namespace robotymobilne_projekt.Devices
             throw new NotSupportedException();
         }
 
-        public override void sendData(string data)
+        public override void sendData(Packet data)
         {
-            throw new NotSupportedException();
+            // null action
         }
     }
 }

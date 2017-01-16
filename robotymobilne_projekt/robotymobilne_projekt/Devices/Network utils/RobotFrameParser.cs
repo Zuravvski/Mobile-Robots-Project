@@ -38,11 +38,11 @@ namespace robotymobilne_projekt.Devices.Network_utils
             return ushort.Parse(bat3, System.Globalization.NumberStyles.HexNumber);
         }
 
-        private RemoteDevice.StatusE getStatus(string data)
+        private RobotModel.StatusE getStatus(string data)
         {
             var statusFrame = data.Substring(1, 2);
             var statusInt = int.Parse(statusFrame, System.Globalization.NumberStyles.HexNumber);
-            return statusInt == 5 ? RemoteDevice.StatusE.DISCONNECTED : RemoteDevice.StatusE.CONNECTED;
+            return statusInt == 5 ? RobotModel.StatusE.DISCONNECTED : RobotModel.StatusE.CONNECTED;
         }
 
         private ObservableCollection<int> getSensors(string data)

@@ -9,10 +9,10 @@ namespace robotymobilne_projekt.GUI.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is RemoteDevice.StatusE)
+            if (value is RobotModel.StatusE)
             {
-                RemoteDevice.StatusE status = (RemoteDevice.StatusE)value;
-                if (RemoteDevice.StatusE.DISCONNECTED == status || RemoteDevice.StatusE.CONNECTING == status)
+                var status = (RobotModel.StatusE)value;
+                if (RobotModel.StatusE.DISCONNECTED == status || RobotModel.StatusE.CONNECTING == status)
                 {
                     return false;
                 }

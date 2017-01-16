@@ -14,15 +14,15 @@ namespace robotymobilne_projekt.GUI.Converters
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is RemoteDevice.StatusE)
+            if (value is RobotModel.StatusE)
             {
-                RemoteDevice.StatusE status = (RemoteDevice.StatusE)value;
+                var status = (RobotModel.StatusE)value;
                 switch (status)
                 {
-                    case RemoteDevice.StatusE.CONNECTED:
+                    case RobotModel.StatusE.CONNECTED:
                         return connected;
 
-                    case RemoteDevice.StatusE.CONNECTING:
+                    case RobotModel.StatusE.CONNECTING:
                         return connecting;
 
                     default:
@@ -37,13 +37,13 @@ namespace robotymobilne_projekt.GUI.Converters
             switch(value.ToString().ToLower())
             {
                 case connected:
-                    return RemoteDevice.StatusE.CONNECTED;
+                    return RobotModel.StatusE.CONNECTED;
 
                 case connecting:
-                    return RemoteDevice.StatusE.CONNECTING;
+                    return RobotModel.StatusE.CONNECTING;
 
                 default:
-                    return RemoteDevice.StatusE.DISCONNECTED;
+                    return RobotModel.StatusE.DISCONNECTED;
             }
         }
     }

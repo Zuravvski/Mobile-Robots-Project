@@ -125,7 +125,6 @@
     <Compile Include="Devices\Network utils\RobotFrameParser.cs" />
     <Compile Include="Devices\Network utils\RobotFrame.cs" />
     <Compile Include="Devices\NullObjectRobot.cs" />
-    <Compile Include="Devices\RemoteDevice.cs" />
     <Compile Include="Devices\RobotModel.cs" />
     <Compile Include="GUI\Converters\AbsoluteSpeedConverter.cs" />
     <Compile Include="GUI\Converters\BatteryStatusToColorConverter.cs" />
@@ -163,6 +162,19 @@
     <Compile Include="GUI\ViewModels\Manual\ManualViewModel.cs" />
     <Compile Include="Manual\ManualRobotDriver.cs" />
     <Compile Include="Manual\NullObjectController.cs" />
+    <Compile Include="Network\ConnectionMode.cs" />
+    <Compile Include="Network\DirectMode.cs" />
+    <Compile Include="Network\Packet.cs" />
+    <Compile Include="Network\Requests\ConnectReq.cs" />
+    <Compile Include="Network\Requests\DisconnectReq.cs" />
+    <Compile Include="Network\Requests\IRequest.cs" />
+    <Compile Include="Network\Requests\PositionReq.cs" />
+    <Compile Include="Network\Requests\RequestFactory.cs" />
+    <Compile Include="Network\Requests\VelocityReq.cs" />
+    <Compile Include="Network\Responses\IResponse.cs" />
+    <Compile Include="Network\ServerMode.cs" />
+    <Compile Include="Network\ServerService.cs" />
+    <Compile Include="Settings\ApplicationSettings.cs" />
     <Compile Include="Settings\IObservable.cs" />
     <Compile Include="Settings\IObserver.cs" />
     <Compile Include="Settings\ServerSettings.cs" />
