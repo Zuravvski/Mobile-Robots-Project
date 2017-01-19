@@ -1,5 +1,6 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using robotymobilne_projekt.Settings;
 
 namespace robotymobilne_projekt.GUI.Views
 {
@@ -28,6 +29,7 @@ namespace robotymobilne_projekt.GUI.Views
         private void button_Click(object sender, RoutedEventArgs e)
         {
             Visibility = Visibility.Collapsed;
+            ApplicationService.Instance.AppMode = ApplicationService.ApplicationMode.SERVER;
         }
     }
 }

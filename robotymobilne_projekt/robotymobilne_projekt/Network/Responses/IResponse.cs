@@ -1,4 +1,4 @@
-﻿using System.Security.Cryptography.X509Certificates;
+﻿using Server.Networking.Server.Networking;
 
 namespace Server.Networking.Responses
 {

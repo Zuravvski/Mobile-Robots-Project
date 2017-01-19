@@ -54,7 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FirstFloor.ModernUI">
-      <HintPath>..\..\..\MobileRobots\MobileRobots\bin\Debug\FirstFloor.ModernUI.dll</HintPath>
+      <HintPath>C:\Users\Michael\Documents\Visual Studio 2015\Projects\Test\packages\ModernUI.WPF.1.0.9\lib\net45\FirstFloor.ModernUI.dll</HintPath>
     </Reference>
     <Reference Include="MahApps.Metro, Version=1.3.0.0, Culture=neutral, PublicKeyToken=f4fb5a3c4d1e5b4f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.1.3.0\lib\net45\MahApps.Metro.dll</HintPath>
@@ -90,9 +90,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Automatic\LineFollower\CustomAlgorithm.cs" />
+    <Compile Include="Automatic\LineFollower\PIDAlgorithm.cs" />
     <Compile Include="Automatic\LineFollower\LineFollowerAlgorithm.cs" />
-    <Compile Include="Automatic\LineFollower\LFPID.cs" />
     <Compile Include="Automatic\LineFollower\LineFollowerAlgorithmFactory.cs" />
     <Compile Include="Automatic\LineFollower\LineFollowerController.cs" />
     <Compile Include="Automatic\LineFollower\LineFollowerDriver.cs" />
@@ -100,6 +99,7 @@
     <Compile Include="Devices\Network utils\DataFrame.cs" />
     <Compile Include="Devices\Network utils\FrameParser.cs" />
     <Compile Include="Devices\RobotDriver.cs" />
+    <Compile Include="GUI\Converters\AppModeToIconConverter.cs" />
     <Compile Include="GUI\Converters\AutoModeCollToStringColl.cs" />
     <Compile Include="GUI\Converters\AutoModeToStringConverter.cs" />
     <Compile Include="GUI\Converters\PIDToBoolConverter.cs" />
@@ -174,10 +174,9 @@
     <Compile Include="Network\Responses\IResponse.cs" />
     <Compile Include="Network\ServerMode.cs" />
     <Compile Include="Network\ServerService.cs" />
-    <Compile Include="Settings\ApplicationSettings.cs" />
+    <Compile Include="Settings\ApplicationService.cs" />
     <Compile Include="Settings\IObservable.cs" />
     <Compile Include="Settings\IObserver.cs" />
-    <Compile Include="Settings\ServerSettings.cs" />
     <Compile Include="Utils\AsyncObservableCollection.cs" />
     <Compile Include="Utils\ObservableObject.cs" />
     <Compile Include="GUI\ViewModels\RobotViewModel.cs" />

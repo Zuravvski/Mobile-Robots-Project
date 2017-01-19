@@ -4,11 +4,21 @@
         xmlns:mui="http://firstfloorsoftware.com/ModernUI"
         x:Class="robotymobilne_projekt.GUI.MainWindow"
         Title="Pololu 3π controller" IsTitleVisible="True"
-        LogoData="{Binding Logo}"
         ContentSource="/GUI/Views/HomePage.xaml"
+        xmlns:converters="clr-namespace:robotymobilne_projekt.GUI.Converters"
         Icon="/Resources/Robot.ico"
         MinHeight="480" MinWidth="640"
-        Keyboard.PreviewKeyDown="ModernWindow_PreviewKeyDown">
+        Keyboard.PreviewKeyDown="ModernWindow_PreviewKeyDown"
+        x:Name="mainWindow">
+    
+    <mui:ModernWindow.Resources>
+        <converters:AppModeToIconConverter x:Key="appToIcon"/>
+    </mui:ModernWindow.Resources>
+
+    <mui:ModernWindow.LogoData>
+        <Binding ElementName="mainWindow" Path="DataContext.AppMode" Converter="{StaticResource appToIcon}" Mode="OneWay"/>
+    </mui:ModernWindow.LogoData>
+
     <mui:ModernWindow.MenuLinkGroups>
         <mui:LinkGroup DisplayName="Home">
             <mui:LinkGroup.Links>
@@ -38,3 +48,4 @@
         <mui:Link DisplayName="help" Source="https://github.com/Zuravvski/Roboty-Mobilne" />
     </mui:ModernWindow.TitleLinks>
 </mui:ModernWindow>
+

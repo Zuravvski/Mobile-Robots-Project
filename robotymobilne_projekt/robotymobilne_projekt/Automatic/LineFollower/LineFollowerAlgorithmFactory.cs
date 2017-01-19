@@ -6,12 +6,9 @@
         {
             switch (type)
             {
-                case LineFollowerAlgorithm.Type.CUSTOM:
-                    return new CustomAlgorithm();
-                case LineFollowerAlgorithm.Type.P:
-                case LineFollowerAlgorithm.Type.PID:
                 default:
-                    return new LFPID();   
+                case LineFollowerAlgorithm.Type.PID:
+                    return new PIDAlgorithm();
             }
         }
     }

@@ -7,9 +7,9 @@ namespace Server.Networking.Requests
 {
     public class VelocityReq : IRequest
     {
-        private byte[] data;
+        private string data;
 
-        public VelocityReq(byte[] data)
+        public VelocityReq(string data)
         {
             this.data = data;
         }

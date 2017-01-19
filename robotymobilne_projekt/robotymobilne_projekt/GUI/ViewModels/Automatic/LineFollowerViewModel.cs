@@ -12,8 +12,8 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
     {
         private LineFollowerController lineFollower;
         private LineFollowerAlgorithm.Type currentAlgorithm;
-        private readonly List<LineFollowerAlgorithm.Type> algorithms =
-            new List<LineFollowerAlgorithm.Type>() { LineFollowerAlgorithm.Type.P, LineFollowerAlgorithm.Type.CUSTOM, LineFollowerAlgorithm.Type.PID };
+        private readonly List<LineFollowerAlgorithm.Type> algorithms = 
+            new List<LineFollowerAlgorithm.Type>() {  };
         private readonly LineFollowerAlgorithmFactory algorithmFactory;
 
         #region Setters & Getters
@@ -104,7 +104,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
         {
             lineFollower = new LineFollowerController {Sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0}};
             algorithmFactory = new LineFollowerAlgorithmFactory();
-            CurrentAlgorithm = LineFollowerAlgorithm.Type.P;
+            CurrentAlgorithm = LineFollowerAlgorithm.Type.PID;
         }   
     }
 }

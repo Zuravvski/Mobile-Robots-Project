@@ -5,27 +5,27 @@ using robotymobilne_projekt.Utils.AppLogger;
 
 namespace robotymobilne_projekt.Network
 {
-    public class ServerService
+    public class ServerService : IDisposable
     {
-        private TcpClient socket;
+        public TcpClient Socket { get; private set; }
 
         public ServerService()
         {
-            socket = new TcpClient(AddressFamily.InterNetwork);
+            Socket = new TcpClient(AddressFamily.InterNetwork);
         }
 
         public void connect()
         {
             try
             {
-                if (null == socket)
+                if (null == Socket)
                 {
-                    socket = new TcpClient(AddressFamily.InterNetwork);
+                    Socket = new TcpClient(AddressFamily.InterNetwork);
                 }
 
-                if (socket.Connected) return;
-                socket.BeginConnect(ApplicationSettings.Instance.Ip, 
-                    ApplicationSettings.Instance.Port, connectCallback, null);
+                if (Socket.Connected) return;
+                Socket.BeginConnect(ApplicationService.Instance.Ip, 
+                    ApplicationService.Instance.Port, connectCallback, null);
             }
             catch
             {
@@ -38,7 +38,7 @@ namespace robotymobilne_projekt.Network
         {
             try
             {
-                socket.EndConnect(result);
+                Socket.EndConnect(result);
             }
             catch
             {
@@ -48,7 +48,13 @@ namespace robotymobilne_projekt.Network
 
         public void disconnect()
         {
-            socket?.Close();
+            Socket?.Close();
+        }
+
+        public void Dispose()
+        {
+            Socket?.Close();
+            ((IDisposable) Socket)?.Dispose();
         }
     }
 }

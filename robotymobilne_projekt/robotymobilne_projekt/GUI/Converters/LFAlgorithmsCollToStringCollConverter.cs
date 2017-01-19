@@ -8,13 +8,11 @@ namespace robotymobilne_projekt.GUI.Converters
 {
     public class LFAlgorithmsCollToStringCollConverter : IValueConverter
     {
-        private const string P = "P";
-        private const string Custom = "Custom";
         private const string PID = "PID";
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var result = new List<string>() { P };
+            var result = new List<string>() { PID };
             if (!(value is IEnumerable<LineFollowerAlgorithm.Type>)) return result;
 
             var algorithms = (List<LineFollowerAlgorithm.Type>)value;
@@ -22,13 +20,9 @@ namespace robotymobilne_projekt.GUI.Converters
             {
                 switch (algorithm)
                 {
+                    default:
                     case LineFollowerAlgorithm.Type.PID:
                         result.Add(PID);
-                        break;
-                    
-
-                    case LineFollowerAlgorithm.Type.CUSTOM:
-                        result.Add(Custom);
                         break;
                 }
             }

@@ -1,4 +1,7 @@
-﻿using FirstFloor.ModernUI.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Data;
+using FirstFloor.ModernUI.Windows.Controls;
+using robotymobilne_projekt.GUI.Converters;
 using robotymobilne_projekt.GUI.ViewModels;
 
 namespace robotymobilne_projekt.GUI
@@ -16,6 +19,7 @@ namespace robotymobilne_projekt.GUI
 
         private void ModernWindow_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
+            // Disable focus on window
             switch (e.Key)
             {
                 case System.Windows.Input.Key.Tab:

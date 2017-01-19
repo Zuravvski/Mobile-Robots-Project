@@ -7,6 +7,7 @@ using robotymobilne_projekt.Network;
 using robotymobilne_projekt.Settings;
 using robotymobilne_projekt.Utils;
 using Server.Networking;
+using Server.Networking.Server.Networking;
 
 namespace robotymobilne_projekt.Devices
 {
@@ -26,6 +27,7 @@ namespace robotymobilne_projekt.Devices
         private TcpClient socket;
         private StatusE status;
         private ConnectionMode connectionManager;
+        private TransmissionModeE transmissionMode;
 
         #region Setters & Getters
 
@@ -74,7 +76,7 @@ namespace robotymobilne_projekt.Devices
             get { return battery; }
             set
             {
-                if (null != socket && socket.Connected && value >= 4300 && value <= 5000)
+                if (null != socket && status == StatusE.CONNECTED && value >= 4300 && value <= 5000)
                 {
                     battery = value;
                 }
@@ -91,7 +93,7 @@ namespace robotymobilne_projekt.Devices
             get { return speedL; }
             set
             {
-                if (null != socket && socket.Connected)
+                if (null != socket && status == StatusE.CONNECTED)
                 {
                     if (value > 127)
                     {
@@ -119,7 +121,7 @@ namespace robotymobilne_projekt.Devices
             get { return speedR; }
             set
             {
-                if (null != socket && socket.Connected)
+                if (null != socket && status == StatusE.CONNECTED)
                 {
                     if (value > 127)
                     {
@@ -264,5 +266,10 @@ namespace robotymobilne_projekt.Devices
             DISCONNECTED,
             CONNECTING
         };
+
+        public enum TransmissionModeE
+        {
+            PACKET, RAW
+        }
     }
 }

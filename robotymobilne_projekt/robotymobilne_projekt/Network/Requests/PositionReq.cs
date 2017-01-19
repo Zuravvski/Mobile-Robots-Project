@@ -5,9 +5,9 @@ namespace Server.Networking.Requests
 {
     public class PositionReq : IRequest
     {
-        private byte[] data;
+        private string data;
 
-        public PositionReq(byte[] data)
+        public PositionReq(string data)
         {
             this.data = data;
         }
