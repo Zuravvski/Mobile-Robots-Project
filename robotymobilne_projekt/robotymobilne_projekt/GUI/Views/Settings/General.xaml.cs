@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using robotymobilne_projekt.GUI.ViewModels;
 
 namespace robotymobilne_projekt.GUI.Views.Settings
 {
@@ -23,6 +24,7 @@ namespace robotymobilne_projekt.GUI.Views.Settings
         public General()
         {
             InitializeComponent();
+            DataContext = new GeneralViewModel();
         }
     }
 }

@@ -110,6 +110,7 @@
     <Compile Include="GUI\ViewModels\Automatic\AutomaticViewModel.cs" />
     <Compile Include="GUI\ViewModels\Automatic\LineFollowerViewModel.cs" />
     <Compile Include="GUI\ViewModels\Automatic\RoadTrackingViewModel.cs" />
+    <Compile Include="GUI\ViewModels\GeneralViewModel.cs" />
     <Compile Include="GUI\ViewModels\MainWindowViewModel.cs" />
     <Compile Include="GUI\ViewModels\Manual\UserViewModel.cs" />
     <Compile Include="GUI\Views\Automatic\AutomaticPanelFactory.cs" />

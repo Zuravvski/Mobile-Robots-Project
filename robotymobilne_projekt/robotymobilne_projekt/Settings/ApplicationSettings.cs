@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using robotymobilne_projekt.Utils;
 
 namespace robotymobilne_projekt.Settings
@@ -10,6 +11,7 @@ namespace robotymobilne_projekt.Settings
         private int port;
         private ApplicationMode appMode;
         private SendMode transMode;
+        private StreamWriter fileWriter;
 
         #region Constants
         public static readonly string DEFAULT_SERVER_IP = "127.0.0.1";
@@ -82,6 +84,18 @@ namespace robotymobilne_projekt.Settings
         public enum SendMode
         {
             PACKET, RAW
+        }
+
+
+        public void save()
+        {
+            if (null == fileWriter)
+            {
+                fileWriter = new StreamWriter("AppSettings.txt");
+                fileWriter.WriteLine(Ip);
+                fileWriter.WriteLine(Port);
+                fileWriter.Flush();
+            }
         }
     }
 }
