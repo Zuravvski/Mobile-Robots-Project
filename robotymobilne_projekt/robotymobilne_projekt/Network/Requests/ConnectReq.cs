@@ -7,9 +7,9 @@ namespace Server.Networking.Requests
 {
     public class ConnectReq : IRequest
     {
-        private readonly byte[] data;
+        private readonly string data;
 
-        public ConnectReq(byte[] data)
+        public ConnectReq(string data)
         {
             this.data = data;
         }

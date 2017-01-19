@@ -6,9 +6,11 @@ namespace robotymobilne_projekt.Automatic.LineFollower
 {
     public class LineFollowerDriver : RobotDriver
     {
+        private LineFollowerController controller;
+
         public LineFollowerDriver(RobotModel robot, LineFollowerController controller) : base(robot, controller)
         {
-
+            this.controller = controller;
         }
 
         protected override void run()
@@ -17,7 +19,7 @@ namespace robotymobilne_projekt.Automatic.LineFollower
             {
                 try
                 {
-                    ((LineFollowerController)controller).Sensors = robot.Sensors;
+                    controller.Sensors = robot.Sensors;
                     var reading = controller.execute();
                     robot.SpeedL = reading.Item1;
                     robot.SpeedR = reading.Item2;

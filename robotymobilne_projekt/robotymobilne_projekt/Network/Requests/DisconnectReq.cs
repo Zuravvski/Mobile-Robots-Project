@@ -6,9 +6,9 @@ namespace Server.Networking.Requests
 {
     public class DisconnectReq : IRequest
     {
-        private readonly byte[] data;
+        private readonly string data;
 
-        public DisconnectReq(byte[] data)
+        public DisconnectReq(string data)
         {
             this.data = data;
         }

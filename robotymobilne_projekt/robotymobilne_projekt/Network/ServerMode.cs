@@ -1,18 +1,17 @@
 ﻿using System;
 using System.IO;
 using System.Net.Sockets;
-using System.Text;
 using robotymobilne_projekt.Devices;
 using robotymobilne_projekt.Utils.AppLogger;
-using Server.Networking;
+using Server.Networking.Server.Networking;
 
 namespace robotymobilne_projekt.Network
 {
     public class ServerMode : ConnectionMode
     {
         private RobotModel robot;
-        private readonly NetworkStream networkStream;
-        private TcpClient socket;
+        private NetworkStream networkStream;
+        private readonly TcpClient socket;
 
         #region Setters & Getters
 
@@ -26,7 +25,11 @@ namespace robotymobilne_projekt.Network
         public ServerMode(TcpClient socket)
         {
             this.socket = socket;
-            networkStream = robot.Socket.GetStream();
+
+            if (socket.Connected)
+            {
+                networkStream = socket?.GetStream();
+            }
         }
 
         public void connect()
@@ -34,8 +37,8 @@ namespace robotymobilne_projekt.Network
             try
             {
                 var data = Convert.ToString(robot.ID);
-                var packet = new Packet(PacketHeader.CONNECT_REQ, Encoding.ASCII.GetBytes(data));
-                robot.sendData(packet);
+                var packet = new Packet(PacketHeader.CONNECT_REQ, data);
+                send(packet);
             }
             catch
             {
@@ -48,7 +51,7 @@ namespace robotymobilne_projekt.Network
             try
             {
                 var data = Convert.ToString(robot.ID);
-                var packet = new Packet(PacketHeader.DISCONNECT_REQ, Encoding.ASCII.GetBytes(data));
+                var packet = new Packet(PacketHeader.DISCONNECT_REQ, data);
                 robot.sendData(packet);
             }
             catch
@@ -62,7 +65,12 @@ namespace robotymobilne_projekt.Network
         {
             try
             {
-                var buffer = packet.serialize();
+                var buffer = packet.toBytes();
+
+                if (networkStream == null && socket.Connected)
+                {
+                    networkStream = socket?.GetStream();
+                }
                 networkStream?.BeginWrite(buffer, 0, buffer.Length, sendCallback, null);
             }
             catch(IOException)
@@ -96,7 +104,11 @@ namespace robotymobilne_projekt.Network
             try
             {
                 var buffer = new byte[128];
-                networkStream.BeginRead(buffer, 0, buffer.Length, receiveCallback, buffer);
+                if (networkStream != null && socket.Connected)
+                {
+                    networkStream = socket?.GetStream();
+                }
+                networkStream?.BeginRead(buffer, 0, buffer.Length, receiveCallback, buffer);
             }
             catch (IOException)
             {

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using robotymobilne_projekt.Settings;
 
 namespace robotymobilne_projekt.GUI.ViewModels
@@ -14,30 +9,30 @@ namespace robotymobilne_projekt.GUI.ViewModels
          
         public string Ip
         {
-            get { return ApplicationSettings.Instance.Ip; }
+            get { return ApplicationService.Instance.Ip; }
             set
             {
-                ApplicationSettings.Instance.Ip = value;
+                ApplicationService.Instance.Ip = value;
                 NotifyPropertyChanged("Ip");
             }
         }
 
         public int Port
         {
-            get { return ApplicationSettings.Instance.Port; }
+            get { return ApplicationService.Instance.Port; }
             set
             {
-                ApplicationSettings.Instance.Port = value;
+                ApplicationService.Instance.Port = value;
                 NotifyPropertyChanged("Port");
             }
         }
 
-        public ApplicationSettings.ApplicationMode AppMode
+        public ApplicationService.ApplicationMode AppMode
         {
-            get { return ApplicationSettings.Instance.AppMode; }
+            get { return ApplicationService.Instance.AppMode; }
             set
             {
-                ApplicationSettings.Instance.AppMode = value;
+                ApplicationService.Instance.AppMode = value;
                 NotifyPropertyChanged("AppMode");
             }
         }
@@ -48,7 +43,7 @@ namespace robotymobilne_projekt.GUI.ViewModels
             {
                 return save ?? (save = new DelegateCommand(delegate
                 {
-                    ApplicationSettings.Instance.save();
+                    ApplicationService.Instance.save();
                 }));
             }
         }
