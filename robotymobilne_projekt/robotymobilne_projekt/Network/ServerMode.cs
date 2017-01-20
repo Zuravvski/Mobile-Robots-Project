@@ -3,7 +3,8 @@ using System.IO;
 using System.Net.Sockets;
 using robotymobilne_projekt.Devices;
 using robotymobilne_projekt.Utils.AppLogger;
-using Server.Networking.Server.Networking;
+using robotymobilne_projekt.Network.Responses;
+using Server.Networking.Responses;
 
 namespace robotymobilne_projekt.Network
 {
@@ -12,6 +13,7 @@ namespace robotymobilne_projekt.Network
         private RobotModel robot;
         private NetworkStream networkStream;
         private readonly TcpClient socket;
+        private readonly ResponseFactory responseFactory;
 
         #region Setters & Getters
 
@@ -25,10 +27,12 @@ namespace robotymobilne_projekt.Network
         public ServerMode(TcpClient socket)
         {
             this.socket = socket;
+            responseFactory = new ResponseFactory();
 
             if (socket.Connected)
             {
                 networkStream = socket?.GetStream();
+                receive();
             }
         }
 
@@ -39,6 +43,7 @@ namespace robotymobilne_projekt.Network
                 var data = Convert.ToString(robot.ID);
                 var packet = new Packet(PacketHeader.CONNECT_REQ, data);
                 send(packet);
+                robot.Status = RobotModel.StatusE.CONNECTING;
             }
             catch
             {
@@ -53,6 +58,7 @@ namespace robotymobilne_projekt.Network
                 var data = Convert.ToString(robot.ID);
                 var packet = new Packet(PacketHeader.DISCONNECT_REQ, data);
                 robot.sendData(packet);
+                robot.Status = RobotModel.StatusE.DISCONNECTED;
             }
             catch
             {
@@ -128,6 +134,8 @@ namespace robotymobilne_projekt.Network
                 var buffer = (byte[]) result.AsyncState;
                 var bytesRead = networkStream.EndRead(result);
                 Array.Resize(ref buffer, bytesRead);
+                IResponse response = responseFactory.getResponse(new Packet(buffer));
+                response?.execute(robot);
                 receive();
             }
             catch (IOException)

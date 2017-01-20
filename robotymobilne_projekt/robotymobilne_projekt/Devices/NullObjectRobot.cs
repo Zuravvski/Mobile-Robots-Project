@@ -1,6 +1,5 @@
 ﻿using System;
-using Server.Networking;
-using Server.Networking.Server.Networking;
+using robotymobilne_projekt.Network;
 
 namespace robotymobilne_projekt.Devices
 {

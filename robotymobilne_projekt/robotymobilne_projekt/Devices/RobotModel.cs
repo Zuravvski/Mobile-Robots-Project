@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Net.Sockets;
-using System.Text;
 using System.Windows;
 using robotymobilne_projekt.Network;
 using robotymobilne_projekt.Settings;
 using robotymobilne_projekt.Utils;
-using Server.Networking;
-using Server.Networking.Server.Networking;
 
 namespace robotymobilne_projekt.Devices
 {
@@ -255,9 +252,9 @@ namespace robotymobilne_projekt.Devices
             {
                 frameR = ((int)SpeedR).ToString("X2").Substring(((int)SpeedR).ToString("X2").Length - 2);
             }
-            var finalFrame = '[' + frameLights + frameL + frameR + ']';
+            var finalFrame = frameLights + frameL + frameR;
 
-            return new Packet(Encoding.ASCII.GetBytes(finalFrame));
+            return new Packet(PacketHeader.UNRECOGNISED, finalFrame);
         }
 
         public enum StatusE

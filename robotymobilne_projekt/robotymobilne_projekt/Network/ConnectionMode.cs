@@ -1,7 +1,4 @@
-﻿using Server.Networking;
-using Server.Networking.Server.Networking;
-
-namespace robotymobilne_projekt.Network
+﻿namespace robotymobilne_projekt.Network
 {
     public interface ConnectionMode
     {

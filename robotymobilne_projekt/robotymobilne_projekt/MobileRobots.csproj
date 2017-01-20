@@ -172,7 +172,9 @@
     <Compile Include="Network\Requests\PositionReq.cs" />
     <Compile Include="Network\Requests\RequestFactory.cs" />
     <Compile Include="Network\Requests\VelocityReq.cs" />
+    <Compile Include="Network\Responses\ConnectAck.cs" />
     <Compile Include="Network\Responses\IResponse.cs" />
+    <Compile Include="Network\Responses\ResponseFactory.cs" />
     <Compile Include="Network\ServerMode.cs" />
     <Compile Include="Network\ServerService.cs" />
     <Compile Include="Settings\ApplicationService.cs" />

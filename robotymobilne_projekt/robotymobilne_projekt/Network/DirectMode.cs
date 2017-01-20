@@ -7,8 +7,6 @@ using robotymobilne_projekt.Devices;
 using robotymobilne_projekt.Devices.Network_utils;
 using robotymobilne_projekt.Settings;
 using robotymobilne_projekt.Utils.AppLogger;
-using Server.Networking;
-using Server.Networking.Server.Networking;
 
 namespace robotymobilne_projekt.Network
 {
@@ -98,7 +96,7 @@ namespace robotymobilne_projekt.Network
             {
                 if (Robot.Status != RobotModel.StatusE.CONNECTED) return;
 
-                var frameToSend = Encoding.ASCII.GetBytes(packet.Data);
+                var frameToSend = packet.toBytes();
                 networkStream.BeginWrite(frameToSend, 0, frameToSend.Length, sendCallback, robot.Socket);
             }
             catch (IOException)

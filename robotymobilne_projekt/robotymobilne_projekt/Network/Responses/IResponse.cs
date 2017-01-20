@@ -1,9 +1,9 @@
-﻿using Server.Networking.Server.Networking;
+﻿using robotymobilne_projekt.Devices;
 
 namespace Server.Networking.Responses
 {
     public interface IResponse
     {
-        Packet execute();
+        void execute(RobotModel robot);
     }
 }
