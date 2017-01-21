@@ -10,7 +10,10 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
     {
         public AutomaticView()
         {
+            InitializeComponent();
             DataContext = new AutomaticViewModel();
+
+            viewboxModeArea.Child = new CoverPanelLoading();
         }
     }
 }

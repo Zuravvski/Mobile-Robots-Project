@@ -143,6 +143,9 @@
     <Compile Include="GUI\Views\CoverPanel.xaml.cs">
       <DependentUpon>CoverPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GUI\Views\CoverPanelLoading.xaml.cs">
+      <DependentUpon>CoverPanelLoading.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -220,6 +223,10 @@
     <Page Include="GUI\Views\CoverPanel.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="GUI\Views\CoverPanelLoading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="GUI\Views\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>

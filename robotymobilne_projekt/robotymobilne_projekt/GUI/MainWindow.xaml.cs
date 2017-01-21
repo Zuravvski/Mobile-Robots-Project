@@ -3,6 +3,7 @@ using System.Windows.Data;
 using FirstFloor.ModernUI.Windows.Controls;
 using robotymobilne_projekt.GUI.Converters;
 using robotymobilne_projekt.GUI.ViewModels;
+using robotymobilne_projekt.GUI.Views;
 
 namespace robotymobilne_projekt.GUI
 {
