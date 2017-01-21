@@ -111,7 +111,7 @@ namespace robotymobilne_projekt.Settings
                         serverService = new ServerService();
                         serverService.connect();
                     }
-                    var serverMode = new ServerMode(serverService.Socket);
+                    var serverMode = new ServerMode(serverService);
                     robot.Mode = serverMode;
                     serverMode.Robot = robot;
                 }

@@ -12,7 +12,6 @@ namespace robotymobilne_projekt.Devices
     public class RobotModel : ObservableObject
     {
         // Robot data
-        private readonly string name;
         private Point position;
         private int battery;
         private double speedL;
@@ -23,12 +22,11 @@ namespace robotymobilne_projekt.Devices
         private bool isNotReserved;
         private TcpClient socket;
         private StatusE status;
-        private ConnectionMode connectionManager;
-        private TransmissionModeE transmissionMode;
+        private IConnectionMode connectionManager;
 
         #region Setters & Getters
 
-        public ConnectionMode Mode
+        public IConnectionMode Mode
         {
             get { return connectionManager; }
             set
@@ -38,7 +36,7 @@ namespace robotymobilne_projekt.Devices
             }
         }
 
-        public string ID { get; }
+        public int ID { get; }
 
         public TcpClient Socket
         {
@@ -90,7 +88,7 @@ namespace robotymobilne_projekt.Devices
             get { return speedL; }
             set
             {
-                if (null != socket && status == StatusE.CONNECTED)
+                if (status == StatusE.CONNECTED)
                 {
                     if (value > 127)
                     {
@@ -118,7 +116,7 @@ namespace robotymobilne_projekt.Devices
             get { return speedR; }
             set
             {
-                if (null != socket && status == StatusE.CONNECTED)
+                if (status == StatusE.CONNECTED)
                 {
                     if (value > 127)
                     {
@@ -167,9 +165,9 @@ namespace robotymobilne_projekt.Devices
 
         #endregion
 
-        public RobotModel(string name, string ip, int port)
+        public RobotModel(int id, string ip, int port)
         {
-            this.name = name;
+            ID = id;
             isNotReserved = true;
             IP = ip;
             Port = port;
@@ -177,16 +175,11 @@ namespace robotymobilne_projekt.Devices
             socket = new TcpClient(AddressFamily.InterNetwork);
             sensors = new ObservableCollection<int>() {0, 0, 0, 0, 0};
             connectionManager = new DirectMode(this);
-
-            if (ip.Length != 0)
-            {
-                ID = ip.Substring(ip.Length - 2, 2);
-            }
         }
 
         public override string ToString()
         {
-            return name;
+            return "ID: " + Convert.ToString(ID);
         }
 
         public virtual void connect()
@@ -263,10 +256,5 @@ namespace robotymobilne_projekt.Devices
             DISCONNECTED,
             CONNECTING
         };
-
-        public enum TransmissionModeE
-        {
-            PACKET, RAW
-        }
     }
 }

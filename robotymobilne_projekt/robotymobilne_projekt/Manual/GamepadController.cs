@@ -69,15 +69,15 @@ namespace robotymobilne_projekt.Manual
 
             if (Math.Abs(LX) > 0.9 && (RT > 0.9 || LT > 0.9))
             {
-                Microsoft.Xna.Framework.Input.GamePad.SetVibration((Microsoft.Xna.Framework.PlayerIndex)index, 0, (float)Math.Abs(LX - 0.5));
+                //Microsoft.Xna.Framework.Input.GamePad.SetVibration((Microsoft.Xna.Framework.PlayerIndex)index, 0, (float)Math.Abs(LX - 0.5));
             }
             else if (Math.Abs(RX) > 0.9 && RT < 0.1 && LT < 0.1)
             {
-                Microsoft.Xna.Framework.Input.GamePad.SetVibration((Microsoft.Xna.Framework.PlayerIndex)index, 0, (float)Math.Abs(RX - 0.5));
+                //Microsoft.Xna.Framework.Input.GamePad.SetVibration((Microsoft.Xna.Framework.PlayerIndex)index, 0, (float)Math.Abs(RX - 0.5));
             }
             else
             {
-                Microsoft.Xna.Framework.Input.GamePad.SetVibration((Microsoft.Xna.Framework.PlayerIndex)index, 0, 0);
+                //Microsoft.Xna.Framework.Input.GamePad.SetVibration((Microsoft.Xna.Framework.PlayerIndex)index, 0, 0);
             }
 
             CalculateFinalSpeed(speedL, speedR, steerL, steerR, nitroPressed, handbrakePressed);

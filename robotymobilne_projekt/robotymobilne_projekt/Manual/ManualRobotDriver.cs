@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using robotymobilne_projekt.Devices;
+using robotymobilne_projekt.Network;
 using robotymobilne_projekt.Settings;
 
 namespace robotymobilne_projekt.Manual
@@ -21,7 +22,17 @@ namespace robotymobilne_projekt.Manual
                     var reading = controller.execute();
                     robot.SpeedL = reading.Item1;
                     robot.SpeedR = reading.Item2;
-                    var dataFrame = robot.calculateFrame();
+
+                    Packet dataFrame;
+                    if (ApplicationService.Instance.AppMode == ApplicationService.ApplicationMode.DIRECT)
+                    {
+                        dataFrame = robot.calculateFrame();
+                    }
+                    else
+                    {
+                        var velocity = robot.ID.ToString("00") + robot.calculateFrame().Data.Substring(2, 4);
+                        dataFrame = new Packet(PacketHeader.VELOCITY_REQ, velocity);
+                    }
 
                     if (null != dataFrame)
                     {

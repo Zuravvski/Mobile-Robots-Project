@@ -1,6 +1,6 @@
 ﻿namespace robotymobilne_projekt.Network
 {
-    public interface ConnectionMode
+    public interface IConnectionMode
     {
         void connect();
         void disconnect();

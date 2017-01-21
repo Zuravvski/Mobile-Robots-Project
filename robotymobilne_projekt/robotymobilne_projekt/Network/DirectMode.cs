@@ -10,7 +10,7 @@ using robotymobilne_projekt.Utils.AppLogger;
 
 namespace robotymobilne_projekt.Network
 {
-    public class DirectMode : ConnectionMode
+    public class DirectMode : IConnectionMode
     {
         private RobotModel robot;
         private NetworkStream networkStream;

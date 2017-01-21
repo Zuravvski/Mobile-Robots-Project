@@ -4,6 +4,6 @@ namespace Server.Networking.Responses
 {
     public interface IResponse
     {
-        void execute(RobotModel robot);
+        void execute();
     }
 }
