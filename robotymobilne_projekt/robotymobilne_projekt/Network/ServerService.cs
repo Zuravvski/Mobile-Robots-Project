@@ -15,6 +15,8 @@ namespace robotymobilne_projekt.Network
         private NetworkStream networkStream;
         private readonly ResponseFactory responseFactory;
 
+        public bool Connected => null != socket && socket.Connected;
+
         public ServerService()
         {
             socket = new TcpClient(AddressFamily.InterNetwork);
@@ -31,8 +33,7 @@ namespace robotymobilne_projekt.Network
                 }
 
                 if (socket.Connected) return;
-
-                //socket.Connect(ApplicationService.Instance.Ip, ApplicationService.Instance.Port);
+                
                 socket.Connect(ApplicationService.Instance.Ip, ApplicationService.Instance.Port);
                 if (socket.Connected)
                 {
@@ -40,33 +41,12 @@ namespace robotymobilne_projekt.Network
                     networkStream = socket.GetStream();
                     receive();
                 }
-                //socket.BeginConnect(ApplicationService.Instance.Ip, 
-                //    ApplicationService.Instance.Port, connectCallback, null);
             }
             catch
             {
                 Logger.Instance.log(LogLevel.ERROR, "Could not connect to server");
             }
 
-        }
-
-        private void connectCallback(IAsyncResult result)
-        {
-            try
-            {
-                socket.EndConnect(result);
-
-                if (socket.Connected)
-                {
-                    Logger.Instance.log(LogLevel.INFO, "Connected to server.");
-                    networkStream = socket.GetStream();
-                    receive();
-                }
-            }
-            catch
-            {
-                Logger.Instance.log(LogLevel.ERROR, "Could not connect to server");
-            }
         }
 
         public void disconnect()

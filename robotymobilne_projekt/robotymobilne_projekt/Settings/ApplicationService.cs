@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using robotymobilne_projekt.Devices;
 using robotymobilne_projekt.GUI.Views;
 using robotymobilne_projekt.Network;
@@ -112,6 +111,9 @@ namespace robotymobilne_projekt.Settings
                         serverService = new ServerService();
                         serverService.connect();
                     }
+
+                    if (!serverService.Connected) return;
+                    
                     var serverMode = new ServerMode(serverService);
                     robot.Mode = serverMode;
                     serverMode.Robot = robot;
