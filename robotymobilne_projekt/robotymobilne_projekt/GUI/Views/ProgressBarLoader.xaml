@@ -5,13 +5,13 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                   xmlns:mui="http://firstfloorsoftware.com/ModernUI"
                   xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
-                  mc:Ignorable="d" d:DesignWidth="300"
-                  Title="Connecting to server" Height="137" Width="300" MinHeight="121" MinWidth="300"
-                  MaxHeight="200">
+                  mc:Ignorable="d"
+                  WindowStyle="None">
 
-    <StackPanel>
-            <ProgressBar IsIndeterminate="True" Margin="5" Height="auto" Width="auto"/>
-            <Label Content="Loading..." HorizontalContentAlignment="Center" Width="auto" Height="auto"/>
+    <StackPanel MinWidth="100" MinHeight="60">
+        <controls:ProgressRing x:Name="progressRing"/>
+        <Label Content="Connecting to server. Please wait..."/>
+        
     </StackPanel>
 
 </mui:ModernDialog>
