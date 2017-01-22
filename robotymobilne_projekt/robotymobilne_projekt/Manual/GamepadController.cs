@@ -5,17 +5,11 @@ namespace robotymobilne_projekt.Manual
 {
     public class GamepadController : AbstractController
     {
-        private int index;
+        private readonly int index;
         private double RT, LT, RX, LX;
         private ButtonState A, B;
 
-        public int GamepadIndex
-        {
-            get
-            {
-                return index;
-            }
-        }
+        public int GamepadIndex => index;
 
         public GamepadController(int index)
         {

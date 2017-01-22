@@ -10,8 +10,6 @@ namespace robotymobilne_projekt.GUI.Views.Manual
         public UserInterface()
         {
             InitializeComponent();
-            var coverPanel = new CoverPanel(canvas, "Switch mode", "This feature requires server mode");
-            canvas.Children.Add(coverPanel);
         }
     }
 }

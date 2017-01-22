@@ -5,7 +5,9 @@
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:converters="clr-namespace:robotymobilne_projekt.GUI.Converters"
             xmlns:local="clr-namespace:robotymobilne_projekt.GUI.Views.Manual"
-            xmlns:ControlzEx="clr-namespace:ControlzEx;assembly=MahApps.Metro" x:Class="robotymobilne_projekt.GUI.Views.Manual.UserInterface"
+            xmlns:ControlzEx="clr-namespace:ControlzEx;assembly=MahApps.Metro"
+            xmlns:views="clr-namespace:robotymobilne_projekt.GUI.Views"
+            x:Class="robotymobilne_projekt.GUI.Views.Manual.UserInterface"
             mc:Ignorable="d" d:DesignWidth="300" Height="276.133">
 
     <UserControl.Resources>
@@ -16,6 +18,7 @@
         <converters:ReverseConnectionStatus x:Key="reverseStatusConverter"/>
         <converters:ValToPercentConverter x:Key="batteryValueConverter" />
         <converters:BatteryStatusToColorConverter x:Key="batteryColorConverter"/>
+        <converters:AppModeToVisibilityConverter x:Key="visibilityConverter"/>
     </UserControl.Resources>
 
     <Grid x:Name="mainPanel">
@@ -27,7 +30,9 @@
             <ColumnDefinition Width="83*"/>
         </Grid.ColumnDefinitions>
 
-        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="200" Margin="10,39,0,0" VerticalAlignment="Top" Width="200" Background="White"/>
+        <Canvas x:Name="canvas" HorizontalAlignment="Left" Height="200" Margin="10,39,0,0" VerticalAlignment="Top" Width="200" Background="White">
+            <views:CoverPanel Width="{Binding ElementName=canvas, Path=Width}" Height="{Binding ElementName=canvas, Path=Height}" Visibility="{Binding DataContext.AppService.AppMode, Converter={StaticResource visibilityConverter}, ElementName=canvas}"/>
+        </Canvas>
         <ProgressBar x:Name="progressBarSpeedL" HorizontalAlignment="Left" Height="160" Margin="215,39,0,0" VerticalAlignment="Top" Width="34" Orientation="Vertical" Value="{Binding SpeedL, Converter={StaticResource speedConverter}, Mode=OneWay}" Background="{x:Null}" BorderThickness="2, 2, 2, 2" Grid.ColumnSpan="2" Foreground="{Binding SpeedL, Converter={StaticResource directionConverter}, Mode=OneWay}" DataContext="{Binding Robot}"/>
         <ProgressBar x:Name="progressBarSpeedR" HorizontalAlignment="Left" Height="160" Margin="256,39,0,0" VerticalAlignment="Top" Width="34" Background="{x:Null}" Orientation="Vertical" Value="{Binding SpeedR, Converter={StaticResource speedConverter}, Mode=OneWay}" BorderThickness="2, 2, 2, 2" DataContext="{Binding Robot}" Foreground="{Binding SpeedR, Converter={StaticResource directionConverter}, Mode=OneWay}"/>
         <ProgressBar x:Name="progressBarBattery" HorizontalAlignment="Left" Height="35" Margin="215,204,0,0" VerticalAlignment="Top" Width="75" Value="{Binding Battery, Converter={StaticResource batteryValueConverter}, FallbackValue=0}" Background="{x:Null}" BorderThickness="2, 2, 2, 2" Grid.ColumnSpan="2" DataContext="{Binding Robot}" Foreground="{Binding Battery, Converter={StaticResource batteryColorConverter}, FallbackValue=#FFFF0000}"/>

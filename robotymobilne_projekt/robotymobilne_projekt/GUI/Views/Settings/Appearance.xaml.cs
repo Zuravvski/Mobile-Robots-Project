@@ -13,9 +13,7 @@ namespace robotymobilne_projekt.GUI.Views.Settings
             InitializeComponent();
 
             // create and assign the appearance view model
-            var model = new AppearanceViewModel();
-            this.DataContext = model;
-            CoverPanelLoading.viewModel = model;
+            DataContext = new AppearanceViewModel();
         }
     }
 }

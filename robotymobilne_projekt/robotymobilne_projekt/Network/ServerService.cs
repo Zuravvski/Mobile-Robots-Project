@@ -32,8 +32,16 @@ namespace robotymobilne_projekt.Network
 
                 if (socket.Connected) return;
 
-                socket.BeginConnect(ApplicationService.Instance.Ip, 
-                    ApplicationService.Instance.Port, connectCallback, null);
+                //socket.Connect(ApplicationService.Instance.Ip, ApplicationService.Instance.Port);
+                socket.Connect(ApplicationService.Instance.Ip, ApplicationService.Instance.Port);
+                if (socket.Connected)
+                {
+                    Logger.Instance.log(LogLevel.INFO, "Connected to server.");
+                    networkStream = socket.GetStream();
+                    receive();
+                }
+                //socket.BeginConnect(ApplicationService.Instance.Ip, 
+                //    ApplicationService.Instance.Port, connectCallback, null);
             }
             catch
             {

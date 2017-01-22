@@ -30,11 +30,6 @@ namespace robotymobilne_projekt.GUI.ViewModels
         public ApplicationService.ApplicationMode AppMode
         {
             get { return ApplicationService.Instance.AppMode; }
-            set
-            {
-                ApplicationService.Instance.AppMode = value;
-                NotifyPropertyChanged("AppMode");
-            }
         }
 
         public ICommand Save

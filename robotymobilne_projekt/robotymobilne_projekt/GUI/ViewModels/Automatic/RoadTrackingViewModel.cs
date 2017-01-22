@@ -1,10 +1,10 @@
 ﻿using robotymobilne_projekt.Devices;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
+using robotymobilne_projekt.Settings;
 
 namespace robotymobilne_projekt.GUI.ViewModels.Automatic
 {
@@ -72,6 +72,9 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
                 return points;
             }
         }
+
+        public ApplicationService AppService => ApplicationService.Instance;
+
         #endregion
 
         #region Actions

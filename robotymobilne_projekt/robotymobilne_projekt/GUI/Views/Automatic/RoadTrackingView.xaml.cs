@@ -16,7 +16,7 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
     public partial class RoadTrackingView : UserControl
     {
         private Point currentPoint;
-        private RoadTrackingViewModel roadTrackingViewModel;
+        private readonly RoadTrackingViewModel roadTrackingViewModel;
 
         private double Xactual = 0;
         private double Yactual = 0;
@@ -25,13 +25,9 @@ namespace robotymobilne_projekt.GUI.Views.Automatic
         public RoadTrackingView()
         {
             InitializeComponent();
-            var roadTrackingViewModel = new RoadTrackingViewModel();
-            this.roadTrackingViewModel = roadTrackingViewModel;
-            DataContext = roadTrackingViewModel;
-
-
-            var coverPanel = new CoverPanel(canvasBoard, "Switch mode", "This feature requires server mode");
-            canvasBoard.Children.Add(coverPanel);
+            var viewModel = new RoadTrackingViewModel();
+            roadTrackingViewModel = viewModel;
+            DataContext = viewModel;
         }
 
         private void Canvas_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)

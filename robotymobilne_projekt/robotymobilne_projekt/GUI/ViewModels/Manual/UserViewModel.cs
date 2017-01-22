@@ -3,6 +3,7 @@ using System.Windows;
 using System.Windows.Input;
 using robotymobilne_projekt.Devices;
 using robotymobilne_projekt.Manual;
+using robotymobilne_projekt.Settings;
 
 namespace robotymobilne_projekt.GUI.ViewModels.Manual
 {
@@ -12,6 +13,8 @@ namespace robotymobilne_projekt.GUI.ViewModels.Manual
         private ICommand delete;
 
         #region Actions
+
+        public ApplicationService AppService => ApplicationService.Instance;
 
         public override ICommand Connect
         {

@@ -5,15 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:robotymobilne_projekt.GUI.Views.Automatic"
              xmlns:converters="clr-namespace:robotymobilne_projekt.GUI.Converters"
+             xmlns:views="clr-namespace:robotymobilne_projekt.GUI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
         <Image x:Key="currentIcon" Source="{Binding PlayPauseIcon}"/>
+        <converters:AppModeToVisibilityConverter x:Key="visibilityConverter"/>
     </UserControl.Resources>
 
 
     <Grid Height="340">
-        <Canvas x:Name="canvasBoard" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300" Background="White" MouseMove="Canvas_MouseMove" MouseDown="canvasBoard_MouseDown" MouseUp="canvasBoard_MouseUp"/>
+        <Canvas x:Name="canvasBoard" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300" Background="White" MouseMove="Canvas_MouseMove" MouseDown="canvasBoard_MouseDown" MouseUp="canvasBoard_MouseUp">
+            <views:CoverPanel Height="{Binding ElementName=canvasBoard, Path=Height}" Width="{Binding ElementName=canvasBoard, Path=Width}" Visibility="{Binding DataContext.AppService.AppMode, Converter={StaticResource visibilityConverter}, ElementName=canvasBoard}"/>
+        </Canvas>
         <Button x:Name="clean" Content="Clean" Height="35" Canvas.Left="10" Canvas.Top="255" Width="130" Margin="0,305,170,0" Click="clean_Click"/>
         <Button x:Name="playPause" Height="35" Canvas.Left="180" Canvas.Top="255" Width="130" Command="{Binding PlayPauseCommand}" Content="{StaticResource currentIcon}" Margin="170,305,0,0"/>
     </Grid>

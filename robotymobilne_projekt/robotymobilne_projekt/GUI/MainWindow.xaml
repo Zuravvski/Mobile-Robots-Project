@@ -16,7 +16,7 @@
     </mui:ModernWindow.Resources>
 
     <mui:ModernWindow.LogoData>
-        <Binding ElementName="mainWindow" Path="DataContext.AppMode" Converter="{StaticResource appToIcon}" Mode="OneWay"/>
+        <Binding ElementName="mainWindow" Path="DataContext.AppService.AppMode" Converter="{StaticResource appToIcon}" Mode="OneWay"/>
     </mui:ModernWindow.LogoData>
 
     <mui:ModernWindow.MenuLinkGroups>

@@ -104,6 +104,7 @@
     <Compile Include="Devices\Network utils\FrameParser.cs" />
     <Compile Include="Devices\RobotDriver.cs" />
     <Compile Include="GUI\Converters\AppModeToIconConverter.cs" />
+    <Compile Include="GUI\Converters\AppModeToVisibilityConverter.cs" />
     <Compile Include="GUI\Converters\AutoModeCollToStringColl.cs" />
     <Compile Include="GUI\Converters\AutoModeToStringConverter.cs" />
     <Compile Include="GUI\Converters\PIDToBoolConverter.cs" />
@@ -143,9 +144,6 @@
     <Compile Include="GUI\Views\CoverPanel.xaml.cs">
       <DependentUpon>CoverPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="GUI\Views\CoverPanelLoading.xaml.cs">
-      <DependentUpon>CoverPanelLoading.xaml</DependentUpon>
-    </Compile>
     <Compile Include="GUI\Views\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -153,6 +151,9 @@
       <DependentUpon>ManualView.xaml</DependentUpon>
     </Compile>
     <Compile Include="GUI\ViewModels\RobotSettingsViewModel.cs" />
+    <Compile Include="GUI\Views\ProgressBarLoader.xaml.cs">
+      <DependentUpon>ProgressBarLoader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="GUI\Views\Settings\General.xaml.cs">
       <DependentUpon>General.xaml</DependentUpon>
     </Compile>
@@ -224,15 +225,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="GUI\Views\CoverPanelLoading.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="GUI\Views\HomePage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="GUI\Views\Manual\ManualView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GUI\Views\ProgressBarLoader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

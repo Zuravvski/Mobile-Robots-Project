@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using robotymobilne_projekt.Devices;
+using robotymobilne_projekt.GUI.Views;
 using robotymobilne_projekt.Network;
 using robotymobilne_projekt.Utils;
 
@@ -45,13 +47,9 @@ namespace robotymobilne_projekt.Settings
         public ApplicationMode AppMode
         {
             get { return appMode; }
-            set
+            private set
             {
-                if (value != appMode)
-                {
-                    appMode = value;
-                    handleModeChange();
-                }
+                appMode = value;
                 NotifyPropertyChanged("AppMode");
             }
         }
@@ -90,19 +88,22 @@ namespace robotymobilne_projekt.Settings
         }
 
 
-        private void handleModeChange()
+        public void handleModeChange(ProgressBarLoader loader, ApplicationMode mode)
         {
+            if(appMode == mode) return;
+
             foreach (var robot in robotSettings.Robots)
             {
-                if((robot is NullObjectRobot)) continue;
+                if ((robot is NullObjectRobot)) continue;
 
                 robot.disconnect();
 
-                if (appMode == ApplicationMode.DIRECT)
+                if (ApplicationMode.DIRECT == mode)
                 {
                     serverService?.Dispose();
                     serverService = null;
                     robot.Mode = new DirectMode(robot);
+                    AppMode = ApplicationMode.DIRECT;
                 }
                 else
                 {
@@ -114,7 +115,9 @@ namespace robotymobilne_projekt.Settings
                     var serverMode = new ServerMode(serverService);
                     robot.Mode = serverMode;
                     serverMode.Robot = robot;
+                    AppMode = ApplicationMode.SERVER;
                 }
+                loader.CloseWindow();
             }
         }
 
