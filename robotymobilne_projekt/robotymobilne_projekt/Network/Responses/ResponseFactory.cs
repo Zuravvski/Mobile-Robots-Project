@@ -15,6 +15,10 @@ namespace robotymobilne_projekt.Network.Responses
                 case PacketHeader.CONNECT_ACK:
                     response = new ConnectAck(packet.Data);
                     break;
+
+                case PacketHeader.POSITION_ACK:
+                    response = new PositionResponse(packet.Data);
+                    break;
             }
 
             return response;

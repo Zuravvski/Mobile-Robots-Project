@@ -126,6 +126,7 @@ namespace robotymobilne_projekt.Settings
             if(0 == robots.Count)
             {
                 robots.Add(new NullObjectRobot(-1, "", 0));
+                //robots.Add(new RobotModel(30, "127.0.0.1", 50131));
                 for (var i = 0; i < 6; i++)
                 {
                     var newRobot = new RobotModel(i + 30, "192.168.2.3" + i, 8000);

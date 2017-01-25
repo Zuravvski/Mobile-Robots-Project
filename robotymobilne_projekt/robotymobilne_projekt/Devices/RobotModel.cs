@@ -12,7 +12,9 @@ namespace robotymobilne_projekt.Devices
     public class RobotModel : ObservableObject
     {
         // Robot data
-        private Point position;
+        private int x;
+        private int y;
+        private int angle;
         private int battery;
         private double speedL;
         private double speedR;
@@ -56,13 +58,30 @@ namespace robotymobilne_projekt.Devices
             }
         }
 
-        public Point Position
+        public int X
         {
-            get { return position; }
+            get { return x; }
             set
             {
-                position = value;
-                NotifyPropertyChanged("Position");
+                x = value;
+            }
+        }
+
+        public int Y
+        {
+            get { return y; }
+            set
+            {
+                y = value;
+            }
+        }
+
+        public int Angle
+        {
+            get { return angle; }
+            set
+            {
+                angle = value;
             }
         }
 
@@ -203,7 +222,9 @@ namespace robotymobilne_projekt.Devices
             SpeedL = 0;
             SpeedR = 0;
             Battery = 0;
-            Position = new Point(0,0);
+            X = 0;
+            Y = 0;
+            Angle = 0;
             Sensors = new ObservableCollection<int>() {0,0,0,0,0};
             Status = StatusE.DISCONNECTED;
         }

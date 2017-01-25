@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using robotymobilne_projekt.Settings;
+using robotymobilne_projekt.Automatic.RoadTracking;
 
 namespace robotymobilne_projekt.GUI.ViewModels.Automatic
 {
@@ -14,6 +15,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
         private bool isRunning;
         private bool isPainted;
         private List<Point> points; //to store all coordinates
+        private RoadTrackingDriver driver;
 
         private ICommand playPause;
 
@@ -143,12 +145,15 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
                             IsRunning = false;
                             IsPainted = points.Count > 0;
                             PlayPauseIcon = PLAY_ICON;
+                            driver?.Dispose();
                         }
                         else
                         {
                             IsRunning = true;
                             IsPainted = true;
                             PlayPauseIcon = PAUSE_ICON;
+
+                            driver = new RoadTrackingDriver(Robot, (RoadTrackingController)Controller, ref points);
                         }
                     });
                 }
@@ -161,6 +166,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
         {
             PlayPauseIcon = PLAY_ICON;
             points = new List<Point>();
+            controller = new RoadTrackingController(ref points);
         }
     }
 }

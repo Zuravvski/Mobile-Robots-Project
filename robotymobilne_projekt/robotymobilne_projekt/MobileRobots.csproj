@@ -100,6 +100,8 @@
     <Compile Include="Automatic\LineFollower\LineFollowerController.cs" />
     <Compile Include="Automatic\LineFollower\LineFollowerDriver.cs" />
     <Compile Include="Automatic\RoadTracking\RoadTracking.cs" />
+    <Compile Include="Automatic\RoadTracking\RoadTrackingController.cs" />
+    <Compile Include="Automatic\RoadTracking\RoadTrackingDriver.cs" />
     <Compile Include="Devices\Network utils\DataFrame.cs" />
     <Compile Include="Devices\Network utils\FrameParser.cs" />
     <Compile Include="Devices\RobotDriver.cs" />
@@ -182,6 +184,7 @@
     <Compile Include="Network\Requests\VelocityReq.cs" />
     <Compile Include="Network\Responses\ConnectAck.cs" />
     <Compile Include="Network\Responses\IResponse.cs" />
+    <Compile Include="Network\Responses\PositionResponse.cs" />
     <Compile Include="Network\Responses\ResponseFactory.cs" />
     <Compile Include="Network\ServerMode.cs" />
     <Compile Include="Network\ServerService.cs" />
