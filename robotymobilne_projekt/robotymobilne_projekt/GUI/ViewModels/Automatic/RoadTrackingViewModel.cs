@@ -13,7 +13,7 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
         private string playPauseIcon;
         private bool isRunning;
         private bool isPainted;
-        private readonly List<Point> points; //to store all coordinates
+        private List<Point> points; //to store all coordinates
 
         private ICommand playPause;
 
@@ -70,6 +70,11 @@ namespace robotymobilne_projekt.GUI.ViewModels.Automatic
             get
             {
                 return points;
+            }
+            set
+            {
+                points = value;
+                NotifyPropertyChanged("Points");
             }
         }
 

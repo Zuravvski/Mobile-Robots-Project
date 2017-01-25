@@ -18,7 +18,17 @@
         <Canvas x:Name="canvasBoard" HorizontalAlignment="Left" Height="300" VerticalAlignment="Top" Width="300" Background="White" MouseMove="Canvas_MouseMove" MouseDown="canvasBoard_MouseDown" MouseUp="canvasBoard_MouseUp">
             <views:CoverPanel Height="{Binding ElementName=canvasBoard, Path=Height}" Width="{Binding ElementName=canvasBoard, Path=Width}" Visibility="{Binding DataContext.AppService.AppMode, Converter={StaticResource visibilityConverter}, ElementName=canvasBoard}"/>
         </Canvas>
-        <Button x:Name="clean" Content="Clean" Height="35" Canvas.Left="10" Canvas.Top="255" Width="130" Margin="0,305,170,0" Click="clean_Click"/>
-        <Button x:Name="playPause" Height="35" Canvas.Left="180" Canvas.Top="255" Width="130" Command="{Binding PlayPauseCommand}" Content="{StaticResource currentIcon}" Margin="170,305,0,0"/>
+        <Button x:Name="clean" Content="Clean" Height="35" Canvas.Left="10" Canvas.Top="255" Margin="0,305,230,0" Click="clean_Click"/>
+        <Button x:Name="playPause" Height="35" Canvas.Left="180" Canvas.Top="255" Command="{Binding PlayPauseCommand}" Content="{StaticResource currentIcon}" Margin="80,305,150,1"/>
+        <Button x:Name="buttonSave" HorizontalAlignment="Left" Margin="250,306,0,0" VerticalAlignment="Top" Width="40" Height="35" Click="buttonSave_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/robotymobilne_projekt;component/Resources/save.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
+        <Button x:Name="buttonLoad" HorizontalAlignment="Left" Margin="200,306,0,0" VerticalAlignment="Top" Width="40" Height="35" Click="buttonLoad_Click">
+            <Button.Background>
+                <ImageBrush ImageSource="/robotymobilne_projekt;component/Resources/load.png" Stretch="Uniform"/>
+            </Button.Background>
+        </Button>
     </Grid>
 </UserControl>

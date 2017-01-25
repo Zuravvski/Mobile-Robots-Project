@@ -109,15 +109,21 @@ namespace robotymobilne_projekt.Settings
                     if (null == serverService)
                     {
                         serverService = new ServerService();
+                        AppMode = ApplicationMode.SWITCHING;
                         serverService.connect();
                     }
 
-                    if (!serverService.Connected) return;
-                    
-                    var serverMode = new ServerMode(serverService);
-                    robot.Mode = serverMode;
-                    serverMode.Robot = robot;
-                    AppMode = ApplicationMode.SERVER;
+                    if (serverService.Connected)
+                    {
+                        var serverMode = new ServerMode(serverService);
+                        robot.Mode = serverMode;
+                        serverMode.Robot = robot;
+                        AppMode = ApplicationMode.SERVER;
+                    }
+                    else
+                    {
+                        AppMode = ApplicationMode.DIRECT;
+                    }
                 }
                 loader.CloseWindow();
             }
